@@ -1,0 +1,350 @@
+/* =========================================================
+   HEADER GLOBAL
+========================================================= */
+
+.site-header {
+
+  position: fixed;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 72px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(5, 5, 5, 0.97);
+
+  border-bottom: 1px solid rgba(184, 138, 59, 0.35);
+
+  z-index: 10000;
+
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.site-logo {
+
+  width: 75px;
+
+  height: auto;
+
+  display: block;
+
+}
+
+
+.site-logo-link {
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+}
+
+
+/* =========================================================
+   BOTÕES DO HEADER
+========================================================= */
+
+.site-header-button {
+
+  position: absolute;
+
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: transparent;
+
+  border: 1px solid #8e6a2d;
+
+  border-radius: 10px;
+
+  color: #c99b48;
+
+  font-size: 18px;
+
+  cursor: pointer;
+
+  text-decoration: none;
+
+}
+
+
+.site-header-button:first-child {
+
+  left: 18px;
+
+}
+
+
+.site-header-button:last-child {
+
+  right: 18px;
+
+}
+
+
+/* =========================================================
+   OVERLAY
+========================================================= */
+
+.site-menu-overlay {
+
+  position: fixed;
+
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.72);
+
+  z-index: 11000;
+
+}
+
+
+/* =========================================================
+   MENU
+========================================================= */
+
+.site-side-menu {
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: min(82%, 360px);
+
+  height: 100vh;
+
+  overflow-y: auto;
+
+  box-sizing: border-box;
+
+  padding: 35px 28px;
+
+  background:
+    linear-gradient(
+      160deg,
+      #120909,
+      #050505 65%
+    );
+
+  border-right: 1px solid rgba(184, 138, 59, 0.45);
+
+  animation: siteMenuSlide 0.35s ease forwards;
+
+}
+
+
+@keyframes siteMenuSlide {
+
+  from {
+
+    transform: translateX(-100%);
+
+  }
+
+  to {
+
+    transform: translateX(0);
+
+  }
+
+}
+
+
+/* =========================================================
+   BOTÃO FECHAR
+========================================================= */
+
+.site-menu-close {
+
+  position: absolute;
+
+  top: 22px;
+  right: 22px;
+
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: transparent;
+
+  border: 1px solid #8e6a2d;
+
+  border-radius: 50%;
+
+  color: #c99b48;
+
+  cursor: pointer;
+
+}
+
+
+/* =========================================================
+   LOGO DO MENU
+========================================================= */
+
+.site-menu-logo {
+
+  display: block;
+
+  width: 90px;
+
+  margin: 20px auto;
+
+}
+
+
+/* =========================================================
+   TÍTULO
+========================================================= */
+
+.site-menu-title {
+
+  display: block;
+
+  text-align: center;
+
+  margin-bottom: 35px;
+
+  color: #c99b48;
+
+  font-size: 10px;
+
+  letter-spacing: 4px;
+
+}
+
+
+/* =========================================================
+   LINKS
+========================================================= */
+
+.site-menu-links {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+
+}
+
+
+.site-menu-links a {
+
+  padding: 15px 10px;
+
+  border-bottom: 1px solid rgba(184, 138, 59, 0.12);
+
+  color: #d8c5a4;
+
+  font-size: 12px;
+
+  letter-spacing: 2px;
+
+  text-decoration: none;
+
+  transition: 0.25s ease;
+
+}
+
+
+.site-menu-links a:hover {
+
+  color: #c99b48;
+
+  padding-left: 18px;
+
+}
+
+
+/* =========================================================
+   REDES
+========================================================= */
+
+.site-menu-social {
+
+  display: flex;
+
+  justify-content: center;
+
+  gap: 25px;
+
+  margin-top: 45px;
+
+}
+
+
+.site-menu-social a {
+
+  color: #c99b48;
+
+  font-size: 21px;
+
+  text-decoration: none;
+
+}
+
+
+/* =========================================================
+   DESKTOP
+========================================================= */
+
+@media (min-width: 768px) {
+
+  .site-header {
+
+    height: 82px;
+
+  }
+
+
+  .site-logo {
+
+    width: 90px;
+
+  }
+
+
+  .site-header-button {
+
+    width: 45px;
+    height: 45px;
+
+  }
+
+
+  .site-header-button:first-child {
+
+    left: 50px;
+
+  }
+
+
+  .site-header-button:last-child {
+
+    right: 50px;
+
+  }
+
+}
