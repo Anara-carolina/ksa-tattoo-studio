@@ -1,0 +1,840 @@
+/* =========================================================
+   ANAMNESE — KSA STUDIO
+========================================================= */
+
+.anamnese-form {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: #f4eee5;
+  font-family: "Montserrat", Arial, sans-serif;
+  padding: 40px 20px;
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   OVERLAY
+========================================================= */
+
+.anamnese-form__overlay {
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(8, 5, 7, 0.82) 0%,
+      rgba(8, 5, 7, 0.91) 55%,
+      rgba(8, 5, 7, 0.96) 100%
+    );
+  z-index: 0;
+}
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.anamnese-form__container {
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+  max-width: 900px;
+
+  margin: 0 auto;
+
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   TOPO
+========================================================= */
+
+.anamnese-form__topbar {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 28px;
+}
+
+/* =========================================================
+   BOTÃO INÍCIO
+========================================================= */
+
+.anamnese-home-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 95px;
+
+  padding: 10px 18px;
+
+  border: 1px solid rgba(201, 164, 92, 0.45);
+  border-radius: 30px;
+
+  background: rgba(10, 7, 9, 0.65);
+
+  color: #c9a45c;
+
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+
+  cursor: pointer;
+
+  backdrop-filter: blur(8px);
+
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.anamnese-home-button:hover {
+  background: rgba(201, 164, 92, 0.12);
+  border-color: #c9a45c;
+  color: #ead18c;
+  transform: translateY(-2px);
+}
+
+/* =========================================================
+   CABEÇALHO
+========================================================= */
+
+.anamnese-form__header {
+  text-align: center;
+  margin-bottom: 42px;
+}
+
+.anamnese-form__brand {
+  display: block;
+
+  margin-bottom: 10px;
+
+  color: #c9a45c;
+
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 5px;
+
+  text-transform: uppercase;
+}
+
+.anamnese-form__header h1 {
+  margin: 0;
+
+  color: #f5eee4;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: clamp(38px, 7vw, 64px);
+
+  font-weight: 400;
+
+  letter-spacing: 8px;
+
+  text-shadow:
+    0 2px 20px rgba(0, 0, 0, 0.7);
+}
+
+.anamnese-form__header p {
+  max-width: 500px;
+
+  margin: 18px auto 0;
+
+  color: rgba(244, 238, 229, 0.68);
+
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* =========================================================
+   PROGRESSO
+========================================================= */
+
+.anamnese-progress {
+  width: 100%;
+  max-width: 700px;
+
+  margin: 0 auto 35px;
+}
+
+.anamnese-progress__steps {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  position: relative;
+
+  z-index: 2;
+}
+
+.progress-step {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+
+  background: rgba(12, 8, 10, 0.9);
+
+  color: rgba(255, 255, 255, 0.4);
+
+  font-size: 12px;
+
+  transition: all 0.35s ease;
+}
+
+.progress-step.active {
+  border-color: #c9a45c;
+
+  background: #17100c;
+
+  color: #d8b96b;
+
+  box-shadow:
+    0 0 0 4px rgba(201, 164, 92, 0.08),
+    0 0 20px rgba(201, 164, 92, 0.12);
+}
+
+.anamnese-progress__line {
+  position: relative;
+
+  height: 1px;
+
+  margin-top: -20px;
+
+  background: rgba(255, 255, 255, 0.12);
+
+  z-index: 0;
+}
+
+.anamnese-progress__line-fill {
+  height: 100%;
+
+  background: linear-gradient(
+    90deg,
+    #8e6c35,
+    #d6b76a
+  );
+
+  transition: width 0.4s ease;
+}
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.anamnese-card {
+  width: 100%;
+
+  padding: clamp(28px, 5vw, 55px);
+
+  box-sizing: border-box;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(22, 16, 17, 0.96),
+      rgba(10, 7, 9, 0.97)
+    );
+
+  border: 1px solid rgba(201, 164, 92, 0.18);
+
+  border-radius: 18px;
+
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+
+  backdrop-filter: blur(14px);
+}
+
+/* =========================================================
+   ETAPA
+========================================================= */
+
+.anamnese-step {
+  animation: aparecerEtapa 0.4s ease;
+}
+
+@keyframes aparecerEtapa {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.step-number {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #b28c4c;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  letter-spacing: 3px;
+}
+
+.anamnese-step h2 {
+  margin: 0 0 10px;
+
+  color: #f5eee4;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: clamp(28px, 5vw, 38px);
+
+  font-weight: 400;
+}
+
+.step-description {
+  max-width: 620px;
+
+  margin: 0 0 35px;
+
+  color: rgba(244, 238, 229, 0.58);
+
+  font-size: 14px;
+
+  line-height: 1.7;
+}
+
+/* =========================================================
+   FORMULÁRIOS
+========================================================= */
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-row {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 20px;
+}
+
+.form-group label {
+  display: block;
+
+  margin-bottom: 9px;
+
+  color: rgba(244, 238, 229, 0.8);
+
+  font-size: 12px;
+  font-weight: 500;
+
+  letter-spacing: 0.5px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 14px 15px;
+
+  border: 1px solid rgba(255, 255, 255, 0.13);
+
+  border-radius: 8px;
+
+  outline: none;
+
+  background: rgba(255, 255, 255, 0.045);
+
+  color: #f4eee5;
+
+  font-family: inherit;
+
+  font-size: 13px;
+
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: rgba(244, 238, 229, 0.3);
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: rgba(201, 164, 92, 0.65);
+
+  background: rgba(201, 164, 92, 0.045);
+
+  box-shadow:
+    0 0 0 3px rgba(201, 164, 92, 0.06);
+}
+
+.form-group input:disabled {
+  color: rgba(244, 238, 229, 0.55);
+
+  cursor: not-allowed;
+
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.form-group textarea {
+  min-height: 110px;
+
+  resize: vertical;
+}
+
+.form-group select {
+  cursor: pointer;
+}
+
+.form-group select option {
+  background: #171214;
+
+  color: #f4eee5;
+}
+
+.form-group small {
+  display: block;
+
+  margin-top: 7px;
+
+  color: rgba(244, 238, 229, 0.35);
+
+  font-size: 10px;
+}
+
+/* =========================================================
+   RADIO
+========================================================= */
+
+.radio-group {
+  display: flex;
+
+  gap: 15px;
+
+  margin-top: 10px;
+}
+
+.radio-option {
+  display: flex !important;
+
+  align-items: center;
+
+  gap: 8px;
+
+  margin: 0 !important;
+
+  padding: 11px 18px;
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  border-radius: 8px;
+
+  background: rgba(255, 255, 255, 0.025);
+
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+}
+
+.radio-option:hover {
+  border-color: rgba(201, 164, 92, 0.45);
+
+  background: rgba(201, 164, 92, 0.05);
+}
+
+.radio-option input {
+  width: auto;
+
+  accent-color: #c9a45c;
+
+  cursor: pointer;
+}
+
+/* =========================================================
+   CONSENTIMENTO
+========================================================= */
+
+.consent-box {
+  padding: 24px;
+
+  margin-bottom: 25px;
+
+  border-left: 2px solid #a68145;
+
+  background: rgba(201, 164, 92, 0.045);
+
+  border-radius: 0 8px 8px 0;
+}
+
+.consent-box p {
+  margin: 0 0 15px;
+
+  color: rgba(244, 238, 229, 0.65);
+
+  font-size: 12px;
+
+  line-height: 1.8;
+}
+
+.consent-box p:last-child {
+  margin-bottom: 0;
+}
+
+.consent-checkbox {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 12px;
+
+  color: rgba(244, 238, 229, 0.75);
+
+  font-size: 12px;
+
+  line-height: 1.5;
+
+  cursor: pointer;
+}
+
+.consent-checkbox input {
+  margin-top: 2px;
+
+  accent-color: #c9a45c;
+
+  cursor: pointer;
+}
+
+/* =========================================================
+   BOTÕES
+========================================================= */
+
+.anamnese-actions {
+  display: flex;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-top: 40px;
+
+  padding-top: 25px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.button-primary,
+.button-secondary {
+  min-width: 145px;
+
+  padding: 14px 24px;
+
+  border-radius: 7px;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  letter-spacing: 2px;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.button-primary {
+  margin-left: auto;
+
+  border: 1px solid #c9a45c;
+
+  background: linear-gradient(
+    135deg,
+    #9b763d,
+    #c9a45c
+  );
+
+  color: #120d0a;
+
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.25);
+}
+
+.button-primary:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 30px rgba(201, 164, 92, 0.2);
+}
+
+.button-secondary {
+  border: 1px solid rgba(201, 164, 92, 0.3);
+
+  background: transparent;
+
+  color: #c9a45c;
+}
+
+.button-secondary:hover {
+  border-color: #c9a45c;
+
+  background: rgba(201, 164, 92, 0.06);
+
+  transform: translateY(-2px);
+}
+
+/* =========================================================
+   RODAPÉ
+========================================================= */
+
+.anamnese-form__footer {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-top: 25px;
+
+  padding: 15px 5px;
+
+  color: rgba(244, 238, 229, 0.35);
+
+  font-size: 10px;
+}
+
+.anamnese-form__footer button {
+  border: 0;
+
+  background: none;
+
+  color: #a68145;
+
+  font-size: 10px;
+
+  letter-spacing: 1.5px;
+
+  cursor: pointer;
+
+  transition: color 0.25s ease;
+}
+
+.anamnese-form__footer button:hover {
+  color: #e0c77f;
+}
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.anamnese-form__loading {
+  position: relative;
+
+  z-index: 1;
+
+  min-height: 80vh;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  color: #c9a45c;
+
+  font-size: 12px;
+
+  letter-spacing: 2px;
+}
+
+/* =========================================================
+   RESPONSIVO — TABLET
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .anamnese-form {
+    padding: 25px 15px;
+    background-attachment: scroll;
+  }
+
+  .anamnese-form__header {
+    margin-bottom: 32px;
+  }
+
+  .anamnese-form__header h1 {
+    letter-spacing: 5px;
+  }
+
+  .anamnese-card {
+    padding: 28px 20px;
+
+    border-radius: 14px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+
+    gap: 0;
+  }
+
+  .anamnese-actions {
+    margin-top: 30px;
+  }
+
+}
+
+/* =========================================================
+   RESPONSIVO — CELULAR
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .anamnese-form {
+    padding: 20px 12px;
+  }
+
+  .anamnese-form__topbar {
+    margin-bottom: 20px;
+  }
+
+  .anamnese-home-button {
+    min-width: 85px;
+
+    padding: 9px 15px;
+
+    font-size: 9px;
+  }
+
+  .anamnese-form__brand {
+    font-size: 9px;
+
+    letter-spacing: 4px;
+  }
+
+  .anamnese-form__header h1 {
+    font-size: 34px;
+
+    letter-spacing: 4px;
+  }
+
+  .anamnese-form__header p {
+    font-size: 12px;
+  }
+
+  .anamnese-progress {
+    margin-bottom: 25px;
+  }
+
+  .progress-step {
+    width: 32px;
+    height: 32px;
+
+    font-size: 10px;
+  }
+
+  .anamnese-progress__line {
+    margin-top: -17px;
+  }
+
+  .anamnese-card {
+    padding: 25px 17px;
+  }
+
+  .anamnese-step h2 {
+    font-size: 28px;
+  }
+
+  .step-description {
+    font-size: 12px;
+
+    margin-bottom: 28px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    padding: 13px;
+
+    font-size: 12px;
+  }
+
+  .radio-group {
+    gap: 8px;
+  }
+
+  .radio-option {
+    flex: 1;
+
+    justify-content: center;
+
+    padding: 11px 8px;
+  }
+
+  .consent-box {
+    padding: 18px;
+  }
+
+  .consent-box p {
+    font-size: 11px;
+  }
+
+  .consent-checkbox {
+    font-size: 11px;
+  }
+
+  .anamnese-actions {
+    gap: 10px;
+  }
+
+  .button-primary,
+  .button-secondary {
+    min-width: 0;
+
+    flex: 1;
+
+    padding: 13px 10px;
+
+    font-size: 9px;
+
+    letter-spacing: 1.5px;
+  }
+
+  .anamnese-form__footer {
+    flex-direction: column;
+
+    align-items: center;
+
+    text-align: center;
+
+    gap: 8px;
+  }
+
+}

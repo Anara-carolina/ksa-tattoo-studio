@@ -1,4 +1,116 @@
 /* =========================================================
+   FOOTER
+========================================================= */
+
+.footer {
+  width: 100%;
+  padding: 70px 20px 110px;
+
+  background: #050505;
+
+  border-top: 1px solid rgba(184, 138, 59, 0.18);
+
+  text-align: center;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.footer-logo {
+  width: 150px;
+  max-width: 70%;
+  height: auto;
+
+  display: block;
+
+  margin: 0 auto 24px;
+}
+
+
+/* =========================================================
+   REDES SOCIAIS
+========================================================= */
+
+.social-icons {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 20px;
+
+  margin: 0 auto 28px;
+}
+
+
+.social-icons a {
+  width: 56px;
+  height: 56px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(201, 155, 72, 0.65);
+
+  border-radius: 50%;
+
+  color: #c99b48;
+
+  font-size: 26px;
+
+  text-decoration: none;
+
+  box-sizing: border-box;
+
+  transition:
+    color 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+
+.social-icons a:hover {
+  color: #a5141b;
+
+  border-color: #a5141b;
+
+  background: rgba(165, 20, 27, 0.08);
+
+  transform: translateY(-3px);
+}
+
+
+/* =========================================================
+   TEXTOS
+========================================================= */
+
+.footer p {
+  margin: 7px 0;
+
+  color: #888;
+
+  font-size: 12px;
+
+  letter-spacing: 1px;
+}
+
+
+.footer-copyright {
+  margin-top: 18px !important;
+
+  color: #555 !important;
+
+  font-size: 10px !important;
+}
+
+
+/* =========================================================
    NAVEGAÇÃO INFERIOR
 ========================================================= */
 
@@ -9,11 +121,9 @@
   bottom: 0;
 
   width: 100%;
-
   height: 68px;
 
   display: flex;
-
   align-items: center;
   justify-content: space-around;
 
@@ -24,8 +134,15 @@
   z-index: 2000;
 
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  box-sizing: border-box;
 }
 
+
+/* =========================================================
+   LINKS DA NAVEGAÇÃO
+========================================================= */
 
 .bottom-navigation a {
   flex: 1;
@@ -37,6 +154,7 @@
   flex-direction: column;
 
   align-items: center;
+
   justify-content: center;
 
   gap: 4px;
@@ -55,6 +173,10 @@
 }
 
 
+/* =========================================================
+   ÍCONES DA NAVEGAÇÃO
+========================================================= */
+
 .bottom-navigation a span {
   font-size: 19px;
 
@@ -69,7 +191,7 @@
 
 
 /* =========================================================
-   PASSOU O MOUSE
+   HOVER
 ========================================================= */
 
 .bottom-navigation a:hover {
@@ -95,4 +217,118 @@
 
 .bottom-navigation a.active span {
   color: #a5141b;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .footer {
+    padding-top: 60px;
+
+    /*
+      Espaço suficiente para a navegação
+      inferior fixa de 68px.
+    */
+    padding-bottom: 105px;
+  }
+
+
+  /* LOGO */
+
+  .footer-logo {
+    width: 135px;
+
+    margin-bottom: 22px;
+  }
+
+
+  /* REDES SOCIAIS */
+
+  .social-icons {
+    gap: 18px;
+
+    margin-bottom: 26px;
+  }
+
+
+  .social-icons a {
+    width: 54px;
+    height: 54px;
+
+    font-size: 25px;
+  }
+
+
+  /* TEXTOS */
+
+  .footer p {
+    font-size: 11px;
+  }
+
+
+  .footer-copyright {
+    font-size: 9px !important;
+  }
+
+
+  /* NAVEGAÇÃO */
+
+  .bottom-navigation {
+    height: 68px;
+  }
+
+
+  .bottom-navigation a {
+    font-size: 7px;
+
+    letter-spacing: 0.8px;
+  }
+
+
+  .bottom-navigation a span {
+    font-size: 18px;
+  }
+
+}
+
+
+/* =========================================================
+   TELAS MUITO PEQUENAS
+========================================================= */
+
+@media (max-width: 380px) {
+
+  .footer {
+    padding-bottom: 100px;
+  }
+
+
+  .footer-logo {
+    width: 125px;
+  }
+
+
+  .social-icons {
+    gap: 15px;
+
+    margin-bottom: 24px;
+  }
+
+
+  .social-icons a {
+    width: 50px;
+    height: 50px;
+
+    font-size: 23px;
+  }
+
+
+  .bottom-navigation a {
+    font-size: 6.5px;
+  }
+
 }

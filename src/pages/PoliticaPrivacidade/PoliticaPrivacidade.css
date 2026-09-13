@@ -1,0 +1,292 @@
+.politica-page {
+  width: 100%;
+  min-height: 100vh;
+
+  background: #090707;
+
+  color: #ffffff;
+}
+
+
+/* ============================= */
+/* CONTEÚDO PRINCIPAL */
+/* ============================= */
+
+.politica-content {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 90px 22px 70px;
+}
+
+
+/* ============================= */
+/* CABEÇALHO DA PÁGINA */
+/* ============================= */
+
+.politica-hero {
+  width: 100%;
+  max-width: 700px;
+
+  margin: 0 auto 55px;
+
+  text-align: center;
+}
+
+.politica-eyebrow {
+  display: block;
+
+  margin-bottom: 12px;
+
+  font-size: 10px;
+  letter-spacing: 4px;
+
+  color: #d8b56a;
+}
+
+.politica-hero h1 {
+  margin: 0;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 32px;
+  font-weight: 400;
+
+  line-height: 1.15;
+
+  letter-spacing: 4px;
+
+  color: #ffffff;
+}
+
+.politica-divider {
+  width: 55px;
+  height: 1px;
+
+  margin: 22px auto;
+
+  background: rgba(216, 181, 106, 0.65);
+}
+
+.politica-hero p {
+  max-width: 340px;
+
+  margin: 0 auto;
+
+  font-size: 13px;
+  line-height: 1.7;
+
+  color: rgba(255, 255, 255, 0.62);
+}
+
+
+/* ============================= */
+/* TEXTO */
+/* ============================= */
+
+.politica-text {
+  width: 100%;
+  max-width: 760px;
+
+  margin: 0 auto;
+}
+
+.politica-text section {
+  position: relative;
+
+  padding: 0 0 38px;
+  margin-bottom: 38px;
+
+  border-bottom: 1px solid rgba(216, 181, 106, 0.12);
+}
+
+.politica-text section:last-child {
+  border-bottom: none;
+}
+
+
+/* ============================= */
+/* NUMERAÇÃO */
+/* ============================= */
+
+.politica-number {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 11px;
+  letter-spacing: 2px;
+
+  color: #d8b56a;
+
+  opacity: 0.85;
+}
+
+
+/* ============================= */
+/* TÍTULOS */
+/* ============================= */
+
+.politica-text h2 {
+  margin: 0 0 16px;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 21px;
+  font-weight: 400;
+
+  line-height: 1.3;
+
+  color: #ffffff;
+}
+
+
+/* ============================= */
+/* PARÁGRAFOS */
+/* ============================= */
+
+.politica-text p {
+  margin: 0 0 14px;
+
+  font-size: 13px;
+  line-height: 1.85;
+
+  color: rgba(255, 255, 255, 0.70);
+}
+
+.politica-text p:last-child {
+  margin-bottom: 0;
+}
+
+
+/* ============================= */
+/* FINAL */
+/* ============================= */
+
+.politica-final {
+  padding-bottom: 10px !important;
+  margin-bottom: 0 !important;
+}
+
+.politica-updated {
+  margin-top: 25px;
+
+  padding-top: 18px;
+
+  border-top: 1px solid rgba(216, 181, 106, 0.18);
+
+  font-size: 10px;
+  letter-spacing: 1px;
+
+  color: rgba(255, 255, 255, 0.45);
+}
+
+
+/* ============================= */
+/* TABLET */
+/* ============================= */
+
+@media (min-width: 600px) {
+
+  .politica-content {
+    padding: 110px 40px 90px;
+  }
+
+  .politica-hero h1 {
+    font-size: 40px;
+  }
+
+  .politica-text h2 {
+    font-size: 23px;
+  }
+
+  .politica-text p {
+    font-size: 14px;
+  }
+}
+
+
+/* ============================= */
+/* DESKTOP */
+/* ============================= */
+
+@media (min-width: 900px) {
+
+  .politica-content {
+    padding-top: 130px;
+  }
+
+  .politica-hero {
+    margin-bottom: 75px;
+  }
+
+  .politica-hero h1 {
+    font-size: 46px;
+  }
+
+  .politica-text section {
+    padding-bottom: 45px;
+    margin-bottom: 45px;
+  }
+}
+
+.politica-back {
+
+  display: flex;
+
+  justify-content: center;
+
+  margin-top: 45px;
+
+  padding-bottom: 20px;
+
+}
+
+
+.politica-back-button {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  min-height: 46px;
+
+  padding: 0 24px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #8e6a2d;
+
+  border-radius: 3px;
+
+  background: transparent;
+
+  color: #c99b48;
+
+  font-size: 10px;
+
+  letter-spacing: 1.5px;
+
+  text-decoration: none;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+
+}
+
+
+.politica-back-button:hover {
+
+  background: #c99b48;
+
+  border-color: #c99b48;
+
+  color: #080707;
+
+}

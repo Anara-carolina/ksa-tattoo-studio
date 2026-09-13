@@ -48,11 +48,13 @@ export default function Header() {
           className="site-logo-link"
           onClick={closeMenu}
         >
+
           <img
             src={logo}
             alt="KSA Studio"
             className="site-logo"
           />
+
         </Link>
 
 
@@ -61,7 +63,9 @@ export default function Header() {
           className="site-header-button"
           aria-label="Agendar tatuagem"
         >
+
           <FaCalendarAlt />
+
         </Link>
 
       </header>
@@ -84,7 +88,10 @@ export default function Header() {
             onClick={(event) => event.stopPropagation()}
           >
 
-            {/* FECHAR */}
+
+            {/* =================================================
+                BOTÃO FECHAR
+            ================================================= */}
 
             <button
               type="button"
@@ -92,21 +99,28 @@ export default function Header() {
               onClick={closeMenu}
               aria-label="Fechar menu"
             >
+
               <FaTimes />
+
             </button>
 
 
-            {/* LOGO */}
+
+            {/* =================================================
+                LOGO
+            ================================================= */}
 
             <Link
               to="/"
               onClick={closeMenu}
             >
+
               <img
                 src={logo}
                 alt="KSA Studio"
                 className="site-menu-logo"
               />
+
             </Link>
 
 
@@ -116,9 +130,12 @@ export default function Header() {
 
 
 
-            {/* LINKS */}
+            {/* =================================================
+                MENU
+            ================================================= */}
 
             <nav className="site-menu-links">
+
 
               <Link
                 to="/"
@@ -161,10 +178,18 @@ export default function Header() {
 
 
               <Link
-                to="/contato"
+                to="/anamnese"
                 onClick={closeMenu}
               >
-                CONTATO
+                ANAMNESE
+              </Link>
+
+
+              <Link
+                to="/cuidados"
+                onClick={closeMenu}
+              >
+                CUIDADOS COM A TATUAGEM
               </Link>
 
 
@@ -175,19 +200,33 @@ export default function Header() {
                 DOCUMENTAÇÃO
               </Link>
 
+
+              <Link
+                to="/contato"
+                onClick={closeMenu}
+              >
+                CONTATO
+              </Link>
+
+
             </nav>
 
 
 
-            {/* REDES */}
+            {/* =================================================
+                REDES SOCIAIS
+            ================================================= */}
 
             <div className="site-menu-social">
+
 
               <a
                 href="#"
                 aria-label="Instagram"
               >
+
                 <FaInstagram />
+
               </a>
 
 
@@ -195,10 +234,14 @@ export default function Header() {
                 href="#"
                 aria-label="WhatsApp"
               >
+
                 <FaWhatsapp />
+
               </a>
 
+
             </div>
+
 
           </aside>
 

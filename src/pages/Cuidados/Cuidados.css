@@ -1,0 +1,1221 @@
+
+/* =========================================================
+   CUIDADOS COM A TATUAGEM
+   KSA STUDIO
+========================================================= */
+
+
+/* =========================================================
+   BASE
+========================================================= */
+
+.cuidados {
+
+  min-height: 100vh;
+
+  background: #050505;
+
+  color: #e8dfd0;
+
+  overflow-x: hidden;
+
+}
+
+
+.cuidados-main {
+
+  width: 100%;
+
+  padding-top: 72px;
+
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.cuidados-hero {
+
+  position: relative;
+
+  padding: 65px 22px 55px;
+
+  text-align: center;
+
+  overflow: hidden;
+
+  border-bottom: 1px solid rgba(184, 138, 59, 0.22);
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(142, 17, 23, 0.15),
+      transparent 65%
+    );
+
+}
+
+
+.cuidados-hero::before {
+
+  content: "✦";
+
+  position: absolute;
+
+  top: 25px;
+
+  left: 15%;
+
+  color: rgba(184, 138, 59, 0.12);
+
+  font-size: 45px;
+
+}
+
+
+.cuidados-hero::after {
+
+  content: "✦";
+
+  position: absolute;
+
+  right: 15%;
+
+  bottom: 25px;
+
+  color: rgba(165, 20, 27, 0.12);
+
+  font-size: 35px;
+
+}
+
+
+.cuidados-small {
+
+  display: block;
+
+  margin-bottom: 18px;
+
+  color: #a5141b;
+
+  font-size: 10px;
+
+  letter-spacing: 4px;
+
+}
+
+
+.cuidados-heading {
+
+  position: relative;
+
+  z-index: 2;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 12px;
+
+}
+
+
+.cuidados-heading h1 {
+
+  margin: 0;
+
+  font-family: Georgia, serif;
+
+  font-size: 30px;
+
+  line-height: 1.15;
+
+  font-weight: 400;
+
+  color: #e8dfd0;
+
+}
+
+
+.cuidados-heading h1 span {
+
+  color: #c99b48;
+
+}
+
+
+.ornament {
+
+  flex-shrink: 0;
+
+  color: #a5141b;
+
+  font-size: 15px;
+
+}
+
+
+.cuidados-intro {
+
+  position: relative;
+
+  z-index: 2;
+
+  max-width: 430px;
+
+  margin: 25px auto 0;
+
+  color: #aaa096;
+
+  font-size: 14px;
+
+  line-height: 1.8;
+
+}
+
+
+/* =========================================================
+   AVISO IMPORTANTE
+========================================================= */
+
+.cuidados-aviso {
+
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 18px;
+
+  max-width: 700px;
+
+  margin: 30px 22px;
+
+  padding: 22px;
+
+  box-sizing: border-box;
+
+  border: 1px solid rgba(184, 138, 59, 0.35);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(184, 138, 59, 0.07),
+      rgba(0, 0, 0, 0.3)
+    );
+
+}
+
+
+.aviso-icon {
+
+  min-width: 40px;
+
+  height: 40px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border: 1px solid #8e6a2d;
+
+  border-radius: 50%;
+
+  color: #c99b48;
+
+  font-size: 17px;
+
+}
+
+
+.aviso-label {
+
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #c99b48;
+
+  font-size: 10px;
+
+  letter-spacing: 2px;
+
+}
+
+
+.cuidados-aviso p {
+
+  margin: 0;
+
+  color: #aaa096;
+
+  font-size: 12px;
+
+  line-height: 1.7;
+
+}
+
+
+/* =========================================================
+   SEÇÕES
+========================================================= */
+
+.cuidados-section {
+
+  padding: 65px 22px;
+
+  border-top: 1px solid rgba(184, 138, 59, 0.16);
+
+}
+
+
+.cuidados-section-dark {
+
+  background:
+    linear-gradient(
+      180deg,
+      #080606,
+      #0d0808,
+      #070606
+    );
+
+}
+
+
+.section-title {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 12px;
+
+  margin-bottom: 22px;
+
+}
+
+
+.section-title > div {
+
+  text-align: center;
+
+}
+
+
+.section-title > div > span {
+
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #a5141b;
+
+  font-size: 9px;
+
+  letter-spacing: 2px;
+
+}
+
+
+.section-title h2 {
+
+  margin: 0;
+
+  font-family: Georgia, serif;
+
+  font-size: 21px;
+
+  line-height: 1.3;
+
+  font-weight: 400;
+
+  color: #d4ad64;
+
+}
+
+
+.section-description {
+
+  max-width: 550px;
+
+  margin: 0 auto 30px;
+
+  text-align: center;
+
+  color: #aaa096;
+
+  font-size: 13px;
+
+  line-height: 1.8;
+
+}
+
+
+/* =========================================================
+   CARDS DE CUIDADOS
+========================================================= */
+
+.cuidados-grid {
+
+  display: grid;
+
+  grid-template-columns: 1fr;
+
+  gap: 12px;
+
+  max-width: 700px;
+
+  margin: 0 auto;
+
+}
+
+
+.cuidado-card {
+
+  padding: 24px 20px;
+
+  text-align: center;
+
+  border: 1px solid rgba(184, 138, 59, 0.25);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(184, 138, 59, 0.04),
+      rgba(0, 0, 0, 0.3)
+    );
+
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    background 0.3s ease;
+
+}
+
+
+.cuidado-card:hover {
+
+  transform: translateY(-4px);
+
+  border-color: #c99b48;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(184, 138, 59, 0.08),
+      rgba(0, 0, 0, 0.35)
+    );
+
+}
+
+
+.cuidado-icon {
+
+  width: 45px;
+
+  height: 45px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  margin: 0 auto 15px;
+
+  border: 1px solid rgba(184, 138, 59, 0.45);
+
+  border-radius: 50%;
+
+  color: #c99b48;
+
+  font-size: 17px;
+
+}
+
+
+.cuidado-card h3 {
+
+  margin: 0 0 9px;
+
+  color: #d5b36c;
+
+  font-size: 11px;
+
+  font-weight: 400;
+
+  letter-spacing: 2px;
+
+}
+
+
+.cuidado-card p {
+
+  margin: 0;
+
+  color: #918980;
+
+  font-size: 12px;
+
+  line-height: 1.6;
+
+}
+
+
+/* =========================================================
+   LISTA DE CUIDADOS
+========================================================= */
+
+.lista-cuidados {
+
+  max-width: 650px;
+
+  margin: 0 auto;
+
+}
+
+
+.lista-item {
+
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 13px;
+
+  padding: 17px 0;
+
+  border-bottom: 1px solid rgba(184, 138, 59, 0.13);
+
+}
+
+
+.lista-item:last-child {
+
+  border-bottom: none;
+
+}
+
+
+.lista-item svg {
+
+  flex-shrink: 0;
+
+  margin-top: 3px;
+
+  color: #a5141b;
+
+  font-size: 14px;
+
+}
+
+
+.lista-item p {
+
+  margin: 0;
+
+  color: #aaa096;
+
+  font-size: 13px;
+
+  line-height: 1.7;
+
+}
+
+
+/* =========================================================
+   DESTAQUE
+========================================================= */
+
+.destaque-box {
+
+  max-width: 650px;
+
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 18px;
+
+  margin: 30px auto 0;
+
+  padding: 25px 20px;
+
+  box-sizing: border-box;
+
+  border-left: 2px solid #a5141b;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(142, 17, 23, 0.08),
+      transparent
+    );
+
+}
+
+
+.destaque-box > svg {
+
+  flex-shrink: 0;
+
+  margin-top: 3px;
+
+  color: #c99b48;
+
+  font-size: 22px;
+
+}
+
+
+.destaque-box h3 {
+
+  margin: 0 0 10px;
+
+  color: #d4ad64;
+
+  font-size: 11px;
+
+  font-weight: 400;
+
+  letter-spacing: 2px;
+
+}
+
+
+.destaque-box p {
+
+  margin: 0;
+
+  color: #aaa096;
+
+  font-size: 12px;
+
+  line-height: 1.7;
+
+}
+
+
+/* =========================================================
+   SEÇÃO O QUE EVITAR
+========================================================= */
+
+.evitar-section {
+
+  padding: 70px 22px;
+
+  border-top: 1px solid rgba(184, 138, 59, 0.18);
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(142, 17, 23, 0.1),
+      transparent 65%
+    );
+
+}
+
+
+.section-title-center {
+
+  margin-bottom: 35px;
+
+}
+
+
+.evitar-grid {
+
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 10px;
+
+  max-width: 650px;
+
+  margin: 0 auto;
+
+}
+
+
+.evitar-card {
+
+  min-height: 155px;
+
+  padding: 20px 12px;
+
+  box-sizing: border-box;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  text-align: center;
+
+  border: 1px solid rgba(165, 20, 27, 0.28);
+
+  background: rgba(0, 0, 0, 0.25);
+
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease;
+
+}
+
+
+.evitar-card:hover {
+
+  transform: translateY(-3px);
+
+  border-color: #a5141b;
+
+}
+
+
+.evitar-card svg {
+
+  margin-bottom: 12px;
+
+  color: #a5141b;
+
+  font-size: 20px;
+
+}
+
+
+.evitar-card h3 {
+
+  margin: 0 0 8px;
+
+  color: #d4ad64;
+
+  font-size: 10px;
+
+  font-weight: 400;
+
+  letter-spacing: 2px;
+
+}
+
+
+.evitar-card p {
+
+  margin: 0;
+
+  color: #918980;
+
+  font-size: 11px;
+
+  line-height: 1.5;
+
+}
+
+
+/* =========================================================
+   SINAIS DE ATENÇÃO
+========================================================= */
+
+.atencao-section {
+
+  max-width: 850px;
+
+  margin: 0 auto;
+
+  padding: 60px 22px;
+
+  box-sizing: border-box;
+
+  border-top: 1px solid rgba(165, 20, 27, 0.35);
+
+  border-bottom: 1px solid rgba(165, 20, 27, 0.35);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(142, 17, 23, 0.12),
+      rgba(0, 0, 0, 0.2)
+    );
+
+}
+
+
+.atencao-header {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 15px;
+
+  margin-bottom: 20px;
+
+}
+
+
+.atencao-header > svg {
+
+  color: #a5141b;
+
+  font-size: 25px;
+
+}
+
+
+.atencao-header > div {
+
+  text-align: left;
+
+}
+
+
+.atencao-header span {
+
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #a5141b;
+
+  font-size: 9px;
+
+  letter-spacing: 2px;
+
+}
+
+
+.atencao-header h2 {
+
+  margin: 0;
+
+  color: #d4ad64;
+
+  font-family: Georgia, serif;
+
+  font-size: 21px;
+
+  font-weight: 400;
+
+}
+
+
+.atencao-section > p {
+
+  max-width: 650px;
+
+  margin: 0 auto 25px;
+
+  text-align: center;
+
+  color: #aaa096;
+
+  font-size: 12px;
+
+  line-height: 1.8;
+
+}
+
+
+.atencao-lista {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
+
+  max-width: 500px;
+
+  margin: 0 auto;
+
+}
+
+
+.atencao-lista span {
+
+  color: #b9afa2;
+
+  font-size: 12px;
+
+}
+
+
+/* =========================================================
+   DEPOIS DA CICATRIZAÇÃO
+========================================================= */
+
+.final-cuidados {
+
+  display: grid;
+
+  grid-template-columns: 1fr;
+
+  gap: 15px;
+
+  max-width: 700px;
+
+  margin: 35px auto 0;
+
+}
+
+
+.final-cuidados > div {
+
+  padding: 25px 20px;
+
+  text-align: center;
+
+  border: 1px solid rgba(184, 138, 59, 0.3);
+
+  background: rgba(0, 0, 0, 0.2);
+
+}
+
+
+.final-cuidados svg {
+
+  margin-bottom: 13px;
+
+  color: #c99b48;
+
+  font-size: 22px;
+
+}
+
+
+.final-cuidados h3 {
+
+  margin: 0 0 10px;
+
+  color: #d4ad64;
+
+  font-size: 11px;
+
+  font-weight: 400;
+
+  letter-spacing: 2px;
+
+}
+
+
+.final-cuidados p {
+
+  margin: 0;
+
+  color: #918980;
+
+  font-size: 12px;
+
+  line-height: 1.7;
+
+}
+
+
+/* =========================================================
+   FINAL DA PÁGINA
+========================================================= */
+
+.cuidados-final {
+
+  padding: 80px 22px;
+
+  text-align: center;
+
+  border-top: 1px solid rgba(184, 138, 59, 0.2);
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(142, 17, 23, 0.12),
+      transparent 65%
+    );
+
+}
+
+
+.cuidados-final .documentacao-small {
+
+  margin-bottom: 10px;
+
+}
+
+
+.final-ornament {
+
+  margin: 10px 0 15px;
+
+  color: #a5141b;
+
+  font-size: 18px;
+
+}
+
+
+.cuidados-final h2 {
+
+  margin: 0;
+
+  font-family: Georgia, serif;
+
+  font-size: 34px;
+
+  line-height: 1.2;
+
+  font-weight: 400;
+
+  color: #e6d5b7;
+
+}
+
+
+.cuidados-final h2 span {
+
+  color: #c99b48;
+
+}
+
+
+.cuidados-final > p {
+
+  max-width: 430px;
+
+  margin: 20px auto 25px;
+
+  color: #aaa096;
+
+  font-size: 13px;
+
+  line-height: 1.8;
+
+}
+
+
+.final-heart {
+
+  color: #a5141b;
+
+  font-size: 18px;
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (min-width: 600px) {
+
+  .cuidados-aviso {
+
+    margin-left: auto;
+
+    margin-right: auto;
+
+  }
+
+
+  .cuidados-grid {
+
+    grid-template-columns: repeat(2, 1fr);
+
+  }
+
+}
+
+
+/* =========================================================
+   DESKTOP
+========================================================= */
+
+@media (min-width: 768px) {
+
+  .cuidados-main {
+
+    padding-top: 82px;
+
+  }
+
+
+  .cuidados-hero {
+
+    padding: 100px 50px 75px;
+
+  }
+
+
+  .cuidados-heading h1 {
+
+    font-size: 46px;
+
+  }
+
+
+  .cuidados-intro {
+
+    font-size: 15px;
+
+  }
+
+
+  .cuidados-aviso {
+
+    margin-top: 45px;
+
+    margin-bottom: 45px;
+
+    padding: 28px;
+
+  }
+
+
+  .cuidados-section {
+
+    padding: 100px 50px;
+
+  }
+
+
+  .section-title h2 {
+
+    font-size: 26px;
+
+  }
+
+
+  .cuidados-grid {
+
+    max-width: 850px;
+
+    gap: 15px;
+
+  }
+
+
+  .cuidado-card {
+
+    min-height: 175px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 30px;
+
+  }
+
+
+  .evitar-section {
+
+    padding: 100px 50px;
+
+  }
+
+
+  .evitar-grid {
+
+    grid-template-columns: repeat(3, 1fr);
+
+    max-width: 850px;
+
+    gap: 15px;
+
+  }
+
+
+  .evitar-card {
+
+    min-height: 180px;
+
+  }
+
+
+  .atencao-section {
+
+    padding: 70px 50px;
+
+  }
+
+
+  .final-cuidados {
+
+    grid-template-columns: repeat(2, 1fr);
+
+  }
+
+
+  .cuidados-final {
+
+    padding: 110px 50px;
+
+  }
+
+
+  .cuidados-final h2 {
+
+    font-size: 48px;
+
+  }
+
+}
+
+
+/* =========================================================
+   DESKTOP GRANDE
+========================================================= */
+
+@media (min-width: 1100px) {
+
+  .cuidados-hero {
+
+    padding-top: 120px;
+
+    padding-bottom: 90px;
+
+  }
+
+
+  .cuidados-grid {
+
+    max-width: 900px;
+
+  }
+
+
+  .evitar-grid {
+
+    max-width: 900px;
+
+  }
+
+}
+
+/* =========================================================
+   FOOTER — AJUSTE MOBILE
+========================================================= */
+
+@media (max-width: 767px) {
+
+  .cuidados {
+    padding-bottom: 75px;
+  }
+
+  .cuidados .footer {
+    padding-bottom: 100px;
+  }
+
+}

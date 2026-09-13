@@ -7,7 +7,27 @@ import {
   FaChevronRight
 } from "react-icons/fa";
 
-import floral from "../../assets/images/floral.png";
+import pantera from "../../assets/images/pantera.png";
+
+import black0 from "../../assets/images/black0.jpeg";
+import black1 from "../../assets/images/black1.jpeg";
+import black2 from "../../assets/images/black2.jpeg";
+import black3 from "../../assets/images/black3.jpeg";
+import black4 from "../../assets/images/black4.jpeg";
+import black5 from "../../assets/images/black5.jpeg";
+import black6 from "../../assets/images/black6.jpeg";
+import black7 from "../../assets/images/black7.jpeg";
+import black8 from "../../assets/images/black8.jpeg";
+
+import old0 from "../../assets/images/old0.jpeg";
+import old1 from "../../assets/images/old1.jpeg";
+import old2 from "../../assets/images/old2.jpeg";
+import old3 from "../../assets/images/old3.jpeg";
+import old4 from "../../assets/images/old4.jpeg";
+import old5 from "../../assets/images/old5.jpeg";
+import old6 from "../../assets/images/old6.jpeg";
+import old7 from "../../assets/images/old7.jpeg";
+import old8 from "../../assets/images/old8.jpeg";
 
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
@@ -47,51 +67,43 @@ export default function Portfolio() {
   const estilos = [
 
     {
-      slug: "florais",
-      nome: "FLORAIS",
-      descricao:
-        "Tatuagens florais autorais, delicadas e cheias de significado.",
-      imagem: floral
-    },
-
-    {
-      slug: "delicadas",
-      nome: "DELICADAS",
-      descricao:
-        "Traços leves e sutis para tatuagens delicadas e cheias de personalidade.",
-      imagem: floral
-    },
-
-    {
       slug: "blackwork",
       nome: "BLACKWORK",
       descricao:
         "Contraste, força e personalidade em trabalhos marcantes.",
-      imagem: floral
+      imagem: black0
     },
 
     {
-      slug: "realismo",
-      nome: "REALISMO",
+      slug: "old-school",
+      nome: "OLD SCHOOL",
       descricao:
-        "Trabalhos ricos em detalhes, profundidade e expressão.",
-      imagem: floral
+        "Traços marcantes, cores fortes e referências clássicas da tatuagem.",
+      imagem: old0
     },
 
     {
-      slug: "lettering",
-      nome: "LETTERING",
+      slug: "maori",
+      nome: "MAORI",
       descricao:
-        "Palavras, frases e significados transformados em arte na pele.",
-      imagem: floral
+        "Símbolos, linhas e elementos inspirados na força da arte Maori.",
+      imagem: black1
     },
 
     {
-      slug: "autorais",
-      nome: "AUTORAIS",
+      slug: "fine-line",
+      nome: "FINE LINE",
       descricao:
-        "Criações exclusivas desenvolvidas especialmente pela KSA Studio.",
-      imagem: floral
+        "Traços finos e precisos para trabalhos leves, elegantes e detalhados.",
+      imagem: black2
+    },
+
+    {
+      slug: "ornamental",
+      nome: "ORNAMENTAL",
+      descricao:
+        "Formas, simetria e detalhes que criam composições sofisticadas.",
+      imagem: black3
     }
 
   ];
@@ -103,58 +115,59 @@ export default function Portfolio() {
 
   const fotosPorEstilo = {
 
-    florais: [
-      floral,
-      floral,
-      floral,
-      floral,
-      floral,
-      floral
-    ],
-
-    delicadas: [
-      floral,
-      floral,
-      floral,
-      floral,
-      floral,
-      floral
-    ],
-
     blackwork: [
-      floral,
-      floral,
-      floral,
-      floral,
-      floral,
-      floral
+      black0,
+      black1,
+      black2,
+      black3,
+      black4,
+      black5,
+      black6,
+      black7,
+      black8
     ],
 
-    realismo: [
-      floral,
-      floral,
-      floral,
-      floral,
-      floral,
-      floral
+    "old-school": [
+      old0,
+      old1,
+      old2,
+      old3,
+      old4,
+      old5,
+      old6,
+      old7,
+      old8
     ],
 
-    lettering: [
-      floral,
-      floral,
-      floral,
-      floral,
-      floral,
-      floral
+    /*
+      TEMPORÁRIO:
+      enquanto você ainda não colocou as fotos desses estilos,
+      usamos algumas imagens já disponíveis apenas para
+      visualização do layout.
+    */
+
+    maori: [
+      black4,
+      black5,
+      black6,
+      black7,
+      black8
     ],
 
-    autorais: [
-      floral,
-      floral,
-      floral,
-      floral,
-      floral,
-      floral
+    "fine-line": [
+      black1,
+      black2,
+      black3,
+      black4,
+      black5
+    ],
+
+    ornamental: [
+      black3,
+      black4,
+      black5,
+      black6,
+      black7
     ]
 
   };
@@ -203,7 +216,7 @@ export default function Portfolio() {
   // =========================================================
 
   const fotosAtuais =
-    fotosPorEstilo[estilo] || fotosPorEstilo.florais;
+    fotosPorEstilo[estilo] || fotosPorEstilo.blackwork;
 
 
   // =========================================================
@@ -278,7 +291,6 @@ export default function Portfolio() {
   function openImage(index) {
 
     setCurrentIndex(index);
-
 
     setSelectedImage(
       fotosAtuais[index]
@@ -362,7 +374,6 @@ export default function Portfolio() {
 
     <div className="portfolio">
 
-
       {/* =====================================================
           HEADER
       ===================================================== */}
@@ -374,7 +385,12 @@ export default function Portfolio() {
           HERO
       ===================================================== */}
 
-      <section className="portfolio-hero">
+      <section
+        className="portfolio-hero"
+        style={{
+          backgroundImage: `url(${pantera})`
+        }}
+      >
 
         <div className="portfolio-hero-overlay"></div>
 
@@ -392,7 +408,7 @@ export default function Portfolio() {
 
 
           <div className="portfolio-ornament">
-            ✦ ───────── ✦
+            ✦
           </div>
 
 
@@ -682,7 +698,7 @@ export default function Portfolio() {
 
 
       {/* =====================================================
-          FOOTER COMPONENTE
+          FOOTER
       ===================================================== */}
 
       <Footer />
@@ -777,7 +793,6 @@ export default function Portfolio() {
         </div>
 
       )}
-
 
     </div>
 

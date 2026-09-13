@@ -25,6 +25,8 @@ export default function Footer() {
 
       <footer className="footer">
 
+        {/* LOGO */}
+
         <img
           src={logo}
           alt="KSA Studio"
@@ -32,20 +34,7 @@ export default function Footer() {
         />
 
 
-        <p>
-          Estúdio de Tatuagem KSA
-        </p>
-
-
-        <p>
-          São Paulo - SP | Uberaba - MG
-        </p>
-
-
-        <p>
-          © 2026 KSA Studio
-        </p>
-
+        {/* REDES SOCIAIS */}
 
         <div className="social-icons">
 
@@ -66,8 +55,24 @@ export default function Footer() {
 
         </div>
 
-      </footer>
 
+        {/* INFORMAÇÕES */}
+
+        <p>
+          Estúdio de Tatuagem KSA
+        </p>
+
+
+        <p>
+          São Paulo - SP | Uberaba - MG
+        </p>
+
+
+        <p className="footer-copyright">
+          © 2026 KSA Studio
+        </p>
+
+      </footer>
 
 
       {/* =====================================================
@@ -75,7 +80,6 @@ export default function Footer() {
       ===================================================== */}
 
       <nav className="bottom-navigation">
-
 
         <Link
           to="/"
@@ -165,7 +169,6 @@ export default function Footer() {
           CONTATO
 
         </Link>
-
 
       </nav>
 
