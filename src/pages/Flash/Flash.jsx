@@ -8,8 +8,7 @@ import {
 
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-
-import pantera from "../../assets/images/pantera.png";
+import PantherHero from "../../components/PantherHero/PantherHero";
 
 import luaFlash from "../../assets/images/luaflash.png";
 import panteraFlash from "../../assets/images/panteraflash.png";
@@ -219,54 +218,40 @@ export default function Flash() {
           HERO
       ===================================================== */}
 
-      <section className="flash-hero">
+      <PantherHero>
 
-        <img
-          src={pantera}
-          alt="Pantera - KSA Studio"
-          className="flash-hero-background"
-        />
-
-        <div className="flash-hero-overlay"></div>
+        <span className="flash-small">
+          KSA STUDIO
+        </span>
 
 
-        <div className="flash-hero-content">
+        <div className="flash-heading">
 
-          <span className="flash-small">
-            KSA STUDIO
+          <span className="ornament">
+            ✦
           </span>
 
 
-          <div className="flash-heading">
-
-            <span className="ornament">
-              ✦
-            </span>
-
-
-            <h1>
-              TATUAGENS
-              <br />
-              <span>FLASH</span>
-            </h1>
+          <h1>
+            TATUAGENS
+            <br />
+            <span>FLASH</span>
+          </h1>
 
 
-            <span className="ornament">
-              ✦
-            </span>
-
-          </div>
-
-
-          <p>
-            Artes autorais criadas para quem deseja
-            levar uma arte especial para a pele.
-          </p>
+          <span className="ornament">
+            ✦
+          </span>
 
         </div>
 
-      </section>
 
+        <p>
+          Artes autorais criadas para quem deseja
+          levar uma arte especial para a pele.
+        </p>
+
+      </PantherHero>
 
 
       {/* =====================================================
@@ -295,7 +280,6 @@ export default function Flash() {
         </p>
 
       </section>
-
 
 
       {/* =====================================================
@@ -330,7 +314,6 @@ export default function Flash() {
         </p>
 
 
-
         {/* ===================================================
             GRADE
         =================================================== */}
@@ -354,7 +337,6 @@ export default function Flash() {
                 />
 
               </div>
-
 
 
               <div className="flash-card-content">
@@ -395,7 +377,6 @@ export default function Flash() {
         </div>
 
       </section>
-
 
 
       {/* =====================================================
@@ -443,7 +424,6 @@ export default function Flash() {
       </section>
 
 
-
       {/* =====================================================
           COMO FUNCIONA
       ===================================================== */}
@@ -489,7 +469,6 @@ export default function Flash() {
           </div>
 
 
-
           <div className="flash-step">
 
             <span className="flash-step-number">
@@ -506,7 +485,6 @@ export default function Flash() {
             </p>
 
           </div>
-
 
 
           <div className="flash-step">
@@ -530,7 +508,6 @@ export default function Flash() {
         </div>
 
       </section>
-
 
 
       {/* =====================================================
@@ -603,7 +580,6 @@ export default function Flash() {
       </section>
 
 
-
       {/* =====================================================
           AGENDAMENTO
       ===================================================== */}
@@ -650,7 +626,6 @@ export default function Flash() {
 
 
       </section>
-
 
 
       {/* =====================================================

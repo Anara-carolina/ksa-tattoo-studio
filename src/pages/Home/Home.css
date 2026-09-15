@@ -1,3 +1,4 @@
+
 /* =========================================================
    HOME — KSA STUDIO
    CSS ORGANIZADO
@@ -716,7 +717,6 @@ body.lightbox-open {
 
 /* =========================================================
    CONTADOR DO CARROSSEL
-   APARECE SOMENTE MOBILE
 ========================================================= */
 
 .style-carousel-counter {
@@ -747,7 +747,6 @@ body.lightbox-open {
 
 /* =========================================================
    BOLINHAS DO CARROSSEL
-   APARECEM SOMENTE MOBILE
 ========================================================= */
 
 .style-carousel-dots {
@@ -862,7 +861,6 @@ body.lightbox-open {
 
 /* =========================================================
    LIGHTBOX
-   FOTO AMPLIADA
 ========================================================= */
 
 .image-lightbox {
@@ -1352,18 +1350,60 @@ body.lightbox-open {
   margin: 50px 0 35px;
 }
 
+
+/* =========================================================
+   CARDS DE ORÇAMENTO — CLICÁVEIS
+========================================================= */
+
 .budget-card {
+  display: block;
+
+  width: 100%;
+
   padding: 35px 25px;
 
   border: 1px solid rgba(212, 175, 55, 0.14);
 
   background: rgba(255, 255, 255, 0.015);
+
+  color: inherit;
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.budget-card:hover {
+  transform: translateY(-4px);
+
+  border-color: rgba(212, 175, 55, 0.55);
+
+  background: rgba(212, 175, 55, 0.045);
+
+  box-shadow:
+    0 12px 35px rgba(0, 0, 0, 0.28);
+}
+
+.budget-card:active {
+  transform: translateY(-1px);
 }
 
 .budget-card svg {
   color: #d4af37;
 
   font-size: 25px;
+
+  transition: transform 0.25s ease;
+}
+
+.budget-card:hover svg {
+  transform: scale(1.08);
 }
 
 .budget-card h3 {
@@ -1643,14 +1683,18 @@ body.lightbox-open {
 
 
 /* =========================================================
-   WHATSAPP
+   WHATSAPP FLUTUANTE
 ========================================================= */
 
 .whatsapp-button {
   position: fixed !important;
 
   right: 24px !important;
-  bottom: 24px !important;
+
+  /*
+    Fica acima do menu inferior fixo.
+  */
+  bottom: 92px !important;
 
   width: 58px;
   height: 58px;
@@ -1693,8 +1737,14 @@ body.lightbox-open {
     0 12px 30px rgba(0, 0, 0, 0.55);
 }
 
+.whatsapp-button:active {
+  transform: scale(0.95);
+}
 
-/* ESCONDE WHATSAPP QUANDO LIGHTBOX ESTÁ ABERTO */
+
+/* =========================================================
+   ESCONDE WHATSAPP QUANDO LIGHTBOX ESTÁ ABERTO
+========================================================= */
 
 body.lightbox-open .whatsapp-button {
   opacity: 0 !important;
@@ -1751,8 +1801,6 @@ body.lightbox-open .whatsapp-button {
     width: 88%;
   }
 
-  /* GRADE COM 2 COLUNAS */
-
   .style-showcase-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1760,8 +1808,6 @@ body.lightbox-open .whatsapp-button {
   .style-showcase-grid-card {
     height: 380px;
   }
-
-  /* ARTISTA */
 
   .artist-content {
     grid-template-columns: 1fr;
@@ -1782,13 +1828,9 @@ body.lightbox-open .whatsapp-button {
     text-align: center;
   }
 
-  /* ORÇAMENTO */
-
   .budget-options {
     grid-template-columns: 1fr;
   }
-
-  /* TRABALHOS */
 
   .works-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -1798,7 +1840,6 @@ body.lightbox-open .whatsapp-button {
 
 /* =========================================================
    DESKTOP
-   NÃO MOSTRA CARROSSEL / CONTADOR / BOLINHAS
 ========================================================= */
 
 @media (min-width: 701px) {
@@ -2614,10 +2655,37 @@ body.lightbox-open .whatsapp-button {
     margin-right: auto;
   }
 
+
+  /* =====================================================
+     CARDS DE ORÇAMENTO MOBILE
+  ===================================================== */
+
   .budget-card {
+    width: 100%;
+
     padding: 28px 20px;
 
     text-align: center;
+
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .budget-card:hover {
+    transform: none;
+
+    border-color: rgba(212, 175, 55, 0.35);
+
+    background: rgba(212, 175, 55, 0.025);
+
+    box-shadow: none;
+  }
+
+  .budget-card:active {
+    transform: scale(0.985);
+
+    border-color: rgba(212, 175, 55, 0.7);
+
+    background: rgba(212, 175, 55, 0.06);
   }
 
 
@@ -2732,7 +2800,12 @@ body.lightbox-open .whatsapp-button {
     position: fixed !important;
 
     right: 18px !important;
-    bottom: 18px !important;
+
+    /*
+      Menu inferior = 68px.
+      Botão fica acima dele com uma margem confortável.
+    */
+    bottom: 88px !important;
 
     width: 54px !important;
     height: 54px !important;
@@ -2750,10 +2823,6 @@ body.lightbox-open .whatsapp-button {
 ========================================================= */
 
 @media (max-width: 430px) {
-
-  /* =====================================================
-     HERO
-  ===================================================== */
 
   .hero {
     min-height: 630px;
@@ -2933,6 +3002,23 @@ body.lightbox-open .whatsapp-button {
 
     text-align: center;
   }
+
+
+  /* =====================================================
+     WHATSAPP PEQUENO
+  ===================================================== */
+
+  .whatsapp-button {
+    right: 14px !important;
+
+    bottom: 86px !important;
+
+    width: 52px !important;
+
+    height: 52px !important;
+
+    font-size: 23px;
+  }
 }
 
 
@@ -2954,4 +3040,11 @@ body.lightbox-open .whatsapp-button {
   .style-showcase-grid {
     display: grid !important;
   }
+}
+.studio-contact-row a {
+  font-size: 0 !important;
+}
+
+.studio-contact-row a svg {
+  font-size: 22px !important;
 }

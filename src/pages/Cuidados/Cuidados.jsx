@@ -1,4 +1,3 @@
-
 import {
   FaSun,
   FaTint,
@@ -16,6 +15,7 @@ import {
 
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
+import PantherHero from "../../components/PantherHero/PantherHero";
 
 import "./Cuidados.css";
 
@@ -44,7 +44,7 @@ export default function Cuidados() {
             HERO
         ===================================================== */}
 
-        <section className="cuidados-hero">
+        <PantherHero>
 
           <span className="cuidados-small">
             KSA STUDIO
@@ -80,7 +80,7 @@ export default function Cuidados() {
 
           </p>
 
-        </section>
+        </PantherHero>
 
 
 
@@ -129,8 +129,6 @@ export default function Cuidados() {
             </span>
 
             <div>
-
-              
 
               <h2>
                 ANTES DA TATUAGEM
@@ -244,8 +242,6 @@ export default function Cuidados() {
 
             <div>
 
-            
-
               <h2>
                 NO DIA DO PROCEDIMENTO
               </h2>
@@ -325,8 +321,6 @@ export default function Cuidados() {
 
             <div>
 
-              
-
               <h2>
                 PRIMEIRAS HORAS
               </h2>
@@ -387,7 +381,6 @@ export default function Cuidados() {
 
             <div>
 
-              
               <h2>
                 DURANTE A CICATRIZAÇÃO
               </h2>
@@ -490,8 +483,6 @@ export default function Cuidados() {
             </span>
 
             <div>
-
-             
 
               <h2>
                 O QUE EVITAR
@@ -622,8 +613,6 @@ export default function Cuidados() {
 
             <div>
 
-              
-
               <h2>
                 SINAIS DE ATENÇÃO
               </h2>
@@ -684,8 +673,6 @@ export default function Cuidados() {
             </span>
 
             <div>
-
-             
 
               <h2>
                 DEPOIS DA CICATRIZAÇÃO

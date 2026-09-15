@@ -1,0 +1,285 @@
+/* =========================================================
+   PANTHER HERO
+   Componente reutilizável da pantera
+========================================================= */
+
+.panther-hero {
+  position: relative;
+  width: 100%;
+  min-height: calc(100vh - 80px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  background: #050505;
+
+  border-top: 1px solid rgba(184, 138, 59, 0.18);
+  border-bottom: 1px solid rgba(184, 138, 59, 0.18);
+}
+
+
+/* =========================================================
+   IMAGEM DA PANTERA
+========================================================= */
+
+.panther-hero-background {
+  position: absolute;
+
+  /*
+    Não usamos mais inset: 0.
+    A imagem ganha uma margem real no topo.
+  */
+  top: 70px;
+  left: 0;
+  right: 0;
+
+  width: 100%;
+  height: calc(100% - 70px);
+
+  display: block;
+
+  object-fit: contain;
+  object-position: center center;
+
+  background: #050505;
+
+  z-index: 0;
+
+  transform: none;
+  filter: none;
+}
+
+
+/* =========================================================
+   OVERLAY
+========================================================= */
+
+.panther-hero-overlay {
+  position: absolute;
+  inset: 0;
+
+  z-index: 1;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.92) 0%,
+      rgba(0, 0, 0, 0.72) 32%,
+      rgba(0, 0, 0, 0.28) 65%,
+      rgba(0, 0, 0, 0.70) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.10) 0%,
+      rgba(0, 0, 0, 0.15) 55%,
+      rgba(0, 0, 0, 0.75) 100%
+    );
+}
+
+
+/* =========================================================
+   CONTEÚDO
+========================================================= */
+
+.panther-hero-content {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+  max-width: 600px;
+
+  padding: 60px 25px;
+
+  box-sizing: border-box;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   DESKTOP
+========================================================= */
+
+@media (min-width: 768px) {
+
+  .panther-hero {
+    min-height: 520px;
+  }
+
+  .panther-hero-content {
+    padding: 100px 40px;
+  }
+
+  .panther-hero-background {
+    top: 70px;
+    left: 0;
+    right: 0;
+
+    width: 100%;
+    height: calc(100% - 70px);
+
+    object-fit: contain;
+    object-position: center center;
+  }
+}
+
+
+/* =========================================================
+   DESKTOP GRANDE
+========================================================= */
+
+@media (min-width: 1400px) {
+
+  .panther-hero {
+    height: calc(100vh - 84px);
+    min-height: 650px;
+  }
+
+  .panther-hero-background {
+    top: 90px;
+
+    height: calc(100% - 90px);
+
+    object-fit: contain;
+    object-position: center center;
+  }
+}
+
+
+/* =========================================================
+   TABLET / DESKTOP MENOR
+========================================================= */
+
+@media (min-width: 701px) and (max-width: 1399px) {
+
+  .panther-hero {
+    height: calc(100vh - 80px);
+    min-height: 600px;
+  }
+
+  .panther-hero-background {
+    top: 70px;
+
+    height: calc(100% - 70px);
+
+    object-fit: contain;
+    object-position: center center;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   NÃO ALTERAR — JÁ ESTÁ BOM
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .panther-hero {
+    width: 100%;
+
+    height: 360px;
+    min-height: 360px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    background: #050505;
+  }
+
+
+  .panther-hero-background {
+    position: absolute !important;
+
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+
+    width: 100% !important;
+    height: 100% !important;
+
+    display: block !important;
+
+    object-fit: contain !important;
+    object-position: center 130% !important;
+
+    background: #050505;
+
+    z-index: 0 !important;
+
+    transform: none !important;
+    filter: none !important;
+  }
+
+
+  .panther-hero-overlay {
+    position: absolute !important;
+    inset: 0 !important;
+
+    z-index: 1 !important;
+
+    pointer-events: none !important;
+
+    background:
+      linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.18) 0%,
+        rgba(0, 0, 0, 0.30) 45%,
+        rgba(0, 0, 0, 0.82) 100%
+      ) !important;
+  }
+
+
+  .panther-hero-content {
+    position: relative;
+
+    z-index: 2;
+
+    width: 100%;
+
+    padding: 35px 20px;
+
+    box-sizing: border-box;
+
+    text-align: center;
+  }
+}
+
+
+/* =========================================================
+   MOBILE PEQUENO
+========================================================= */
+
+@media (max-width: 430px) {
+
+  .panther-hero {
+    height: 340px;
+    min-height: 340px;
+  }
+
+  .panther-hero-content {
+    padding: 30px 16px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE MUITO PEQUENO
+========================================================= */
+
+@media (max-width: 380px) {
+
+  .panther-hero {
+    height: 320px;
+    min-height: 320px;
+  }
+}

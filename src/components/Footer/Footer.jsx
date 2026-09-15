@@ -2,23 +2,21 @@ import { Link, useLocation } from "react-router-dom";
 
 import {
   FaInstagram,
-  FaWhatsapp
+  FaWhatsapp,
 } from "react-icons/fa";
 
 import logo from "../../assets/images/logo.png";
 
 import "./Footer.css";
 
+const INSTAGRAM_URL = "https://www.instagram.com/ksastudio_/";
+const WHATSAPP_URL = "https://wa.me/5534984065905";
 
 export default function Footer() {
-
   const location = useLocation();
 
-
   return (
-
     <>
-
       {/* =====================================================
           FOOTER
       ===================================================== */}
@@ -33,28 +31,31 @@ export default function Footer() {
           className="footer-logo"
         />
 
-
         {/* REDES SOCIAIS */}
 
         <div className="social-icons">
 
           <a
-            href="#"
-            aria-label="Instagram"
+            href={INSTAGRAM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram KSA Studio"
+            title="Instagram KSA Studio"
           >
             <FaInstagram />
           </a>
 
-
           <a
-            href="#"
-            aria-label="WhatsApp"
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="WhatsApp KSA Studio"
+            title="WhatsApp KSA Studio"
           >
             <FaWhatsapp />
           </a>
 
         </div>
-
 
         {/* INFORMAÇÕES */}
 
@@ -62,18 +63,15 @@ export default function Footer() {
           Estúdio de Tatuagem KSA
         </p>
 
-
         <p>
           São Paulo - SP | Uberaba - MG
         </p>
-
 
         <p className="footer-copyright">
           © 2026 KSA Studio
         </p>
 
       </footer>
-
 
       {/* =====================================================
           NAVEGAÇÃO INFERIOR
@@ -89,15 +87,9 @@ export default function Footer() {
               : ""
           }
         >
-
-          <span>
-            ⌂
-          </span>
-
+          <span>⌂</span>
           INÍCIO
-
         </Link>
-
 
         <Link
           to="/portfolio"
@@ -107,15 +99,9 @@ export default function Footer() {
               : ""
           }
         >
-
-          <span>
-            ▧
-          </span>
-
+          <span>▧</span>
           PORTFÓLIO
-
         </Link>
-
 
         <Link
           to="/flash"
@@ -125,15 +111,9 @@ export default function Footer() {
               : ""
           }
         >
-
-          <span>
-            ϟ
-          </span>
-
+          <span>ϟ</span>
           FLASH
-
         </Link>
-
 
         <Link
           to="/agendamento"
@@ -143,15 +123,9 @@ export default function Footer() {
               : ""
           }
         >
-
-          <span>
-            ▣
-          </span>
-
+          <span>▣</span>
           AGENDAR
-
         </Link>
-
 
         <Link
           to="/contato"
@@ -161,19 +135,11 @@ export default function Footer() {
               : ""
           }
         >
-
-          <span>
-            ♧
-          </span>
-
+          <span>♧</span>
           CONTATO
-
         </Link>
 
       </nav>
-
     </>
-
   );
-
 }

@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 
 import {
@@ -11,6 +12,7 @@ import {
 
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
+import PantherHero from "../../components/PantherHero/PantherHero";
 
 import autorizacao from "../../assets/formulario/autorizacao.pdf";
 
@@ -40,7 +42,7 @@ export default function Documentacao() {
             HERO
         ===================================================== */}
 
-        <section className="documentacao-hero">
+        <PantherHero>
 
           <span className="documentacao-small">
             KSA STUDIO
@@ -72,7 +74,7 @@ export default function Documentacao() {
 
           </p>
 
-        </section>
+        </PantherHero>
 
 
 

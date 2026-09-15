@@ -1,10 +1,11 @@
+
 import { Link } from "react-router-dom";
 import { FaArrowRight, FaInstagram, FaWhatsapp } from "react-icons/fa";
 
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
+import PantherHero from "../../components/PantherHero/PantherHero";
 
-import pantera from "../../assets/images/pantera.png";
 import katarine from "../../assets/images/katarine.jpeg";
 
 import "./Sobre.css";
@@ -19,45 +20,37 @@ export default function Sobre() {
           HERO
       ===================================================== */}
 
-      <section className="sobre-hero">
+      <PantherHero>
 
-        <img
-          src={pantera}
-          alt="Pantera - KSA Studio"
-          className="sobre-hero-image"
-        />
+        <span className="sobre-small">
+          KSA STUDIO
+        </span>
 
-        <div className="sobre-hero-overlay"></div>
+        <div className="sobre-heading">
 
-        <div className="sobre-hero-content">
-
-          <span className="sobre-small">
-            KSA STUDIO
+          <span className="ornament">
+            ✦
           </span>
 
-          <div className="sobre-heading">
-
-            <span className="ornament">✦</span>
-
-            <h1>
-              SOBRE
-              <br />
-              <span>A ARTISTA</span>
-            </h1>
-
-            <span className="ornament">✦</span>
-
-          </div>
-
-          <p>
-            Conheça um pouco da minha história,
+          <h1>
+            SOBRE
             <br />
-            da minha arte e do meu trabalho.
-          </p>
+            <span>A ARTISTA</span>
+          </h1>
+
+          <span className="ornament">
+            ✦
+          </span>
 
         </div>
 
-      </section>
+        <p>
+          Conheça um pouco da minha história,
+          <br />
+          da minha arte e do meu trabalho.
+        </p>
+
+      </PantherHero>
 
 
       {/* =====================================================

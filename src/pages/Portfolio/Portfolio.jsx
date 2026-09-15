@@ -7,8 +7,6 @@ import {
   FaChevronRight
 } from "react-icons/fa";
 
-import pantera from "../../assets/images/pantera.png";
-
 import black0 from "../../assets/images/black0.jpeg";
 import black1 from "../../assets/images/black1.jpeg";
 import black2 from "../../assets/images/black2.jpeg";
@@ -31,6 +29,7 @@ import old8 from "../../assets/images/old8.jpeg";
 
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
+import PantherHero from "../../components/PantherHero/PantherHero";
 
 import "./Portfolio.css";
 
@@ -383,43 +382,32 @@ export default function Portfolio() {
 
       {/* =====================================================
           HERO
+          Agora usando o componente reutilizável
       ===================================================== */}
 
-      <section
-        className="portfolio-hero"
-        style={{
-          backgroundImage: `url(${pantera})`
-        }}
-      >
+      <PantherHero>
 
-        <div className="portfolio-hero-overlay"></div>
+        <span>
+          KSA STUDIO
+        </span>
 
 
-        <div className="portfolio-hero-content">
-
-          <span>
-            KSA STUDIO
-          </span>
+        <h1>
+          PORTFÓLIO
+        </h1>
 
 
-          <h1>
-            PORTFÓLIO
-          </h1>
-
-
-          <div className="portfolio-ornament">
-            ✦
-          </div>
-
-
-          <p>
-            Arte autoral criada para contar
-            histórias através da pele.
-          </p>
-
+        <div className="portfolio-ornament">
+          ✦
         </div>
 
-      </section>
+
+        <p>
+          Arte autoral criada para contar
+          histórias através da pele.
+        </p>
+
+      </PantherHero>
 
 
       {/* =====================================================

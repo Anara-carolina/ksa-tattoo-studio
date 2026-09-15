@@ -23,7 +23,6 @@
 
 .header {
   position: fixed;
-
   top: 0;
   left: 0;
 
@@ -41,12 +40,10 @@
   z-index: 1000;
 }
 
-
 .logo {
   width: 75px;
   height: auto;
 }
-
 
 .header-button {
   position: absolute;
@@ -61,7 +58,6 @@
   background: transparent;
 
   border: 1px solid #8e6a2d;
-
   border-radius: 10px;
 
   color: #c99b48;
@@ -69,10 +65,8 @@
   font-size: 18px;
 
   cursor: pointer;
-
   text-decoration: none;
 }
-
 
 .header-button:last-child {
   right: 18px;
@@ -80,95 +74,22 @@
 
 
 /* =========================================================
-   HERO
+   HERO — PANTHERA
+   Usa o componente reutilizável PantherHero
 ========================================================= */
 
-.portfolio-hero {
-  position: relative;
+/*
+  IMPORTANTE:
+  O hero agora é controlado pelo PantherHero.css.
 
-  min-height: 390px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  overflow: hidden;
-
-  background-color: #050505;
-
-  background-size: cover;
-
-  background-position: center 25%;
-
-  border-bottom: 1px solid rgba(184, 138, 59, 0.35);
-}
+  Aqui ficam somente os estilos específicos
+  do conteúdo do Portfolio.
+*/
 
 
-/* =========================================================
-   ESCURECIMENTO DA PANTERA
-========================================================= */
+/* KSA STUDIO */
 
-.portfolio-hero::before {
-  content: "";
-
-  position: absolute;
-
-  inset: 0;
-
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0.35) 0%,
-      rgba(0, 0, 0, 0.48) 30%,
-      rgba(5, 5, 5, 0.72) 68%,
-      #050505 100%
-    );
-
-  pointer-events: none;
-
-  z-index: 1;
-}
-
-
-.portfolio-hero-overlay {
-  position: absolute;
-
-  inset: 0;
-
-  background:
-    radial-gradient(
-      circle at center,
-      transparent 15%,
-      rgba(0, 0, 0, 0.22) 70%,
-      rgba(0, 0, 0, 0.5) 100%
-    );
-
-  z-index: 1;
-
-  pointer-events: none;
-}
-
-
-/* =========================================================
-   CONTEÚDO DO HERO
-========================================================= */
-
-.portfolio-hero-content {
-  position: relative;
-
-  z-index: 2;
-
-  width: 100%;
-
-  padding: 40px 22px;
-
-  text-align: center;
-
-  box-sizing: border-box;
-}
-
-
-.portfolio-hero-content > span {
+.panther-hero-content > span {
   display: block;
 
   margin-bottom: 12px;
@@ -176,7 +97,6 @@
   color: #ffffff;
 
   font-size: 10px;
-
   letter-spacing: 4px;
 
   text-shadow:
@@ -184,13 +104,14 @@
 }
 
 
-.portfolio-hero-content h1 {
+/* TÍTULO PORTFÓLIO */
+
+.panther-hero-content > h1 {
   margin: 0;
 
   font-family: Georgia, serif;
 
   font-size: 42px;
-
   font-weight: 400;
 
   letter-spacing: 4px;
@@ -202,18 +123,21 @@
 }
 
 
+/* ORNAMENTO */
+
 .portfolio-ornament {
   margin: 18px 0;
 
   color: #a5141b;
 
   font-size: 13px;
-
   letter-spacing: 2px;
 }
 
 
-.portfolio-hero-content p {
+/* DESCRIÇÃO DO HERO */
+
+.panther-hero-content > p {
   max-width: 340px;
 
   margin: 0 auto;
@@ -259,19 +183,16 @@
   margin-bottom: 20px;
 }
 
-
 .section-heading h2 {
   margin: 0;
 
   font-family: Georgia, serif;
 
   font-size: 22px;
-
   font-weight: 400;
 
   color: #d4ad64;
 }
-
 
 .ornament {
   color: #a5141b;
@@ -292,7 +213,6 @@
   color: #aaa096;
 
   font-size: 14px;
-
   line-height: 1.7;
 }
 
@@ -305,12 +225,10 @@
   position: relative;
 
   width: 100%;
-
   max-width: 700px;
 
   margin: 0 auto 80px;
 }
-
 
 .portfolio-card {
   position: relative;
@@ -329,7 +247,6 @@
     0 15px 40px rgba(0, 0, 0, 0.5);
 }
 
-
 .portfolio-card img {
   width: 100%;
   height: 100%;
@@ -340,7 +257,6 @@
 
   transition: transform 0.5s ease;
 }
-
 
 .portfolio-card:hover img {
   transform: scale(1.03);
@@ -371,15 +287,12 @@
     );
 }
 
-
 .portfolio-card-info span {
   color: #c99b48;
 
   font-size: 9px;
-
   letter-spacing: 2px;
 }
-
 
 .portfolio-card-info h3 {
   margin: 6px 0 4px;
@@ -387,12 +300,10 @@
   font-family: Georgia, serif;
 
   font-size: 25px;
-
   font-weight: 400;
 
   color: #eee4d3;
 }
-
 
 .portfolio-card-info p {
   max-width: 480px;
@@ -402,7 +313,6 @@
   color: #d0c3b1;
 
   font-size: 12px;
-
   line-height: 1.5;
 }
 
@@ -424,13 +334,11 @@
   background: #8e1117;
 
   border: 1px solid #c99b48;
-
   border-radius: 4px;
 
   color: #f5ead8;
 
   font-size: 9px;
-
   font-weight: 600;
 
   letter-spacing: 1.8px;
@@ -445,7 +353,6 @@
     transform 0.25s ease,
     box-shadow 0.25s ease;
 }
-
 
 .carousel-style-button:hover {
   background: #a5141b;
@@ -477,7 +384,6 @@
   justify-content: center;
 
   border: 1px solid #c99b48;
-
   border-radius: 50%;
 
   background: rgba(5, 5, 5, 0.88);
@@ -494,18 +400,14 @@
     transform 0.25s ease;
 }
 
-
 .carousel-button:hover {
   background: #8e1117;
-
   color: #fff;
 }
-
 
 .carousel-button.previous {
   left: -20px;
 }
-
 
 .carousel-button.next {
   right: -20px;
@@ -527,7 +429,6 @@
   margin-top: 20px;
 }
 
-
 .carousel-indicators button {
   width: 7px;
   height: 7px;
@@ -535,7 +436,6 @@
   padding: 0;
 
   border: none;
-
   border-radius: 50%;
 
   background: #554631;
@@ -546,7 +446,6 @@
     width 0.25s ease,
     background 0.25s ease;
 }
-
 
 .carousel-indicators button.active {
   width: 22px;
@@ -569,7 +468,6 @@
   gap: 8px;
 
   width: 100%;
-
   max-width: 900px;
 
   margin: 0 auto 45px;
@@ -583,11 +481,9 @@
   box-sizing: border-box;
 }
 
-
 .portfolio-filters::-webkit-scrollbar {
   display: none;
 }
-
 
 .portfolio-filters a {
   flex-shrink: 0;
@@ -606,7 +502,6 @@
   color: #9f8b6d;
 
   font-size: 9px;
-
   letter-spacing: 1.5px;
 
   text-decoration: none;
@@ -616,7 +511,6 @@
     border-color 0.25s ease,
     color 0.25s ease;
 }
-
 
 .portfolio-filters a:hover,
 .portfolio-filters a.active {
@@ -641,12 +535,10 @@
   gap: 12px;
 
   width: 100%;
-
   max-width: 1100px;
 
   margin: 0 auto;
 }
-
 
 .portfolio-grid-item {
   position: relative;
@@ -666,7 +558,6 @@
   cursor: pointer;
 }
 
-
 .portfolio-grid-item img {
   width: 100%;
   height: 100%;
@@ -677,7 +568,6 @@
 
   transition: transform 0.4s ease;
 }
-
 
 .portfolio-grid-item:hover img {
   transform: scale(1.05);
@@ -690,7 +580,6 @@
 
 .portfolio-cta {
   width: 100%;
-
   max-width: 600px;
 
   margin: 90px auto 0;
@@ -698,21 +587,17 @@
   padding: 45px 25px;
 
   border-top: 1px solid rgba(184, 138, 59, 0.25);
-
   border-bottom: 1px solid rgba(184, 138, 59, 0.25);
 
   box-sizing: border-box;
 }
 
-
 .portfolio-cta > span {
   color: #a5141b;
 
   font-size: 9px;
-
   letter-spacing: 3px;
 }
-
 
 .portfolio-cta h2 {
   margin: 12px 0;
@@ -720,12 +605,10 @@
   font-family: Georgia, serif;
 
   font-size: 30px;
-
   font-weight: 400;
 
   color: #dfcda9;
 }
-
 
 .portfolio-cta p {
   margin: 0 auto 25px;
@@ -734,7 +617,6 @@
 
   font-size: 13px;
 }
-
 
 .portfolio-button {
   display: inline-flex;
@@ -753,7 +635,6 @@
   color: #f5ead8;
 
   font-size: 10px;
-
   letter-spacing: 1.5px;
 
   text-decoration: none;
@@ -762,7 +643,6 @@
     background 0.25s ease,
     transform 0.25s ease;
 }
-
 
 .portfolio-button:hover {
   background: #a5141b;
@@ -777,7 +657,6 @@
 
 .image-modal {
   position: fixed;
-
   inset: 0;
 
   display: flex;
@@ -794,12 +673,9 @@
   box-sizing: border-box;
 }
 
-
 .modal-content {
   width: auto;
-
   max-width: 900px;
-
   max-height: 90vh;
 
   display: flex;
@@ -807,14 +683,11 @@
   flex-direction: column;
 
   align-items: center;
-
   justify-content: center;
 }
 
-
 .modal-content img {
   max-width: 100%;
-
   max-height: 75vh;
 
   display: block;
@@ -827,22 +700,18 @@
     0 20px 60px rgba(0, 0, 0, 0.7);
 }
 
-
 .modal-info {
   margin-top: 15px;
 
   text-align: center;
 }
 
-
 .modal-info span {
   color: #c99b48;
 
   font-size: 9px;
-
   letter-spacing: 2px;
 }
-
 
 .modal-info h3 {
   margin: 5px 0 0;
@@ -850,7 +719,6 @@
   font-family: Georgia, serif;
 
   font-size: 20px;
-
   font-weight: 400;
 
   color: #eee4d3;
@@ -876,7 +744,6 @@
   justify-content: center;
 
   border: 1px solid #c99b48;
-
   border-radius: 50%;
 
   background: rgba(5, 5, 5, 0.8);
@@ -911,7 +778,6 @@
   justify-content: center;
 
   border: 1px solid #c99b48;
-
   border-radius: 50%;
 
   background: rgba(5, 5, 5, 0.8);
@@ -927,18 +793,14 @@
     color 0.25s ease;
 }
 
-
 .modal-arrow:hover {
   background: #8e1117;
-
   color: #fff;
 }
-
 
 .modal-left {
   left: 25px;
 }
-
 
 .modal-right {
   right: 25px;
@@ -955,49 +817,35 @@
     padding-top: 82px;
   }
 
-
   /* HEADER */
 
   .header {
     height: 82px;
   }
 
-
   .logo {
     width: 90px;
   }
-
 
   .header-button {
     width: 45px;
     height: 45px;
   }
 
-
   .header-button:last-child {
     right: 50px;
   }
 
 
-  /* HERO */
+  /* HERO — APENAS TIPOGRAFIA */
 
-  .portfolio-hero {
-    min-height: 520px;
-
-    background-position: center 30%;
-  }
-
-
-  .portfolio-hero-content h1 {
+  .panther-hero-content > h1 {
     font-size: 58px;
-
     letter-spacing: 6px;
   }
 
-
-  .portfolio-hero-content p {
+  .panther-hero-content > p {
     max-width: 500px;
-
     font-size: 15px;
   }
 
@@ -1008,11 +856,9 @@
     padding: 100px 50px 140px;
   }
 
-
   .section-heading h2 {
     font-size: 28px;
   }
-
 
   .portfolio-description {
     font-size: 15px;
@@ -1025,32 +871,26 @@
     aspect-ratio: 16 / 10;
   }
 
-
   .portfolio-card-info {
     padding: 100px 35px 30px;
   }
-
 
   .portfolio-card-info h3 {
     font-size: 30px;
   }
 
-
   .portfolio-card-info p {
     font-size: 13px;
   }
-
 
   .carousel-button {
     width: 50px;
     height: 50px;
   }
 
-
   .carousel-button.previous {
     left: -70px;
   }
-
 
   .carousel-button.next {
     right: -70px;
@@ -1067,10 +907,8 @@
     flex-wrap: wrap;
   }
 
-
   .portfolio-filters a {
     padding: 11px 18px;
-
     font-size: 10px;
   }
 
@@ -1089,10 +927,8 @@
 
   .portfolio-cta {
     margin-top: 120px;
-
     padding: 60px 35px;
   }
-
 
   .portfolio-cta h2 {
     font-size: 38px;
@@ -1104,7 +940,6 @@
   .modal-content img {
     max-height: 80vh;
   }
-
 }
 
 
@@ -1119,21 +954,17 @@
     padding-right: 35px;
   }
 
-
   .portfolio-card {
     aspect-ratio: 4 / 3;
   }
-
 
   .carousel-button.previous {
     left: -18px;
   }
 
-
   .carousel-button.next {
     right: -18px;
   }
-
 }
 
 
@@ -1148,30 +979,19 @@
   }
 
 
-  /* HERO */
+  /* HERO — TIPOGRAFIA */
 
-  .portfolio-hero {
-    min-height: 430px;
-
-    background-position: center center;
-  }
-
-
-  .portfolio-hero-content {
+  .panther-hero-content {
     padding: 30px 20px;
   }
 
-
-  .portfolio-hero-content h1 {
+  .panther-hero-content > h1 {
     font-size: 38px;
-
     letter-spacing: 3px;
   }
 
-
-  .portfolio-hero-content p {
+  .panther-hero-content > p {
     max-width: 310px;
-
     font-size: 13px;
   }
 
@@ -1182,20 +1002,16 @@
     padding: 60px 16px 110px;
   }
 
-
   .section-heading {
     gap: 9px;
   }
-
 
   .section-heading h2 {
     font-size: 20px;
   }
 
-
   .portfolio-description {
     font-size: 13px;
-
     margin-bottom: 30px;
   }
 
@@ -1204,48 +1020,38 @@
 
   .portfolio-carousel {
     max-width: 600px;
-
     margin-bottom: 65px;
   }
-
 
   .portfolio-card {
     aspect-ratio: 4 / 5;
   }
 
-
   .portfolio-card-info {
     padding: 75px 20px 20px;
   }
-
 
   .portfolio-card-info h3 {
     font-size: 22px;
   }
 
-
   .portfolio-card-info p {
     font-size: 11px;
   }
 
-
   .carousel-style-button {
     padding: 10px 15px;
-
     font-size: 8px;
   }
-
 
   .carousel-button {
     width: 38px;
     height: 38px;
   }
 
-
   .carousel-button.previous {
     left: 8px;
   }
-
 
   .carousel-button.next {
     right: 8px;
@@ -1263,10 +1069,8 @@
     margin-bottom: 30px;
   }
 
-
   .portfolio-filters a {
     padding: 9px 13px;
-
     font-size: 8px;
   }
 
@@ -1285,17 +1089,13 @@
 
   .portfolio-cta {
     margin-top: 75px;
-
     padding: 40px 20px;
   }
 
-
   .portfolio-cta > span {
     font-size: 8px;
-
     letter-spacing: 2px;
   }
-
 
   .portfolio-cta h2 {
     font-size: 28px;
@@ -1308,20 +1108,15 @@
     padding: 15px;
   }
 
-
   .modal-content {
     max-width: calc(100vw - 70px);
-
     max-height: 82vh;
   }
 
-
   .modal-content img {
     max-width: 100%;
-
     max-height: 70vh;
   }
-
 
   .modal-close {
     top: 15px;
@@ -1331,27 +1126,22 @@
     height: 40px;
   }
 
-
   .modal-arrow {
     width: 38px;
     height: 38px;
   }
 
-
   .modal-left {
     left: 8px;
   }
-
 
   .modal-right {
     right: 8px;
   }
 
-
   .modal-info h3 {
     font-size: 17px;
   }
-
 }
 
 
@@ -1366,40 +1156,28 @@
     padding-right: 12px;
   }
 
-
-  .portfolio-hero {
-    min-height: 390px;
-  }
-
-
-  .portfolio-hero-content h1 {
+  .panther-hero-content > h1 {
     font-size: 33px;
   }
-
 
   .portfolio-card-info {
     padding: 65px 16px 16px;
   }
 
-
   .portfolio-card-info h3 {
     font-size: 20px;
   }
 
-
   .portfolio-card-info p {
     font-size: 10px;
   }
-
 
   .carousel-button {
     width: 34px;
     height: 34px;
   }
 
-
   .portfolio-grid {
     gap: 8px;
   }
-
 }

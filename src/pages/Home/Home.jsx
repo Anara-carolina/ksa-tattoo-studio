@@ -9,21 +9,13 @@ import {
   FaMapMarkerAlt,
   FaFileAlt,
   FaArrowRight,
-  FaTimes
+  FaTimes,
 } from "react-icons/fa";
 
 import pantera from "../../assets/images/pantera.png";
-
-// ======================================================
-// FOTO DA ARTISTA
-// ======================================================
-
 import katarine from "../../assets/images/katarine.jpeg";
 
-// ======================================================
 // BLACKWORK
-// ======================================================
-
 import black0 from "../../assets/images/black0.jpeg";
 import black1 from "../../assets/images/black1.jpeg";
 import black2 from "../../assets/images/black2.jpeg";
@@ -34,10 +26,7 @@ import black6 from "../../assets/images/black6.jpeg";
 import black7 from "../../assets/images/black7.jpeg";
 import black8 from "../../assets/images/black8.jpeg";
 
-// ======================================================
 // OLD SCHOOL
-// ======================================================
-
 import old0 from "../../assets/images/old0.jpeg";
 import old1 from "../../assets/images/old1.jpeg";
 import old2 from "../../assets/images/old2.jpeg";
@@ -53,6 +42,12 @@ import Footer from "../../components/Footer/Footer";
 
 import "./Home.css";
 
+// ======================================================
+// LINKS OFICIAIS
+// ======================================================
+
+const WHATSAPP_URL = "https://wa.me/5534984065905";
+const INSTAGRAM_URL = "https://www.instagram.com/ksastudio_/";
 
 // ======================================================
 // COMPONENTE DE CADA ESTILO
@@ -63,15 +58,13 @@ function StyleShowcase({
   descricao,
   imagens = [],
   rota,
-  placeholder = false
+  placeholder = false,
 }) {
   const [index, setIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
   const hasImages =
-    Array.isArray(imagens) &&
-    imagens.length > 0;
-
+    Array.isArray(imagens) && imagens.length > 0;
 
   // ====================================================
   // IMAGEM ANTERIOR
@@ -80,15 +73,10 @@ function StyleShowcase({
   const previousImage = () => {
     if (!hasImages) return;
 
-    setIndex((current) => {
-      if (current === 0) {
-        return imagens.length - 1;
-      }
-
-      return current - 1;
-    });
+    setIndex((current) =>
+      current === 0 ? imagens.length - 1 : current - 1
+    );
   };
-
 
   // ====================================================
   // PRÓXIMA IMAGEM
@@ -97,15 +85,10 @@ function StyleShowcase({
   const nextImage = () => {
     if (!hasImages) return;
 
-    setIndex((current) => {
-      if (current === imagens.length - 1) {
-        return 0;
-      }
-
-      return current + 1;
-    });
+    setIndex((current) =>
+      current === imagens.length - 1 ? 0 : current + 1
+    );
   };
-
 
   // ====================================================
   // SELECIONAR IMAGEM
@@ -114,7 +97,6 @@ function StyleShowcase({
   const selectImage = (imageIndex) => {
     setIndex(imageIndex);
   };
-
 
   // ====================================================
   // ABRIR LIGHTBOX
@@ -125,7 +107,6 @@ function StyleShowcase({
     setLightboxOpen(true);
   };
 
-
   // ====================================================
   // FECHAR LIGHTBOX
   // ====================================================
@@ -133,7 +114,6 @@ function StyleShowcase({
   const closeLightbox = () => {
     setLightboxOpen(false);
   };
-
 
   // ====================================================
   // TECLADO
@@ -158,10 +138,7 @@ function StyleShowcase({
       }
     };
 
-    document.addEventListener(
-      "keydown",
-      handleKeyDown
-    );
+    document.addEventListener("keydown", handleKeyDown);
 
     return () => {
       document.removeEventListener(
@@ -169,115 +146,81 @@ function StyleShowcase({
         handleKeyDown
       );
 
-      document.body.classList.remove(
-        "lightbox-open"
-      );
+      document.body.classList.remove("lightbox-open");
     };
   }, [lightboxOpen, imagens.length]);
 
-
   // ====================================================
   // LIGHTBOX
-  // Renderizado diretamente no BODY
   // ====================================================
 
   const lightbox =
-    lightboxOpen && hasImages
-      ? (
-        <div
-          className="image-lightbox"
-          role="dialog"
-          aria-modal="true"
-          aria-label={`Imagem ampliada - ${nome}`}
-          onClick={closeLightbox}
+    lightboxOpen && hasImages ? (
+      <div
+        className="image-lightbox"
+        role="dialog"
+        aria-modal="true"
+        aria-label={`Imagem ampliada - ${nome}`}
+        onClick={closeLightbox}
+      >
+        <button
+          type="button"
+          className="lightbox-close"
+          onClick={(event) => {
+            event.stopPropagation();
+            closeLightbox();
+          }}
+          aria-label="Fechar imagem ampliada"
         >
+          <FaTimes />
+        </button>
 
-          {/* ==========================================
-              BOTÃO FECHAR
-          ========================================== */}
+        <button
+          type="button"
+          className="lightbox-arrow lightbox-arrow-left"
+          onClick={(event) => {
+            event.stopPropagation();
+            previousImage();
+          }}
+          aria-label="Imagem anterior"
+        >
+          ‹
+        </button>
 
-          <button
-            type="button"
-            className="lightbox-close"
-            onClick={(event) => {
-              event.stopPropagation();
-              closeLightbox();
-            }}
-            aria-label="Fechar imagem ampliada"
-          >
-            <FaTimes />
-          </button>
+        <div
+          className="lightbox-image-container"
+          onClick={(event) => {
+            event.stopPropagation();
+          }}
+        >
+          <img
+            src={imagens[index].imagem}
+            alt={`${imagens[index].alt} ampliada`}
+            className="lightbox-image"
+          />
 
+          <div className="lightbox-caption">
+            <span>{nome}</span>
 
-          {/* ==========================================
-              SETA ESQUERDA
-          ========================================== */}
-
-          <button
-            type="button"
-            className="lightbox-arrow lightbox-arrow-left"
-            onClick={(event) => {
-              event.stopPropagation();
-              previousImage();
-            }}
-            aria-label="Imagem anterior"
-          >
-            ‹
-          </button>
-
-
-          {/* ==========================================
-              IMAGEM
-          ========================================== */}
-
-          <div
-            className="lightbox-image-container"
-            onClick={(event) => {
-              event.stopPropagation();
-            }}
-          >
-
-            <img
-              src={imagens[index].imagem}
-              alt={`${imagens[index].alt} ampliada`}
-              className="lightbox-image"
-            />
-
-            <div className="lightbox-caption">
-
-              <span>
-                {nome}
-              </span>
-
-              <small>
-                {index + 1} / {imagens.length}
-              </small>
-
-            </div>
-
+            <small>
+              {index + 1} / {imagens.length}
+            </small>
           </div>
-
-
-          {/* ==========================================
-              SETA DIREITA
-          ========================================== */}
-
-          <button
-            type="button"
-            className="lightbox-arrow lightbox-arrow-right"
-            onClick={(event) => {
-              event.stopPropagation();
-              nextImage();
-            }}
-            aria-label="Próxima imagem"
-          >
-            ›
-          </button>
-
         </div>
-      )
-      : null;
 
+        <button
+          type="button"
+          className="lightbox-arrow lightbox-arrow-right"
+          onClick={(event) => {
+            event.stopPropagation();
+            nextImage();
+          }}
+          aria-label="Próxima imagem"
+        >
+          ›
+        </button>
+      </div>
+    ) : null;
 
   // ====================================================
   // RENDER
@@ -285,52 +228,28 @@ function StyleShowcase({
 
   return (
     <>
-
       <section className="style-showcase">
-
-        {/* ==================================================
-            CABEÇALHO
-        ================================================== */}
-
         <div className="style-showcase-header">
-
           <span className="style-showcase-small">
             KSA STUDIO
           </span>
 
           <div className="section-heading">
+            <span className="ornament">✦</span>
 
-            <span className="ornament">
-              ✦
-            </span>
+            <h2>{nome}</h2>
 
-            <h2>
-              {nome}
-            </h2>
-
-            <span className="ornament">
-              ✦
-            </span>
-
+            <span className="ornament">✦</span>
           </div>
 
-          <p>
-            {descricao}
-          </p>
-
+          <p>{descricao}</p>
         </div>
 
-
-        {/* ==================================================
-            GRID DESKTOP
-        ================================================== */}
+        {/* GRID DESKTOP */}
 
         {hasImages && !placeholder && (
-
           <div className="style-showcase-grid">
-
             {imagens.map((imagem, imageIndex) => (
-
               <button
                 type="button"
                 className="style-showcase-grid-card"
@@ -342,7 +261,6 @@ function StyleShowcase({
                   imageIndex + 1
                 } de ${nome}`}
               >
-
                 <img
                   src={imagem.imagem}
                   alt={`${imagem.alt} ${
@@ -353,24 +271,15 @@ function StyleShowcase({
                 <span className="image-zoom-hint">
                   CLIQUE PARA AMPLIAR
                 </span>
-
               </button>
-
             ))}
-
           </div>
-
         )}
 
-
-        {/* ==================================================
-            CARROSSEL MOBILE
-        ================================================== */}
+        {/* CARROSSEL MOBILE */}
 
         {hasImages && !placeholder && (
-
           <div className="style-showcase-carousel">
-
             <button
               type="button"
               className="style-carousel-arrow style-carousel-prev"
@@ -380,18 +289,14 @@ function StyleShowcase({
               ‹
             </button>
 
-
             <button
               type="button"
               className="style-carousel-frame"
-              onClick={() =>
-                openLightbox(index)
-              }
+              onClick={() => openLightbox(index)}
               aria-label={`Ampliar imagem ${
                 index + 1
               } de ${nome}`}
             >
-
               <img
                 src={imagens[index].imagem}
                 alt={`${imagens[index].alt} ${
@@ -402,9 +307,7 @@ function StyleShowcase({
               <span className="mobile-zoom-hint">
                 TOQUE PARA AMPLIAR
               </span>
-
             </button>
-
 
             <button
               type="button"
@@ -414,20 +317,13 @@ function StyleShowcase({
             >
               ›
             </button>
-
           </div>
-
         )}
 
-
-        {/* ==================================================
-            CONTADOR
-        ================================================== */}
+        {/* CONTADOR */}
 
         {hasImages && !placeholder && (
-
           <div className="style-carousel-counter">
-
             <span>
               {String(index + 1).padStart(2, "0")}
             </span>
@@ -437,22 +333,14 @@ function StyleShowcase({
             <span>
               {String(imagens.length).padStart(2, "0")}
             </span>
-
           </div>
-
         )}
 
-
-        {/* ==================================================
-            DOTS
-        ================================================== */}
+        {/* DOTS */}
 
         {hasImages && !placeholder && (
-
           <div className="style-carousel-dots">
-
             {imagens.map((_, imageIndex) => (
-
               <button
                 type="button"
                 key={imageIndex}
@@ -468,41 +356,25 @@ function StyleShowcase({
                   imageIndex + 1
                 }`}
               />
-
             ))}
-
           </div>
-
         )}
 
-
-        {/* ==================================================
-            PLACEHOLDER
-        ================================================== */}
+        {/* PLACEHOLDER */}
 
         {placeholder && (
-
           <div className="style-showcase-placeholder">
-
-            <span>
-              GALERIA EM BREVE
-            </span>
+            <span>GALERIA EM BREVE</span>
 
             <small>
               NOVAS TATUAGENS SERÃO ADICIONADAS AQUI
             </small>
-
           </div>
-
         )}
 
-
-        {/* ==================================================
-            BOTÃO PORTFÓLIO
-        ================================================== */}
+        {/* BOTÃO PORTFÓLIO */}
 
         <div className="style-showcase-actions">
-
           <Link
             to={rota}
             className="button-primary"
@@ -510,144 +382,117 @@ function StyleShowcase({
             VER PORTFÓLIO {nome}
 
             <FaArrowRight />
-
           </Link>
-
         </div>
-
       </section>
-
-
-      {/* ==================================================
-          LIGHTBOX FORA DA SECTION
-          DIRETO NO BODY
-      ================================================== */}
 
       {lightbox &&
         typeof document !== "undefined" &&
-        createPortal(
-          lightbox,
-          document.body
-        )}
-
+        createPortal(lightbox, document.body)}
     </>
   );
 }
-
 
 // ======================================================
 // HOME
 // ======================================================
 
 export default function Home() {
-
   // ====================================================
-  // IMAGENS BLACKWORK
-  // black0 é a primeira
+  // BLACKWORK
   // ====================================================
 
   const blackworkImages = [
     {
       imagem: black0,
-      alt: "Tatuagem Blackwork KSA Studio"
+      alt: "Tatuagem Blackwork KSA Studio",
     },
     {
       imagem: black1,
-      alt: "Tatuagem Blackwork KSA Studio"
+      alt: "Tatuagem Blackwork KSA Studio",
     },
     {
       imagem: black2,
-      alt: "Tatuagem Blackwork KSA Studio"
+      alt: "Tatuagem Blackwork KSA Studio",
     },
     {
       imagem: black3,
-      alt: "Tatuagem Blackwork KSA Studio"
+      alt: "Tatuagem Blackwork KSA Studio",
     },
     {
       imagem: black4,
-      alt: "Tatuagem Blackwork KSA Studio"
+      alt: "Tatuagem Blackwork KSA Studio",
     },
     {
       imagem: black5,
-      alt: "Tatuagem Blackwork KSA Studio"
+      alt: "Tatuagem Blackwork KSA Studio",
     },
     {
       imagem: black6,
-      alt: "Tatuagem Blackwork KSA Studio"
+      alt: "Tatuagem Blackwork KSA Studio",
     },
     {
       imagem: black7,
-      alt: "Tatuagem Blackwork KSA Studio"
+      alt: "Tatuagem Blackwork KSA Studio",
     },
     {
       imagem: black8,
-      alt: "Tatuagem Blackwork KSA Studio"
-    }
+      alt: "Tatuagem Blackwork KSA Studio",
+    },
   ];
 
-
   // ====================================================
-  // IMAGENS OLD SCHOOL
-  // old0 até old8
+  // OLD SCHOOL
   // ====================================================
 
   const oldSchoolImages = [
     {
       imagem: old0,
-      alt: "Tatuagem Old School KSA Studio"
+      alt: "Tatuagem Old School KSA Studio",
     },
     {
       imagem: old1,
-      alt: "Tatuagem Old School KSA Studio"
+      alt: "Tatuagem Old School KSA Studio",
     },
     {
       imagem: old2,
-      alt: "Tatuagem Old School KSA Studio"
+      alt: "Tatuagem Old School KSA Studio",
     },
     {
       imagem: old3,
-      alt: "Tatuagem Old School KSA Studio"
+      alt: "Tatuagem Old School KSA Studio",
     },
     {
       imagem: old4,
-      alt: "Tatuagem Old School KSA Studio"
+      alt: "Tatuagem Old School KSA Studio",
     },
     {
       imagem: old5,
-      alt: "Tatuagem Old School KSA Studio"
+      alt: "Tatuagem Old School KSA Studio",
     },
     {
       imagem: old6,
-      alt: "Tatuagem Old School KSA Studio"
+      alt: "Tatuagem Old School KSA Studio",
     },
     {
       imagem: old7,
-      alt: "Tatuagem Old School KSA Studio"
+      alt: "Tatuagem Old School KSA Studio",
     },
     {
       imagem: old8,
-      alt: "Tatuagem Old School KSA Studio"
-    }
+      alt: "Tatuagem Old School KSA Studio",
+    },
   ];
 
-
-  // ====================================================
-  // RENDER
-  // ====================================================
-
   return (
-
     <div className="home">
-
       <Header />
-
 
       {/* ==================================================
           HERO
       ================================================== */}
 
       <section className="hero">
-
         <img
           src={pantera}
           alt="Arte de pantera"
@@ -657,7 +502,6 @@ export default function Home() {
         <div className="hero-overlay"></div>
 
         <div className="hero-content">
-
           <span className="hero-small">
             KSA STUDIO
           </span>
@@ -675,7 +519,6 @@ export default function Home() {
           </p>
 
           <div className="hero-buttons">
-
             <Link
               to="/contato"
               className="button-primary"
@@ -689,67 +532,38 @@ export default function Home() {
             >
               VER PORTFÓLIO
             </Link>
-
           </div>
-
         </div>
-
       </section>
-
 
       {/* ==================================================
           ARTISTA
       ================================================== */}
 
       <section className="artist-section">
-
         <div className="section-heading">
+          <span className="ornament">✦</span>
 
-          <span className="ornament">
-            ✦
-          </span>
+          <h2>CONHEÇA A ARTISTA</h2>
 
-          <h2>
-            CONHEÇA A ARTISTA
-          </h2>
-
-          <span className="ornament">
-            ✦
-          </span>
-
+          <span className="ornament">✦</span>
         </div>
 
-
         <div className="artist-content">
-
-          {/* ==========================================
-              FOTO DA KATARINE
-          ========================================== */}
-
           <div className="artist-image">
-
             <img
               src={katarine}
               alt="Katarine - Tatuadora e artista da KSA Studio"
               className="artist-photo"
             />
-
           </div>
 
-
-          {/* ==========================================
-              INFORMAÇÕES DA ARTISTA
-          ========================================== */}
-
           <div className="artist-info">
-
             <span className="artist-label">
               KSA STUDIO
             </span>
 
-            <h3>
-              Katarine
-            </h3>
+            <h3>Katarine</h3>
 
             <p className="artist-role">
               Tatuadora e artista
@@ -769,27 +583,18 @@ export default function Home() {
               CONHECER MINHA HISTÓRIA
 
               <FaArrowRight />
-
             </Link>
-
           </div>
-
         </div>
-
       </section>
-
 
       {/* ==================================================
           ESTILOS
       ================================================== */}
 
       <section className="styles-section">
-
         <div className="section-heading">
-
-          <span className="ornament">
-            ✦
-          </span>
+          <span className="ornament">✦</span>
 
           <h2>
             CONHEÇA UM POUCO
@@ -797,23 +602,14 @@ export default function Home() {
             DOS NOSSOS ESTILOS
           </h2>
 
-          <span className="ornament">
-            ✦
-          </span>
-
+          <span className="ornament">✦</span>
         </div>
-
 
         <p className="section-description">
           Cada estilo possui sua própria identidade.
           Conheça um pouco das possibilidades que
           fazem parte da arte da KSA Studio.
         </p>
-
-
-        {/* ==================================================
-            BLACKWORK
-        ================================================== */}
 
         <StyleShowcase
           nome="BLACKWORK"
@@ -822,22 +618,12 @@ export default function Home() {
           rota="/portfolio/blackwork"
         />
 
-
-        {/* ==================================================
-            OLD SCHOOL
-        ================================================== */}
-
         <StyleShowcase
           nome="OLD SCHOOL"
           descricao="Traços marcantes, formas tradicionais e uma estética clássica que atravessa gerações."
           imagens={oldSchoolImages}
           rota="/portfolio/old-school"
         />
-
-
-        {/* ==================================================
-            MAORI
-        ================================================== */}
 
         <StyleShowcase
           nome="MAORI"
@@ -847,11 +633,6 @@ export default function Home() {
           placeholder
         />
 
-
-        {/* ==================================================
-            FINE LINE
-        ================================================== */}
-
         <StyleShowcase
           nome="FINE LINE"
           descricao="Traços delicados e precisos para tatuagens leves, elegantes e cheias de detalhes."
@@ -859,11 +640,6 @@ export default function Home() {
           rota="/portfolio/fine-line"
           placeholder
         />
-
-
-        {/* ==================================================
-            ORNAMENTAL
-        ================================================== */}
 
         <StyleShowcase
           nome="ORNAMENTAL"
@@ -873,11 +649,6 @@ export default function Home() {
           placeholder
         />
 
-
-        {/* ==================================================
-            PORTFÓLIO COMPLETO
-        ================================================== */}
-
         <Link
           to="/portfolio"
           className="button-outline styles-main-button"
@@ -885,23 +656,20 @@ export default function Home() {
           VER PORTFÓLIO COMPLETO
 
           <FaArrowRight />
-
         </Link>
-
       </section>
 
-
       {/* ==================================================
-          TRABALHOS
+          TRABALHOS AUTORAIS
+
+          MANTIDO NO CÓDIGO.
+          DESATIVADO TEMPORARIAMENTE.
       ================================================== */}
 
+      {/*
       <section className="works-section">
-
         <div className="section-heading">
-
-          <span className="ornament">
-            ✦
-          </span>
+          <span className="ornament">✦</span>
 
           <h2>
             TRABALHOS QUE
@@ -909,12 +677,8 @@ export default function Home() {
             CONTAM HISTÓRIAS
           </h2>
 
-          <span className="ornament">
-            ✦
-          </span>
-
+          <span className="ornament">✦</span>
         </div>
-
 
         <p className="section-description">
           Cada traço carrega intenção,
@@ -923,35 +687,23 @@ export default function Home() {
           trabalhos autorais.
         </p>
 
-
         <div className="works-grid">
-
           <div className="work-card">
-            <span>
-              TRABALHO 01
-            </span>
+            <span>TRABALHO 01</span>
           </div>
 
           <div className="work-card">
-            <span>
-              TRABALHO 02
-            </span>
+            <span>TRABALHO 02</span>
           </div>
 
           <div className="work-card">
-            <span>
-              TRABALHO 03
-            </span>
+            <span>TRABALHO 03</span>
           </div>
 
           <div className="work-card">
-            <span>
-              TRABALHO 04
-            </span>
+            <span>TRABALHO 04</span>
           </div>
-
         </div>
-
 
         <Link
           to="/portfolio"
@@ -959,34 +711,21 @@ export default function Home() {
         >
           VER PORTFÓLIO
         </Link>
-
       </section>
-
+      */}
 
       {/* ==================================================
           FLASH
-          SEM IMAGENS NA HOME
-          AS IMAGENS FICAM NA PÁGINA /FLASH
       ================================================== */}
 
       <section className="flash-section">
-
         <div className="section-heading">
+          <span className="ornament">✦</span>
 
-          <span className="ornament">
-            ✦
-          </span>
+          <h2>TATUAGENS FLASH</h2>
 
-          <h2>
-            TATUAGENS FLASH
-          </h2>
-
-          <span className="ornament">
-            ✦
-          </span>
-
+          <span className="ornament">✦</span>
         </div>
-
 
         <p className="section-description">
           Artes autorais criadas pela KSA Studio
@@ -994,30 +733,18 @@ export default function Home() {
           pronta para ganhar vida na pele.
         </p>
 
-
-        {/* ==================================================
-            PREÇO
-        ================================================== */}
-
         <div className="flash-price">
-
           <span className="flash-label">
             FLASH KSA
           </span>
 
-          <h3>
-            A PARTIR DE
-          </h3>
+          <h3>A PARTIR DE</h3>
 
-          <strong>
-            R$ 150
-          </strong>
+          <strong>R$ 150</strong>
 
           <p>
             Para tatuagens de aproximadamente até{" "}
-            <strong>
-              8 cm
-            </strong>.
+            <strong>8 cm</strong>.
           </p>
 
           <p className="flash-observation">
@@ -1025,20 +752,9 @@ export default function Home() {
             ou artes com mais detalhes podem ter
             valores diferentes.
           </p>
-
         </div>
 
-
-        {/* ==================================================
-            AÇÕES FLASH
-        ================================================== */}
-
         <div className="flash-actions">
-
-          {/* ==============================================
-              VER AS ARTES FLASH
-          ============================================== */}
-
           <Link
             to="/flash"
             className="button-outline"
@@ -1046,13 +762,7 @@ export default function Home() {
             VER FLASH DISPONÍVEIS
 
             <FaArrowRight />
-
           </Link>
-
-
-          {/* ==============================================
-              AGENDAMENTO
-          ============================================== */}
 
           <Link
             to="/agendamento"
@@ -1061,48 +771,16 @@ export default function Home() {
             AGENDAR FLASH
 
             <FaArrowRight />
-
           </Link>
-
-
-          {/* ==================================================
-              ESSA PARTE FICA DESATIVADA POR ENQUANTO
-              NÃO APARECE NA HOME
-          ================================================== */}
-
-          {/*
-          <p className="flash-budget-text">
-            Gostou de uma Flash, mas quer outro tamanho?
-            Ou tem outra ideia?
-            <br />
-
-            <span>
-              Solicite um orçamento e envie sua ideia.
-            </span>
-          </p>
-
-          <Link
-            to="/contato"
-            className="button-outline"
-          >
-            SOLICITAR ORÇAMENTO
-          </Link>
-          */}
-
         </div>
-
       </section>
-
 
       {/* ==================================================
           ORÇAMENTO
-          AGORA FICA ABAIXO DAS FLASH
       ================================================== */}
 
       <section className="budget-section">
-
         <div className="budget-content">
-
           <span className="budget-small">
             SUA IDEIA COMEÇA AQUI
           </span>
@@ -1110,7 +788,6 @@ export default function Home() {
           <h2>
             TEM UMA IDEIA?
             <br />
-
             <span>
               VAMOS TRANSFORMÁ-LA EM ARTE.
             </span>
@@ -1122,67 +799,53 @@ export default function Home() {
             única para você.
           </p>
 
-
           <div className="budget-options">
+            {/* WHATSAPP */}
 
-            {/* ==========================================
-                WHATSAPP
-            ========================================== */}
-
-            <div className="budget-card">
-
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="budget-card"
+              aria-label="Conversar com a KSA Studio pelo WhatsApp"
+            >
               <FaWhatsapp />
 
-              <h3>
-                WHATSAPP
-              </h3>
+              <h3>WHATSAPP</h3>
 
               <p>
                 Converse diretamente com a artista.
               </p>
+            </a>
 
-            </div>
-
-
-            {/* ==========================================
-                E-MAIL
-            ========================================== */}
+            {/* E-MAIL */}
 
             <div className="budget-card">
-
               <FaEnvelope />
 
-              <h3>
-                E-MAIL
-              </h3>
+              <h3>E-MAIL</h3>
 
               <p>
                 Envie sua ideia e referências.
               </p>
-
             </div>
 
+            {/* FORMULÁRIO */}
 
-            {/* ==========================================
-                FORMULÁRIO
-            ========================================== */}
-
-            <div className="budget-card">
-
+            <Link
+              to="/contato"
+              className="budget-card"
+              aria-label="Abrir formulário de contato"
+            >
               <FaFileAlt />
 
-              <h3>
-                FORMULÁRIO
-              </h3>
+              <h3>SAC</h3>
 
               <p>
-                Conte todos os detalhes da tatuagem.
+                Serviço de Atendimento ao Cliente.
               </p>
-
-            </div>
-
+            </Link>
           </div>
-
 
           <Link
             to="/contato"
@@ -1190,69 +853,38 @@ export default function Home() {
           >
             SOLICITAR ORÇAMENTO
           </Link>
-
         </div>
-
       </section>
-
 
       {/* ==================================================
           ESTÚDIO
       ================================================== */}
 
       <section className="studio-section">
-
         <div className="studio-content">
-
           <span className="studio-small">
             KSA STUDIO
           </span>
 
-          <h2>
-            NOSSO ESTÚDIO
-          </h2>
-
+          <h2>NOSSO ESTÚDIO</h2>
 
           <div className="studio-info">
+            {/* LOCALIZAÇÃO */}
 
             <div>
-
               <FaMapMarkerAlt />
 
               <span>
                 São Paulo - SP | Uberaba - MG
               </span>
-
             </div>
 
+            
 
-            <div>
-
-              <FaWhatsapp />
-
-              <span>
-                WhatsApp
-              </span>
-
-            </div>
-
-
-            <div>
-
-              <FaInstagram />
-
-              <span>
-                Instagram
-              </span>
-
-            </div>
-
+          
           </div>
-
         </div>
-
       </section>
-
 
       {/* ==================================================
           FOOTER
@@ -1260,19 +892,20 @@ export default function Home() {
 
       <Footer />
 
-
       {/* ==================================================
           WHATSAPP FLUTUANTE
       ================================================== */}
 
       <a
-        href="#"
+        href={WHATSAPP_URL}
+        target="_blank"
+        rel="noopener noreferrer"
         className="whatsapp-button"
-        aria-label="WhatsApp"
+        aria-label="Conversar pelo WhatsApp"
+        title="Fale conosco pelo WhatsApp"
       >
         <FaWhatsapp />
       </a>
-
     </div>
   );
 }

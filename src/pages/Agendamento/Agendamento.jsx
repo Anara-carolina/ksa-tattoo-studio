@@ -1,4 +1,3 @@
-
 import { useEffect, useMemo, useState } from "react";
 
 import {
@@ -21,6 +20,8 @@ import {
 } from "react-icons/fi";
 
 import { db } from "../../lib/firebase";
+
+import Footer from "../../components/Footer/Footer";
 
 import "./Agendamento.css";
 
@@ -975,120 +976,124 @@ function Agendamento() {
     agendamentoEnviado
   ) {
     return (
-      <main className="agendamento-page">
+      <>
+        <main className="agendamento-page">
 
-        <section className="agendamento-main">
+          <section className="agendamento-main">
 
-          <div className="agendamento-sucesso">
+            <div className="agendamento-sucesso">
 
-            <div className="agendamento-sucesso-icon">
-              <FiCheck />
-            </div>
+              <div className="agendamento-sucesso-icon">
+                <FiCheck />
+              </div>
 
-            <span className="agendamento-eyebrow">
-              Solicitação enviada
-            </span>
+              <span className="agendamento-eyebrow">
+                Solicitação enviada
+              </span>
 
-            <h1>
-              Seu pedido de agendamento
-              <br />
-              foi enviado!
-            </h1>
+              <h1>
+                Seu pedido de agendamento
+                <br />
+                foi enviado!
+              </h1>
 
-            <div className="agendamento-line" />
+              <div className="agendamento-line" />
 
-            <div className="agendamento-resumo-final">
+              <div className="agendamento-resumo-final">
 
-              <div className="agendamento-resumo-item">
+                <div className="agendamento-resumo-item">
 
-                <FiCalendar />
+                  <FiCalendar />
 
-                <div>
+                  <div>
 
-                  <span>
-                    Data
-                  </span>
+                    <span>
+                      Data
+                    </span>
 
-                  <strong>
-                    {formatarDataBonita(
-                      agendamentoEnviado.data
-                    )}
-                  </strong>
+                    <strong>
+                      {formatarDataBonita(
+                        agendamentoEnviado.data
+                      )}
+                    </strong>
+
+                  </div>
+
+                </div>
+
+                <div className="agendamento-resumo-item">
+
+                  <FiClock />
+
+                  <div>
+
+                    <span>
+                      Horário
+                    </span>
+
+                    <strong>
+                      {agendamentoEnviado.horario}
+                    </strong>
+
+                  </div>
 
                 </div>
 
               </div>
 
-              <div className="agendamento-resumo-item">
+              <div className="agendamento-confirmacao">
 
-                <FiClock />
+                <FiMessageCircle />
 
                 <div>
 
-                  <span>
-                    Horário
-                  </span>
+                  <h2>
+                    Aguarde nossa confirmação pelo WhatsApp
+                  </h2>
 
-                  <strong>
-                    {agendamentoEnviado.horario}
-                  </strong>
+                  <p>
+                    <strong>
+                      O agendamento só será confirmado após a
+                      confirmação pelo WhatsApp.
+                    </strong>
+                  </p>
+
+                  <p>
+                    Por lá vamos conversar sobre{" "}
+                    <strong>
+                      valores, sinal
+                    </strong>{" "}
+                    e todos os detalhes da sua tatuagem.
+                  </p>
+
+                  <p>
+                    Assim que recebermos sua solicitação,
+                    entraremos em contato para combinar tudo
+                    com você.
+                  </p>
 
                 </div>
 
               </div>
 
-            </div>
-
-            <div className="agendamento-confirmacao">
-
-              <FiMessageCircle />
-
-              <div>
-
-                <h2>
-                  Aguarde nossa confirmação pelo WhatsApp
-                </h2>
-
-                <p>
-                  <strong>
-                    O agendamento só será confirmado após a
-                    confirmação pelo WhatsApp.
-                  </strong>
-                </p>
-
-                <p>
-                  Por lá vamos conversar sobre{" "}
-                  <strong>
-                    valores, sinal
-                  </strong>{" "}
-                  e todos os detalhes da sua tatuagem.
-                </p>
-
-                <p>
-                  Assim que recebermos sua solicitação,
-                  entraremos em contato para combinar tudo
-                  com você.
-                </p>
-
-              </div>
+              <button
+                type="button"
+                className="agendamento-continuar"
+                onClick={() =>
+                  navigate("/")
+                }
+              >
+                Voltar para o início
+              </button>
 
             </div>
 
-            <button
-              type="button"
-              className="agendamento-continuar"
-              onClick={() =>
-                navigate("/")
-              }
-            >
-              Voltar para o início
-            </button>
+          </section>
 
-          </div>
+        </main>
 
-        </section>
-
-      </main>
+        <Footer />
+      </>
     );
   }
 
@@ -1097,550 +1102,554 @@ function Agendamento() {
   ========================================================= */
 
   return (
-    <main className="agendamento-page">
+    <>
+      <main className="agendamento-page">
 
-      <section className="agendamento-hero">
+        <section className="agendamento-hero">
 
-        <div className="agendamento-container">
+          <div className="agendamento-container">
 
-          {/* =================================================
-              BOTÃO VOLTAR
-          ================================================= */}
+            {/* =================================================
+                BOTÃO VOLTAR
+            ================================================= */}
 
-          <button
-            type="button"
-            className="agendamento-voltar"
-            onClick={() =>
-              navigate(-1)
-            }
-            aria-label="Voltar para a página anterior"
-          >
-            <FiArrowLeft />
-
-            <span>
-              Voltar
-            </span>
-          </button>
-
-          {/* =================================================
-              CALENDÁRIO
-          ================================================= */}
-
-          <div className="agendamento-card">
-
-            <div className="agendamento-card-header">
-
-              <span className="agendamento-label">
-                KSA STUDIO
-              </span>
-
-              <h1>
-                Agendamento
-              </h1>
-
-              <p>
-                Escolha a melhor data e horário para sua
-                tatuagem.
-              </p>
-
-            </div>
-
-            <div className="agendamento-hoje">
-
-              <FiCalendar />
+            <button
+              type="button"
+              className="agendamento-voltar"
+              onClick={() =>
+                navigate(-1)
+              }
+              aria-label="Voltar para a página anterior"
+            >
+              <FiArrowLeft />
 
               <span>
-                Hoje:{" "}
-                {formatarDataBonita(
-                  formatarDataISO(
-                    hoje
-                  )
-                )}
+                Voltar
               </span>
+            </button>
 
-            </div>
+            {/* =================================================
+                CALENDÁRIO
+            ================================================= */}
 
-            <div className="agendamento-calendar-navigation">
+            <div className="agendamento-card">
 
-              <button
-                type="button"
-                className="calendar-arrow"
-                onClick={
-                  voltarMes
-                }
-                aria-label="Mês anterior"
-              >
-                <FiArrowLeft />
-              </button>
+              <div className="agendamento-card-header">
 
-              <strong>
-                {nomesMeses[
-                  mesAtual
-                ]}{" "}
-                {anoAtual}
-              </strong>
+                <span className="agendamento-label">
+                  KSA STUDIO
+                </span>
 
-              <button
-                type="button"
-                className="calendar-arrow"
-                onClick={
-                  avancarMes
-                }
-                aria-label="Próximo mês"
-              >
-                <FiArrowRight />
-              </button>
-
-            </div>
-
-            <div className="agendamento-weekdays">
-
-              {nomesDias.map(
-                (dia) => (
-                  <span key={dia}>
-                    {dia}
-                  </span>
-                )
-              )}
-
-            </div>
-
-            <div className="agendamento-calendar">
-
-              {calendario.map(
-                (
-                  diaInfo,
-                  index
-                ) => {
-
-                  if (
-                    !diaInfo
-                  ) {
-                    return (
-                      <div
-                        key={`empty-${index}`}
-                        className="calendar-day calendar-day--empty"
-                      />
-                    );
-                  }
-
-                  const selecionado =
-                    dataSelecionada ===
-                    diaInfo.dataISO;
-
-                  let classe =
-                    "calendar-day";
-
-                  if (
-                    diaInfo.passado
-                  ) {
-                    classe +=
-                      " calendar-day--past";
-                  } else if (
-                    !diaInfo.disponivel
-                  ) {
-                    classe +=
-                      " calendar-day--unavailable";
-                  } else {
-                    classe +=
-                      " calendar-day--available";
-                  }
-
-                  if (
-                    diaInfo.hoje
-                  ) {
-                    classe +=
-                      " calendar-day--today";
-                  }
-
-                  if (
-                    selecionado
-                  ) {
-                    classe +=
-                      " calendar-day--selected";
-                  }
-
-                  return (
-                    <button
-                      type="button"
-                      key={
-                        diaInfo.dataISO
-                      }
-                      className={
-                        classe
-                      }
-                      onClick={() =>
-                        selecionarDia(
-                          diaInfo
-                        )
-                      }
-                      disabled={
-                        diaInfo.passado ||
-                        !diaInfo.disponivel
-                      }
-                    >
-
-                      <span>
-                        {
-                          diaInfo.dia
-                        }
-                      </span>
-
-                      {diaInfo.disponivel &&
-                        !diaInfo.passado && (
-                          <i className="calendar-day-dot" />
-                        )}
-
-                    </button>
-                  );
-                }
-              )}
-
-            </div>
-
-            <div className="calendar-legend">
-
-              <span className="legend-item">
-
-                <i className="legend-dot legend-dot--available" />
-
-                Disponível
-
-              </span>
-
-              <span className="legend-item">
-
-                <i className="legend-dot legend-dot--unavailable-day" />
-
-                Indisponível
-
-              </span>
-
-              <span className="legend-item">
-
-                <i className="legend-dot legend-dot--selected" />
-
-                Selecionado
-
-              </span>
-
-            </div>
-
-          </div>
-
-          {/* =================================================
-              HORÁRIOS E FORMULÁRIO
-          ================================================= */}
-
-          <aside className="agendamento-side">
-
-            {!dataSelecionada ? (
-
-              <div className="agendamento-empty">
-
-                <div className="agendamento-empty-icon">
-                  <FiCalendar />
-                </div>
-
-                <h2>
-                  Escolha uma data
-                </h2>
+                <h1>
+                  Agendamento
+                </h1>
 
                 <p>
-                  Selecione um dia no calendário
-                  para visualizar os horários
-                  disponíveis.
+                  Escolha a melhor data e horário para sua
+                  tatuagem.
                 </p>
 
               </div>
 
-            ) : (
+              <div className="agendamento-hoje">
 
-              <>
+                <FiCalendar />
 
-                <div className="agendamento-side-header">
+                <span>
+                  Hoje:{" "}
+                  {formatarDataBonita(
+                    formatarDataISO(
+                      hoje
+                    )
+                  )}
+                </span>
 
-                  <span>
-                    DATA ESCOLHIDA
-                  </span>
+              </div>
 
-                  <h2>
-                    {formatarDataBonita(
-                      dataSelecionada
-                    )}
-                  </h2>
+              <div className="agendamento-calendar-navigation">
 
-                </div>
+                <button
+                  type="button"
+                  className="calendar-arrow"
+                  onClick={
+                    voltarMes
+                  }
+                  aria-label="Mês anterior"
+                >
+                  <FiArrowLeft />
+                </button>
 
-                <div className="horarios-header">
+                <strong>
+                  {nomesMeses[
+                    mesAtual
+                  ]}{" "}
+                  {anoAtual}
+                </strong>
 
-                  <span>
-                    HORÁRIOS
-                  </span>
+                <button
+                  type="button"
+                  className="calendar-arrow"
+                  onClick={
+                    avancarMes
+                  }
+                  aria-label="Próximo mês"
+                >
+                  <FiArrowRight />
+                </button>
 
-                </div>
+              </div>
 
-                {horariosDisponiveis.length ===
-                0 ? (
+              <div className="agendamento-weekdays">
 
-                  <div className="agendamento-horarios-esgotados">
-                    Todos os horários deste dia estão
-                    ocupados.
-                  </div>
-
-                ) : (
-
-                  <div className="horarios-grid">
-
-                    {obterHorariosDaData(
-                      dataSelecionada
-                    ).map(
-                      (
-                        horario
-                      ) => {
-
-                        const ocupado =
-                          horarioEstaOcupado(
-                            dataSelecionada,
-                            horario
-                          );
-
-                        const extra =
-                          horarioEhExtraDaData(
-                            dataSelecionada,
-                            horario
-                          );
-
-                        const selecionado =
-                          horarioSelecionado ===
-                          horario;
-
-                        return (
-                          <button
-                            type="button"
-                            key={
-                              horario
-                            }
-                            className={`horario-button ${
-                              selecionado
-                                ? "horario-button--selected"
-                                : ""
-                            } ${
-                              ocupado
-                                ? "horario-button--unavailable"
-                                : ""
-                            }`}
-                            onClick={() => {
-
-                              if (
-                                !ocupado
-                              ) {
-                                setHorarioSelecionado(
-                                  horario
-                                );
-
-                                setErro(
-                                  ""
-                                );
-                              }
-
-                            }}
-                            disabled={
-                              ocupado
-                            }
-                          >
-
-                            {horario}
-
-                            {extra &&
-                              !ocupado && (
-                                <span className="horario-extra-label">
-                                  EXTRA
-                                </span>
-                              )}
-
-                          </button>
-                        );
-                      }
-                    )}
-
-                  </div>
+                {nomesDias.map(
+                  (dia) => (
+                    <span key={dia}>
+                      {dia}
+                    </span>
+                  )
                 )}
 
-                {horarioSelecionado && (
+              </div>
 
-                  <div className="agendamento-dados-container">
+              <div className="agendamento-calendar">
 
-                    <div className="agendamento-dados-card">
+                {calendario.map(
+                  (
+                    diaInfo,
+                    index
+                  ) => {
 
-                      <div className="agendamento-dados-header">
+                    if (
+                      !diaInfo
+                    ) {
+                      return (
+                        <div
+                          key={`empty-${index}`}
+                          className="calendar-day calendar-day--empty"
+                        />
+                      );
+                    }
 
-                        <span>
-                          HORÁRIO SELECIONADO
-                        </span>
+                    const selecionado =
+                      dataSelecionada ===
+                      diaInfo.dataISO;
 
-                        <strong>
-                          {
-                            horarioSelecionado
-                          }
-                        </strong>
+                    let classe =
+                      "calendar-day";
 
-                      </div>
+                    if (
+                      diaInfo.passado
+                    ) {
+                      classe +=
+                        " calendar-day--past";
+                    } else if (
+                      !diaInfo.disponivel
+                    ) {
+                      classe +=
+                        " calendar-day--unavailable";
+                    } else {
+                      classe +=
+                        " calendar-day--available";
+                    }
 
-                      <div className="agendamento-resumo">
+                    if (
+                      diaInfo.hoje
+                    ) {
+                      classe +=
+                        " calendar-day--today";
+                    }
 
-                        <div className="agendamento-resumo-item">
+                    if (
+                      selecionado
+                    ) {
+                      classe +=
+                        " calendar-day--selected";
+                    }
 
-                          <FiCalendar />
-
-                          <span>
-                            {formatarDataBonita(
-                              dataSelecionada
-                            )}
-                          </span>
-
-                        </div>
-
-                        <div className="agendamento-resumo-item">
-
-                          <FiClock />
-
-                          <span>
-                            {
-                              horarioSelecionado
-                            }
-                          </span>
-
-                        </div>
-
-                      </div>
-
-                      <form
-                        className="agendamento-form"
-                        onSubmit={
-                          enviarAgendamento
+                    return (
+                      <button
+                        type="button"
+                        key={
+                          diaInfo.dataISO
+                        }
+                        className={
+                          classe
+                        }
+                        onClick={() =>
+                          selecionarDia(
+                            diaInfo
+                          )
+                        }
+                        disabled={
+                          diaInfo.passado ||
+                          !diaInfo.disponivel
                         }
                       >
 
-                        <div className="agendamento-form-group">
-
-                          <label htmlFor="nome">
-                            Nome
-                          </label>
-
-                          <input
-                            id="nome"
-                            type="text"
-                            value={
-                              nome
-                            }
-                            onChange={(
-                              event
-                            ) =>
-                              setNome(
-                                event.target.value
-                              )
-                            }
-                            placeholder="Seu nome"
-                          />
-
-                        </div>
-
-                        <div className="agendamento-form-group">
-
-                          <label htmlFor="whatsapp">
-                            WhatsApp
-                          </label>
-
-                          <input
-                            id="whatsapp"
-                            type="tel"
-                            value={
-                              whatsapp
-                            }
-                            onChange={(
-                              event
-                            ) =>
-                              setWhatsapp(
-                                event.target.value
-                              )
-                            }
-                            placeholder="(00) 00000-0000"
-                          />
-
-                        </div>
-
-                        <div className="agendamento-form-group agendamento-form-group-full">
-
-                          <label htmlFor="observacoes">
-                            Observações
-                          </label>
-
-                          <textarea
-                            id="observacoes"
-                            value={
-                              observacoes
-                            }
-                            onChange={(
-                              event
-                            ) =>
-                              setObservacoes(
-                                event.target.value
-                              )
-                            }
-                            placeholder="Conte um pouco sobre a tatuagem que deseja..."
-                            rows="4"
-                          />
-
-                        </div>
-
-                        {erro && (
-
-                          <div className="agendamento-erro">
-                            {erro}
-                          </div>
-
-                        )}
-
-                        <button
-                          type="submit"
-                          className="agendamento-enviar"
-                          disabled={
-                            enviando
+                        <span>
+                          {
+                            diaInfo.dia
                           }
-                        >
-                          {enviando
-                            ? "Enviando..."
-                            : "Enviar solicitação"}
-                        </button>
+                        </span>
 
-                        <p className="agendamento-form-observacao">
-                          O envio deste formulário é apenas uma
-                          solicitação de agendamento. A confirmação
-                          do horário será feita posteriormente pelo
-                          WhatsApp, onde também serão combinados os
-                          valores e o sinal.
-                        </p>
+                        {diaInfo.disponivel &&
+                          !diaInfo.passado && (
+                            <i className="calendar-day-dot" />
+                          )}
 
-                      </form>
+                      </button>
+                    );
+                  }
+                )}
 
-                    </div>
+              </div>
+
+              <div className="calendar-legend">
+
+                <span className="legend-item">
+
+                  <i className="legend-dot legend-dot--available" />
+
+                  Disponível
+
+                </span>
+
+                <span className="legend-item">
+
+                  <i className="legend-dot legend-dot--unavailable-day" />
+
+                  Indisponível
+
+                </span>
+
+                <span className="legend-item">
+
+                  <i className="legend-dot legend-dot--selected" />
+
+                  Selecionado
+
+                </span>
+
+              </div>
+
+            </div>
+
+            {/* =================================================
+                HORÁRIOS E FORMULÁRIO
+            ================================================= */}
+
+            <aside className="agendamento-side">
+
+              {!dataSelecionada ? (
+
+                <div className="agendamento-empty">
+
+                  <div className="agendamento-empty-icon">
+                    <FiCalendar />
+                  </div>
+
+                  <h2>
+                    Escolha uma data
+                  </h2>
+
+                  <p>
+                    Selecione um dia no calendário
+                    para visualizar os horários
+                    disponíveis.
+                  </p>
+
+                </div>
+
+              ) : (
+
+                <>
+
+                  <div className="agendamento-side-header">
+
+                    <span>
+                      DATA ESCOLHIDA
+                    </span>
+
+                    <h2>
+                      {formatarDataBonita(
+                        dataSelecionada
+                      )}
+                    </h2>
 
                   </div>
 
-                )}
+                  <div className="horarios-header">
 
-              </>
+                    <span>
+                      HORÁRIOS
+                    </span>
 
-            )}
+                  </div>
 
-          </aside>
+                  {horariosDisponiveis.length ===
+                  0 ? (
 
-        </div>
+                    <div className="agendamento-horarios-esgotados">
+                      Todos os horários deste dia estão
+                      ocupados.
+                    </div>
 
-      </section>
+                  ) : (
 
-    </main>
+                    <div className="horarios-grid">
+
+                      {obterHorariosDaData(
+                        dataSelecionada
+                      ).map(
+                        (
+                          horario
+                        ) => {
+
+                          const ocupado =
+                            horarioEstaOcupado(
+                              dataSelecionada,
+                              horario
+                            );
+
+                          const extra =
+                            horarioEhExtraDaData(
+                              dataSelecionada,
+                              horario
+                            );
+
+                          const selecionado =
+                            horarioSelecionado ===
+                            horario;
+
+                          return (
+                            <button
+                              type="button"
+                              key={
+                                horario
+                              }
+                              className={`horario-button ${
+                                selecionado
+                                  ? "horario-button--selected"
+                                  : ""
+                              } ${
+                                ocupado
+                                  ? "horario-button--unavailable"
+                                  : ""
+                              }`}
+                              onClick={() => {
+
+                                if (
+                                  !ocupado
+                                ) {
+                                  setHorarioSelecionado(
+                                    horario
+                                  );
+
+                                  setErro(
+                                    ""
+                                  );
+                                }
+
+                              }}
+                              disabled={
+                                ocupado
+                              }
+                            >
+
+                              {horario}
+
+                              {extra &&
+                                !ocupado && (
+                                  <span className="horario-extra-label">
+                                    EXTRA
+                                  </span>
+                                )}
+
+                            </button>
+                          );
+                        }
+                      )}
+
+                    </div>
+                  )}
+
+                  {horarioSelecionado && (
+
+                    <div className="agendamento-dados-container">
+
+                      <div className="agendamento-dados-card">
+
+                        <div className="agendamento-dados-header">
+
+                          <span>
+                            HORÁRIO SELECIONADO
+                          </span>
+
+                          <strong>
+                            {
+                              horarioSelecionado
+                            }
+                          </strong>
+
+                        </div>
+
+                        <div className="agendamento-resumo">
+
+                          <div className="agendamento-resumo-item">
+
+                            <FiCalendar />
+
+                            <span>
+                              {formatarDataBonita(
+                                dataSelecionada
+                              )}
+                            </span>
+
+                          </div>
+
+                          <div className="agendamento-resumo-item">
+
+                            <FiClock />
+
+                            <span>
+                              {
+                                horarioSelecionado
+                              }
+                            </span>
+
+                          </div>
+
+                        </div>
+
+                        <form
+                          className="agendamento-form"
+                          onSubmit={
+                            enviarAgendamento
+                          }
+                        >
+
+                          <div className="agendamento-form-group">
+
+                            <label htmlFor="nome">
+                              Nome
+                            </label>
+
+                            <input
+                              id="nome"
+                              type="text"
+                              value={
+                                nome
+                              }
+                              onChange={(
+                                event
+                              ) =>
+                                setNome(
+                                  event.target.value
+                                )
+                              }
+                              placeholder="Seu nome"
+                            />
+
+                          </div>
+
+                          <div className="agendamento-form-group">
+
+                            <label htmlFor="whatsapp">
+                              WhatsApp
+                            </label>
+
+                            <input
+                              id="whatsapp"
+                              type="tel"
+                              value={
+                                whatsapp
+                              }
+                              onChange={(
+                                event
+                              ) =>
+                                setWhatsapp(
+                                  event.target.value
+                                )
+                              }
+                              placeholder="(00) 00000-0000"
+                            />
+
+                          </div>
+
+                          <div className="agendamento-form-group agendamento-form-group-full">
+
+                            <label htmlFor="observacoes">
+                              Observações
+                            </label>
+
+                            <textarea
+                              id="observacoes"
+                              value={
+                                observacoes
+                              }
+                              onChange={(
+                                event
+                              ) =>
+                                setObservacoes(
+                                  event.target.value
+                                )
+                              }
+                              placeholder="Conte um pouco sobre a tatuagem que deseja..."
+                              rows="4"
+                            />
+
+                          </div>
+
+                          {erro && (
+
+                            <div className="agendamento-erro">
+                              {erro}
+                            </div>
+
+                          )}
+
+                          <button
+                            type="submit"
+                            className="agendamento-enviar"
+                            disabled={
+                              enviando
+                            }
+                          >
+                            {enviando
+                              ? "Enviando..."
+                              : "Enviar solicitação"}
+                          </button>
+
+                          <p className="agendamento-form-observacao">
+                            O envio deste formulário é apenas uma
+                            solicitação de agendamento. A confirmação
+                            do horário será feita posteriormente pelo
+                            WhatsApp, onde também serão combinados os
+                            valores e o sinal.
+                          </p>
+
+                        </form>
+
+                      </div>
+
+                    </div>
+
+                  )}
+
+                </>
+
+              )}
+
+            </aside>
+
+          </div>
+
+        </section>
+
+      </main>
+
+      <Footer />
+    </>
   );
 }
 

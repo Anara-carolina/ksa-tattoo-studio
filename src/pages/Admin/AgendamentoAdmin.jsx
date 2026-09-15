@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from "react";
-
 import {
   collection,
   deleteDoc,
@@ -14,37 +13,31 @@ import {
   updateDoc,
   writeBatch,
 } from "firebase/firestore";
-
 import { useNavigate } from "react-router-dom";
 
 import {
-  FaArrowLeft,
-  FaCalendarAlt,
-  FaCheck,
-  FaChevronLeft,
-  FaChevronRight,
-  FaClock,
-  FaExclamationTriangle,
-  FaLock,
-  FaMapMarkerAlt,
-  FaPhone,
-  FaPlus,
-  FaRegCalendarAlt,
-  FaSyncAlt,
-  FaTimes,
-  FaTrash,
-  FaUnlock,
-  FaUser,
-  FaWhatsapp,
-} from "react-icons/fa";
+  FiArrowLeft,
+  FiCalendar,
+  FiCheck,
+  FiChevronLeft,
+  FiChevronRight,
+  FiClock,
+  FiDollarSign,
+  FiEdit3,
+  FiExternalLink,
+  FiLock,
+  FiMail,
+  FiMessageCircle,
+  FiPlus,
+  FiUnlock,
+  FiUser,
+  FiUsers,
+  FiX,
+} from "react-icons/fi";
 
 import { db } from "../../lib/firebase";
 
 import "./AgendamentoAdmin.css";
-
-/* =========================================================
-   CONFIGURAÇÕES
-========================================================= */
 
 const HORARIOS_PADRAO = [
   "09:00",
@@ -54,7 +47,15 @@ const HORARIOS_PADRAO = [
   "17:00",
 ];
 
-const nomesMeses = [
+const STATUS_FILTROS = [
+  { valor: "todos", label: "Todos" },
+  { valor: "pendente", label: "Pendentes" },
+  { valor: "confirmado", label: "Confirmados" },
+  { valor: "concluido", label: "Concluídos" },
+  { valor: "cancelado", label: "Cancelados" },
+];
+
+const MESES = [
   "Janeiro",
   "Fevereiro",
   "Março",
@@ -69,7 +70,7 @@ const nomesMeses = [
   "Dezembro",
 ];
 
-const nomesDiasSemana = [
+const DIAS_SEMANA = [
   "DOM",
   "SEG",
   "TER",
@@ -79,1104 +80,1991 @@ const nomesDiasSemana = [
   "SÁB",
 ];
 
-/* =========================================================
-   FUNÇÕES DE DATA
-========================================================= */
+function criarDataLocal(ano, mes, dia) {
+  return new Date(ano, mes, dia);
+}
 
-const formatarDataISO = (data) => {
+function formatarDataISO(data) {
+  if (!(data instanceof Date) || Number.isNaN(data.getTime())) {
+    return "";
+  }
+
   const ano = data.getFullYear();
-
-  const mes = String(
-    data.getMonth() + 1
-  ).padStart(2, "0");
-
-  const dia = String(
-    data.getDate()
-  ).padStart(2, "0");
+  const mes = String(data.getMonth() + 1).padStart(2, "0");
+  const dia = String(data.getDate()).padStart(2, "0");
 
   return `${ano}-${mes}-${dia}`;
-};
+}
 
-const criarDataLocal = (dataISO) => {
-  if (!dataISO) return null;
-
-  const [ano, mes, dia] =
-    dataISO.split("-").map(Number);
-
-  return new Date(
-    ano,
-    mes - 1,
-    dia
-  );
-};
-
-const formatarDataTexto = (dataISO) => {
-  const data = criarDataLocal(dataISO);
-
-  if (!data) return "";
-
-  return data.toLocaleDateString(
-    "pt-BR",
-    {
-      weekday: "long",
-      day: "2-digit",
-      month: "long",
-      year: "numeric",
-    }
-  );
-};
-
-const formatarDataCurta = (dataISO) => {
-  const data = criarDataLocal(dataISO);
-
-  if (!data) return "";
-
-  return data.toLocaleDateString(
-    "pt-BR",
-    {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    }
-  );
-};
-
-const criarIdHorario = (
-  data,
-  horario
-) => {
-  return `${data}_${horario}`;
-};
-
-const criarIdHorarioExtra = (
-  data,
-  horario
-) => {
-  return `${data}_${horario}`;
-};
-
-const adicionarDias = (
-  data,
-  quantidade
-) => {
+function adicionarDias(data, quantidade) {
   const novaData = new Date(data);
-
-  novaData.setDate(
-    novaData.getDate() + quantidade
-  );
-
+  novaData.setDate(novaData.getDate() + quantidade);
   return novaData;
-};
+}
 
-/* =========================================================
-   VERIFICAR HORÁRIO
-========================================================= */
+function formatarDataTexto(dataISO) {
+  if (!dataISO) return "";
 
-const horarioValido = (horario) => {
-  if (!horario) return false;
+  const [ano, mes, dia] = dataISO.split("-").map(Number);
+  const data = criarDataLocal(ano, mes - 1, dia);
 
-  return /^([01]\d|2[0-3]):[0-5]\d$/.test(
-    horario
-  );
-};
+  return data.toLocaleDateString("pt-BR", {
+    weekday: "long",
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
+}
 
-/* =========================================================
-   COMPONENTE
-========================================================= */
+function formatarDataCurta(dataISO) {
+  if (!dataISO) return "";
+
+  const [ano, mes, dia] = dataISO.split("-");
+
+  return `${dia}/${mes}/${ano}`;
+}
+
+function criarIdHorario(data, horario) {
+  return `${data}_${horario.replace(":", "-")}`;
+}
+
+function horarioValido(horario) {
+  return /^([01]\d|2[0-3]):[0-5]\d$/.test(horario);
+}
+
+function formatarMoeda(valor) {
+  const numero = Number(valor || 0);
+
+  return numero.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
+}
+
+function converterValor(valor) {
+  if (typeof valor === "number") {
+    return valor;
+  }
+
+  if (!valor) {
+    return 0;
+  }
+
+  const texto = String(valor)
+    .replace(/\s/g, "")
+    .replace("R$", "")
+    .replace(/\./g, "")
+    .replace(",", ".");
+
+  const numero = Number(texto);
+
+  return Number.isFinite(numero) ? numero : 0;
+}
+
+function normalizarTelefone(telefone) {
+  return String(telefone || "").replace(/\D/g, "");
+}
+
+function nomeNormalizado(nome) {
+  return String(nome || "")
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
+function obterStatusCliente(quantidade) {
+  const numero = Number(quantidade || 0);
+
+  if (numero <= 0) return "novo";
+  if (numero === 1) return "cliente";
+
+  return "recorrente";
+}
+
+function obterNomeStatus(status) {
+  switch (status) {
+    case "confirmado":
+      return "Confirmado";
+
+    case "concluido":
+      return "Concluído";
+
+    case "cancelado":
+      return "Cancelado";
+
+    case "excluido":
+      return "Excluído";
+
+    default:
+      return "Pendente";
+  }
+}
+
+function obterStatusClienteLabel(status) {
+  switch (status) {
+    case "recorrente":
+      return "Cliente recorrente";
+
+    case "cliente":
+      return "Cliente";
+
+    case "novo":
+    default:
+      return "Novo cliente";
+  }
+}
 
 function AgendamentoAdmin() {
   const navigate = useNavigate();
 
-  /* =======================================================
-     AGENDAMENTOS
-  ======================================================= */
-
-  const [agendamentos, setAgendamentos] =
-    useState([]);
-
-  const [
-    carregandoAgendamentos,
-    setCarregandoAgendamentos,
-  ] = useState(true);
-
-  const [erro, setErro] = useState("");
-
-  /* =======================================================
-     HORÁRIOS
-  ======================================================= */
-
-  const [
-    horariosOcupados,
-    setHorariosOcupados,
-  ] = useState([]);
-
-  /* =======================================================
-     CALENDÁRIO ADMINISTRATIVO
-  ======================================================= */
-
   const hoje = new Date();
 
-  hoje.setHours(
-    0,
-    0,
-    0,
-    0
-  );
+  const [agendamentos, setAgendamentos] = useState([]);
+  const [horariosOcupados, setHorariosOcupados] = useState([]);
 
-  const [mesAtual, setMesAtual] =
-    useState(
-      new Date(
-        hoje.getFullYear(),
-        hoje.getMonth(),
-        1
-      )
-    );
+  const [mesAtual, setMesAtual] = useState(hoje.getMonth());
+  const [anoAtual, setAnoAtual] = useState(hoje.getFullYear());
 
-  const [
-    dataSelecionada,
-    setDataSelecionada,
-  ] = useState(
+  const [dataSelecionada, setDataSelecionada] = useState(
     formatarDataISO(hoje)
   );
 
-  /* =======================================================
-     BLOQUEIO DE DIA
-  ======================================================= */
+  const [motivoBloqueioDia, setMotivoBloqueioDia] = useState("");
 
-  const [motivoBloqueio, setMotivoBloqueio] =
+  const [processando, setProcessando] = useState(false);
+  const [erro, setErro] = useState("");
+
+  const [periodoInicio, setPeriodoInicio] = useState("");
+  const [periodoFim, setPeriodoFim] = useState("");
+  const [periodoMotivo, setPeriodoMotivo] = useState("");
+
+  const [novoHorarioExtra, setNovoHorarioExtra] = useState("");
+  const [novoHorarioExtraMotivo, setNovoHorarioExtraMotivo] =
     useState("");
 
-  const [
-    processandoDisponibilidade,
-    setProcessandoDisponibilidade,
-  ] = useState(false);
+  const [filtroStatus, setFiltroStatus] = useState("todos");
 
-  /* =======================================================
-     BLOQUEIO DE PERÍODO
-  ======================================================= */
+  const [modalFinanceiro, setModalFinanceiro] = useState(null);
 
-  const [
-    dataInicioPeriodo,
-    setDataInicioPeriodo,
-  ] = useState(
-    formatarDataISO(hoje)
-  );
+  const [dadosFinanceiros, setDadosFinanceiros] = useState({
+    valorTotal: "",
+    valorSinal: "",
+    formaPagamentoSinal: "",
+    restantePago: false,
+    formaPagamentoRestante: "",
+  });
 
-  const [
-    dataFimPeriodo,
-    setDataFimPeriodo,
-  ] = useState(
-    formatarDataISO(hoje)
-  );
+  /*
+   * ============================================================
+   * NOVO AGENDAMENTO MANUAL
+   * ============================================================
+   */
 
-  const [
-    motivoPeriodo,
-    setMotivoPeriodo,
-  ] = useState("");
+  const [modalNovoAgendamento, setModalNovoAgendamento] =
+    useState(false);
 
-  /* =======================================================
-     HORÁRIO EXTRA
-  ======================================================= */
+  const [novoAgendamento, setNovoAgendamento] = useState({
+    nome: "",
+    whatsapp: "",
+    email: "",
+    data: formatarDataISO(hoje),
+    horario: "",
+    observacoes: "",
+    valorTotal: "",
+    valorSinal: "",
+    formaPagamentoSinal: "",
+    restantePago: false,
+    formaPagamentoRestante: "",
+  });
 
-  const [
-    mostrandoAdicionarHorario,
-    setMostrandoAdicionarHorario,
-  ] = useState(false);
-
-  const [
-    novoHorario,
-    setNovoHorario,
-  ] = useState("");
-
-  const [
-    motivoHorarioExtra,
-    setMotivoHorarioExtra,
-  ] = useState("");
-
-  /* =======================================================
-     FILTRO DOS AGENDAMENTOS
-  ======================================================= */
-
-  const [
-    filtroStatus,
-    setFiltroStatus,
-  ] = useState("todos");
-
-  /* =========================================================
-     CARREGAR AGENDAMENTOS
-  ========================================================= */
+  /*
+   * ============================================================
+   * AGENDAMENTOS
+   * ============================================================
+   */
 
   useEffect(() => {
-    const agendamentosRef =
-      collection(
-        db,
-        "agendamentos"
-      );
-
     const consulta = query(
-      agendamentosRef,
-      orderBy(
-        "criadoEm",
-        "desc"
-      )
+      collection(db, "agendamentos"),
+      orderBy("criadoEm", "desc")
     );
 
-    const unsubscribe =
-      onSnapshot(
-        consulta,
-        (snapshot) => {
-          const lista =
-            snapshot.docs.map(
-              (item) => ({
-                id: item.id,
-                ...item.data(),
-              })
-            );
+    const unsubscribe = onSnapshot(
+      consulta,
+      (snapshot) => {
+        const lista = snapshot.docs.map((item) => ({
+          id: item.id,
+          ...item.data(),
+        }));
 
-          setAgendamentos(lista);
-          setCarregandoAgendamentos(
-            false
-          );
-        },
-        (error) => {
-          console.error(
-            "Erro ao carregar agendamentos:",
-            error
-          );
+        setAgendamentos(lista);
+      },
+      (error) => {
+        console.error(error);
+        setErro("Não foi possível carregar os agendamentos.");
+      }
+    );
 
-          setErro(
-            "Não foi possível carregar os agendamentos."
-          );
-
-          setCarregandoAgendamentos(
-            false
-          );
-        }
-      );
-
-    return () =>
-      unsubscribe();
+    return () => unsubscribe();
   }, []);
 
-  /* =========================================================
-     CARREGAR HORÁRIOS OCUPADOS
-  ========================================================= */
+  /*
+   * ============================================================
+   * HORÁRIOS
+   * ============================================================
+   */
 
   useEffect(() => {
-    const horariosRef =
-      collection(
-        db,
-        "horariosOcupados"
-      );
+    const unsubscribe = onSnapshot(
+      collection(db, "horariosOcupados"),
+      (snapshot) => {
+        const lista = snapshot.docs.map((item) => ({
+          id: item.id,
+          ...item.data(),
+        }));
 
-    const unsubscribe =
-      onSnapshot(
-        horariosRef,
-        (snapshot) => {
-          const lista =
-            snapshot.docs.map(
-              (item) => ({
-                id: item.id,
-                ...item.data(),
-              })
-            );
+        setHorariosOcupados(lista);
+      },
+      (error) => {
+        console.error(error);
+        setErro("Não foi possível carregar os horários.");
+      }
+    );
 
-          setHorariosOcupados(
-            lista
-          );
-        },
-        (error) => {
-          console.error(
-            "Erro ao carregar horários:",
-            error
-          );
-        }
-      );
-
-    return () =>
-      unsubscribe();
+    return () => unsubscribe();
   }, []);
 
-  /* =========================================================
-     SINCRONIZAR AGENDAMENTOS COM HORÁRIOS OCUPADOS
-  ========================================================= */
+  /*
+   * ============================================================
+   * SINCRONIZAÇÃO
+   * ============================================================
+   */
 
   useEffect(() => {
-    if (
-      carregandoAgendamentos
-    ) {
-      return;
+    let desmontado = false;
+
+    async function sincronizarHorarios() {
+      try {
+        const snapshot = await getDocs(
+          collection(db, "horariosOcupados")
+        );
+
+        if (desmontado) return;
+
+        const existentes = new Map();
+
+        snapshot.docs.forEach((item) => {
+          existentes.set(item.id, {
+            id: item.id,
+            ...item.data(),
+          });
+        });
+
+        const ativos = agendamentos.filter(
+          (agendamento) =>
+            agendamento.status !== "cancelado" &&
+            agendamento.status !== "excluido" &&
+            agendamento.data &&
+            agendamento.horario
+        );
+
+        const batch = writeBatch(db);
+
+        const slotsAtivos = new Set();
+
+        ativos.forEach((agendamento) => {
+          const slotId = criarIdHorario(
+            agendamento.data,
+            agendamento.horario
+          );
+
+          slotsAtivos.add(slotId);
+
+          const existente = existentes.get(slotId);
+
+          const dados = {
+            data: agendamento.data,
+            horario: agendamento.horario,
+            agendamentoId: agendamento.id,
+          };
+
+          if (agendamento.clienteId) {
+            dados.clienteId = agendamento.clienteId;
+          }
+
+          if (existente?.horarioExtra) {
+            dados.horarioExtra = true;
+          }
+
+          if (existente?.bloqueado) {
+            dados.bloqueado = true;
+            dados.motivo = existente.motivo || "";
+          }
+
+          batch.set(
+            doc(db, "horariosOcupados", slotId),
+            dados,
+            { merge: true }
+          );
+        });
+
+        existentes.forEach((slot, slotId) => {
+          if (
+            slot.agendamentoId &&
+            !slotsAtivos.has(slotId) &&
+            !slot.bloqueado &&
+            !slot.horarioExtra
+          ) {
+            batch.delete(
+              doc(db, "horariosOcupados", slotId)
+            );
+          }
+        });
+
+        if (ativos.length > 0 || existentes.size > 0) {
+          await batch.commit();
+        }
+      } catch (error) {
+        console.error("Erro ao sincronizar:", error);
+      }
     }
 
-    const sincronizar =
-      async () => {
-        try {
-          const horariosRef =
-            collection(
-              db,
-              "horariosOcupados"
-            );
+    sincronizarHorarios();
 
-          const snapshot =
-            await getDocs(
-              horariosRef
-            );
+    return () => {
+      desmontado = true;
+    };
+  }, [agendamentos]);
 
-          const batch =
-            writeBatch(db);
-
-          const horariosEsperados =
-            new Set();
-
-          agendamentos.forEach(
-            (agendamento) => {
-              /*
-                Somente agendamentos ativos
-                ocupam o horário.
-              */
-
-              if (
-                agendamento.status ===
-                  "cancelado" ||
-                agendamento.status ===
-                  "excluido"
-              ) {
-                return;
-              }
-
-              if (
-                !agendamento.data ||
-                !agendamento.horario
-              ) {
-                return;
-              }
-
-              const id =
-                criarIdHorario(
-                  agendamento.data,
-                  agendamento.horario
-                );
-
-              horariosEsperados.add(
-                id
-              );
-
-              const slotRef =
-                doc(
-                  db,
-                  "horariosOcupados",
-                  id
-                );
-
-              /*
-                merge preserva:
-                - bloqueado
-                - motivo
-                - horário extra
-              */
-
-              batch.set(
-                slotRef,
-                {
-                  data:
-                    agendamento.data,
-
-                  horario:
-                    agendamento.horario,
-
-                  agendamentoId:
-                    agendamento.id,
-                },
-                {
-                  merge: true,
-                }
-              );
-            }
-          );
-
-          /*
-            Remove horários antigos que não possuem
-            mais agendamento.
-
-            IMPORTANTE:
-            bloqueios manuais NÃO são apagados.
-          */
-
-          snapshot.docs.forEach(
-            (item) => {
-              const dados =
-                item.data();
-
-              if (
-                !horariosEsperados.has(
-                  item.id
-                ) &&
-                dados.bloqueado !== true
-              ) {
-                /*
-                  Horário extra disponível também
-                  não deve ser apagado.
-                */
-
-                if (
-                  dados.horarioExtra ===
-                  true
-                ) {
-                  return;
-                }
-
-                batch.delete(
-                  item.ref
-                );
-              }
-            }
-          );
-
-          await batch.commit();
-        } catch (error) {
-          console.error(
-            "Erro ao sincronizar horários:",
-            error
-          );
-        }
-      };
-
-    sincronizar();
-  }, [
-    agendamentos,
-    carregandoAgendamentos,
-  ]);
-
-  /* =========================================================
-     CALENDÁRIO
-  ========================================================= */
+  /*
+   * ============================================================
+   * CALENDÁRIO
+   * ============================================================
+   */
 
   const diasDoMes = useMemo(() => {
-    const ano =
-      mesAtual.getFullYear();
+    const primeiroDia = criarDataLocal(
+      anoAtual,
+      mesAtual,
+      1
+    );
 
-    const mes =
-      mesAtual.getMonth();
-
-    const primeiroDia =
-      new Date(
-        ano,
-        mes,
-        1
-      );
-
-    const ultimoDia =
-      new Date(
-        ano,
-        mes + 1,
-        0
-      );
+    const ultimoDia = criarDataLocal(
+      anoAtual,
+      mesAtual + 1,
+      0
+    );
 
     const dias = [];
 
-    const primeiroDiaSemana =
-      primeiroDia.getDay();
-
-    for (
-      let i = 0;
-      i < primeiroDiaSemana;
-      i++
-    ) {
-      dias.push(null);
+    for (let i = 0; i < primeiroDia.getDay(); i += 1) {
+      dias.push({
+        vazio: true,
+        id: `vazio-${i}`,
+      });
     }
 
     for (
       let dia = 1;
-      dia <=
-      ultimoDia.getDate();
-      dia++
+      dia <= ultimoDia.getDate();
+      dia += 1
     ) {
-      dias.push(
-        new Date(
-          ano,
-          mes,
-          dia
-        )
+      const data = criarDataLocal(
+        anoAtual,
+        mesAtual,
+        dia
       );
+
+      dias.push({
+        vazio: false,
+        dia,
+        data,
+        dataISO: formatarDataISO(data),
+      });
     }
 
     return dias;
-  }, [mesAtual]);
+  }, [anoAtual, mesAtual]);
 
-  /* =========================================================
-     MAPA DE HORÁRIOS
-  ========================================================= */
+  const mapaHorarios = useMemo(() => {
+    const mapa = {};
 
-  const mapaHorarios =
-    useMemo(() => {
-      const mapa = {};
+    horariosOcupados.forEach((item) => {
+      if (!item.data || !item.horario) return;
 
-      horariosOcupados.forEach(
-        (item) => {
-          if (
-            item.data &&
-            item.horario
-          ) {
-            mapa[
-              criarIdHorario(
-                item.data,
-                item.horario
-              )
-            ] = item;
-          }
-        }
-      );
-
-      return mapa;
-    }, [
-      horariosOcupados,
-    ]);
-
-  /* =========================================================
-     HORÁRIOS EXTRAS DE UMA DATA
-  ========================================================= */
-
-  const horariosExtrasDaData =
-    useMemo(() => {
-      if (!dataSelecionada) {
-        return [];
+      if (!mapa[item.data]) {
+        mapa[item.data] = {};
       }
 
-      return horariosOcupados
-        .filter(
-          (item) =>
-            item.data ===
-              dataSelecionada &&
-            item.horarioExtra ===
-              true
-        )
-        .sort(
-          (a, b) =>
-            a.horario.localeCompare(
-              b.horario
-            )
-        );
-    }, [
-      horariosOcupados,
-      dataSelecionada,
-    ]);
+      mapa[item.data][item.horario] = item;
+    });
 
-  /* =========================================================
-     TODOS OS HORÁRIOS DA DATA
-  ========================================================= */
+    return mapa;
+  }, [horariosOcupados]);
 
-  const todosHorariosDaData =
-    useMemo(() => {
-      const extras =
-        horariosExtrasDaData.map(
-          (item) =>
-            item.horario
-        );
+  function obterHorario(dataISO, horario) {
+    return mapaHorarios[dataISO]?.[horario] || null;
+  }
 
-      return [
-        ...new Set([
-          ...HORARIOS_PADRAO,
-          ...extras,
-        ]),
-      ].sort((a, b) =>
-        a.localeCompare(b)
-      );
-    }, [
-      horariosExtrasDaData,
-    ]);
-
-  /* =========================================================
-     AGENDAMENTOS DA DATA
-  ========================================================= */
-
-  const agendamentosDaData =
-    useMemo(() => {
-      return agendamentos.filter(
-        (item) =>
-          item.data ===
-          dataSelecionada
-      );
-    }, [
-      agendamentos,
-      dataSelecionada,
-    ]);
-
-  /* =========================================================
-     VERIFICAR SE HORÁRIO ESTÁ OCUPADO
-  ========================================================= */
-
-  const obterHorario = (
-    data,
-    horario
-  ) => {
-    return (
-      mapaHorarios[
-        criarIdHorario(
-          data,
-          horario
-        )
-      ] || null
+  function horarioEstaOcupado(dataISO, horario) {
+    return Boolean(
+      obterHorario(dataISO, horario)?.agendamentoId
     );
-  };
+  }
 
-  const horarioEstaOcupado =
-    (
-      data,
-      horario
-    ) => {
-      return Boolean(
-        obterHorario(
-          data,
-          horario
+  function horarioEstaBloqueado(dataISO, horario) {
+    return Boolean(
+      obterHorario(dataISO, horario)?.bloqueado
+    );
+  }
+
+  const extrasDoDia = useMemo(() => {
+    return horariosOcupados
+      .filter(
+        (item) =>
+          item.data === dataSelecionada &&
+          item.horarioExtra === true
+      )
+      .sort((a, b) =>
+        String(a.horario).localeCompare(
+          String(b.horario)
         )
       );
-    };
+  }, [horariosOcupados, dataSelecionada]);
 
-  const horarioEstaBloqueado =
-    (
-      data,
-      horario
-    ) => {
-      const horarioItem =
-        obterHorario(
-          data,
-          horario
-        );
+  const todosHorariosDoDia = useMemo(() => {
+    const extras = extrasDoDia.map(
+      (item) => item.horario
+    );
 
-      return (
-        horarioItem?.bloqueado ===
-        true
-      );
-    };
+    return [...HORARIOS_PADRAO, ...extras].sort(
+      (a, b) => a.localeCompare(b)
+    );
+  }, [extrasDoDia]);
 
-  /* =========================================================
-     VERIFICAR DIA INTEIRO BLOQUEADO
-  ========================================================= */
+  function diaEstaBloqueado(dataISO) {
+    return HORARIOS_PADRAO.every((horario) =>
+      horarioEstaBloqueado(dataISO, horario)
+    );
+  }
 
-  const diaEstaBloqueado =
-    (dataISO) => {
-      if (!dataISO) {
-        return false;
+  function diaTemBloqueio(dataISO) {
+    return HORARIOS_PADRAO.some((horario) =>
+      horarioEstaBloqueado(dataISO, horario)
+    );
+  }
+
+  function diaTemAgendamento(dataISO) {
+    return agendamentos.some(
+      (agendamento) =>
+        agendamento.data === dataISO &&
+        agendamento.status !== "cancelado" &&
+        agendamento.status !== "excluido"
+    );
+  }
+
+  function diaTemExtra(dataISO) {
+    return horariosOcupados.some(
+      (item) =>
+        item.data === dataISO &&
+        item.horarioExtra === true
+    );
+  }
+
+  /*
+   * ============================================================
+   * NAVEGAÇÃO
+   * ============================================================
+   */
+
+  function mudarMes(direcao) {
+    if (direcao === -1) {
+      if (mesAtual === 0) {
+        setMesAtual(11);
+        setAnoAtual((ano) => ano - 1);
+      } else {
+        setMesAtual((mes) => mes - 1);
       }
 
-      return HORARIOS_PADRAO.every(
+      return;
+    }
+
+    if (mesAtual === 11) {
+      setMesAtual(0);
+      setAnoAtual((ano) => ano + 1);
+    } else {
+      setMesAtual((mes) => mes + 1);
+    }
+  }
+
+  function voltarParaHoje() {
+    const agora = new Date();
+
+    setMesAtual(agora.getMonth());
+    setAnoAtual(agora.getFullYear());
+    setDataSelecionada(formatarDataISO(agora));
+  }
+
+  function selecionarData(dataISO) {
+    setDataSelecionada(dataISO);
+    setMotivoBloqueioDia("");
+    setNovoHorarioExtra("");
+    setNovoHorarioExtraMotivo("");
+
+    setNovoAgendamento((anterior) => ({
+      ...anterior,
+      data: dataISO,
+      horario: "",
+    }));
+  }
+
+  /*
+   * ============================================================
+   * ABRIR NOVO AGENDAMENTO
+   * ============================================================
+   */
+
+  function abrirNovoAgendamento() {
+    const primeiroHorarioDisponivel =
+      todosHorariosDoDia.find(
         (horario) =>
-          horarioEstaBloqueado(
-            dataISO,
+          !horarioEstaOcupado(
+            dataSelecionada,
+            horario
+          ) &&
+          !horarioEstaBloqueado(
+            dataSelecionada,
             horario
           )
-      );
-    };
+      ) || "";
 
-  /* =========================================================
-     VERIFICAR SE TEM ALGUM BLOQUEIO
-  ========================================================= */
-
-  const diaTemBloqueio =
-    (dataISO) => {
-      if (!dataISO) {
-        return false;
-      }
-
-      return horariosOcupados.some(
-        (item) =>
-          item.data ===
-            dataISO &&
-          item.bloqueado ===
-            true
-      );
-    };
-
-  /* =========================================================
-     VERIFICAR SE TEM AGENDAMENTO
-  ========================================================= */
-
-  const diaTemAgendamento =
-    (dataISO) => {
-      if (!dataISO) {
-        return false;
-      }
-
-      return agendamentos.some(
-        (item) =>
-          item.data ===
-            dataISO &&
-          item.status !==
-            "cancelado" &&
-          item.status !==
-            "excluido"
-      );
-    };
-
-  /* =========================================================
-     NAVEGAÇÃO DO CALENDÁRIO
-  ========================================================= */
-
-  const mesAnterior = () => {
-    setMesAtual(
-      new Date(
-        mesAtual.getFullYear(),
-        mesAtual.getMonth() -
-          1,
-        1
-      )
-    );
-  };
-
-  const proximoMes = () => {
-    setMesAtual(
-      new Date(
-        mesAtual.getFullYear(),
-        mesAtual.getMonth() +
-          1,
-        1
-      )
-    );
-  };
-
-  const voltarParaHoje = () => {
-    setMesAtual(
-      new Date(
-        hoje.getFullYear(),
-        hoje.getMonth(),
-        1
-      )
-    );
-
-    setDataSelecionada(
-      formatarDataISO(hoje)
-    );
-  };
-
-  /* =========================================================
-     SELECIONAR DIA
-  ========================================================= */
-
-  const selecionarDia = (
-    data
-  ) => {
-    if (!data) return;
-
-    const dataISO =
-      formatarDataISO(data);
-
-    setDataSelecionada(
-      dataISO
-    );
+    setNovoAgendamento({
+      nome: "",
+      whatsapp: "",
+      email: "",
+      data: dataSelecionada,
+      horario: primeiroHorarioDisponivel,
+      observacoes: "",
+      valorTotal: "",
+      valorSinal: "",
+      formaPagamentoSinal: "",
+      restantePago: false,
+      formaPagamentoRestante: "",
+    });
 
     setErro("");
-    setNovoHorario("");
-    setMotivoHorarioExtra("");
-    setMostrandoAdicionarHorario(
-      false
+    setModalNovoAgendamento(true);
+  }
+
+  function fecharNovoAgendamento() {
+    if (processando) return;
+
+    setModalNovoAgendamento(false);
+  }
+
+  /*
+   * ============================================================
+   * CRM
+   * ============================================================
+   */
+
+  async function encontrarOuCriarCliente(dados) {
+    const snapshot = await getDocs(
+      collection(db, "clientes")
     );
-  };
 
-  /* =========================================================
-     EXECUTAR OPERAÇÕES EM LOTES
-  ========================================================= */
+    const telefone = normalizarTelefone(
+      dados.whatsapp
+    );
 
-  const executarOperacoes =
-    async (
-      operacoes
-    ) => {
-      const tamanhoLote = 400;
+    const nome = nomeNormalizado(
+      dados.nome
+    );
 
-      for (
-        let inicio = 0;
-        inicio <
-        operacoes.length;
-        inicio +=
-          tamanhoLote
+    let encontrado = null;
+
+    snapshot.forEach((item) => {
+      const cliente = item.data();
+
+      const telefoneCliente =
+        normalizarTelefone(cliente.whatsapp);
+
+      const nomeCliente =
+        nomeNormalizado(cliente.nome);
+
+      if (
+        telefone &&
+        telefoneCliente &&
+        telefone === telefoneCliente
       ) {
-        const lote =
-          operacoes.slice(
-            inicio,
-            inicio +
-              tamanhoLote
-          );
+        encontrado = {
+          id: item.id,
+          ...cliente,
+        };
+      } else if (
+        !telefone &&
+        nome &&
+        nome === nomeCliente
+      ) {
+        encontrado = {
+          id: item.id,
+          ...cliente,
+        };
+      }
+    });
 
-        const batch =
-          writeBatch(db);
+    if (encontrado) {
+      await updateDoc(
+        doc(db, "clientes", encontrado.id),
+        {
+          nome:
+            dados.nome ||
+            encontrado.nome ||
+            "",
 
-        lote.forEach(
-          (operacao) => {
-            if (
-              operacao.tipo ===
-              "set"
-            ) {
-              batch.set(
-                operacao.ref,
-                operacao.dados,
-                {
-                  merge:
-                    true,
-                }
-              );
-            }
+          whatsapp:
+            dados.whatsapp ||
+            encontrado.whatsapp ||
+            "",
 
-            if (
-              operacao.tipo ===
-              "update"
-            ) {
-              batch.update(
-                operacao.ref,
-                operacao.dados
-              );
-            }
+          instagram:
+            dados.instagram ||
+            encontrado.instagram ||
+            "",
 
-            if (
-              operacao.tipo ===
-              "delete"
-            ) {
-              batch.delete(
-                operacao.ref
-              );
-            }
-          }
+          email:
+            dados.email ||
+            encontrado.email ||
+            "",
+
+          atualizadoEm:
+            serverTimestamp(),
+        }
+      );
+
+      return encontrado.id;
+    }
+
+    const clienteRef = doc(
+      collection(db, "clientes")
+    );
+
+    await setDoc(clienteRef, {
+      nome: dados.nome || "",
+      whatsapp: dados.whatsapp || "",
+      instagram: dados.instagram || "",
+      email: dados.email || "",
+      observacoes: "",
+      statusCliente: "novo",
+      quantidadeTrabalhos: 0,
+      criadoEm: serverTimestamp(),
+      atualizadoEm: serverTimestamp(),
+    });
+
+    return clienteRef.id;
+  }
+
+  /*
+   * ============================================================
+   * CRIAR AGENDAMENTO MANUAL
+   * ============================================================
+   */
+
+  async function criarAgendamentoManual() {
+    const nome = novoAgendamento.nome.trim();
+    const whatsapp = novoAgendamento.whatsapp.trim();
+    const data = novoAgendamento.data;
+    const horario = novoAgendamento.horario;
+
+    if (!nome) {
+      setErro("Informe o nome do cliente.");
+      return;
+    }
+
+    if (!data) {
+      setErro("Informe a data do atendimento.");
+      return;
+    }
+
+    if (!horario || !horarioValido(horario)) {
+      setErro("Selecione um horário válido.");
+      return;
+    }
+
+    const slotAtual = obterHorario(
+      data,
+      horario
+    );
+
+    if (
+      slotAtual?.agendamentoId ||
+      slotAtual?.bloqueado
+    ) {
+      setErro(
+        "Esse horário não está disponível."
+      );
+      return;
+    }
+
+    const valorTotal = converterValor(
+      novoAgendamento.valorTotal
+    );
+
+    const valorSinal = Math.min(
+      converterValor(
+        novoAgendamento.valorSinal
+      ),
+      valorTotal
+    );
+
+    const valorRestante = Math.max(
+      valorTotal - valorSinal,
+      0
+    );
+
+    try {
+      setProcessando(true);
+      setErro("");
+
+      const clienteId =
+        await encontrarOuCriarCliente({
+          nome,
+          whatsapp,
+          email:
+            novoAgendamento.email.trim(),
+        });
+
+      const agendamentoRef = doc(
+        collection(db, "agendamentos")
+      );
+
+      await setDoc(agendamentoRef, {
+        nome,
+        whatsapp,
+        email:
+          novoAgendamento.email.trim(),
+
+        data,
+        horario,
+
+        observacoes:
+          novoAgendamento.observacoes.trim(),
+
+        status: "pendente",
+
+        clienteId,
+
+        valorTotal,
+        valorSinal,
+        valorRestante,
+
+        sinalPago:
+          valorSinal > 0,
+
+        formaPagamentoSinal:
+          novoAgendamento.formaPagamentoSinal,
+
+        restantePago:
+          Boolean(
+            novoAgendamento.restantePago
+          ),
+
+        formaPagamentoRestante:
+          novoAgendamento.formaPagamentoRestante,
+
+        criadoManualmente: true,
+
+        criadoEm:
+          serverTimestamp(),
+
+        atualizadoEm:
+          serverTimestamp(),
+      });
+
+      await setDoc(
+        doc(
+          db,
+          "horariosOcupados",
+          criarIdHorario(
+            data,
+            horario
+          )
+        ),
+        {
+          data,
+          horario,
+          agendamentoId:
+            agendamentoRef.id,
+          clienteId,
+          ...(slotAtual?.horarioExtra
+            ? {
+                horarioExtra: true,
+              }
+            : {}),
+          ...(slotAtual?.motivo
+            ? {
+                motivo:
+                  slotAtual.motivo,
+              }
+            : {}),
+          ...(slotAtual?.bloqueado
+            ? {
+                bloqueado: true,
+              }
+            : {}),
+          atualizadoEm:
+            serverTimestamp(),
+        },
+        {
+          merge: true,
+        }
+      );
+
+      setDataSelecionada(data);
+
+      const partesData = data
+        .split("-")
+        .map(Number);
+
+      setAnoAtual(partesData[0]);
+      setMesAtual(partesData[1] - 1);
+
+      setModalNovoAgendamento(false);
+
+      setNovoAgendamento({
+        nome: "",
+        whatsapp: "",
+        email: "",
+        data,
+        horario: "",
+        observacoes: "",
+        valorTotal: "",
+        valorSinal: "",
+        formaPagamentoSinal: "",
+        restantePago: false,
+        formaPagamentoRestante: "",
+      });
+    } catch (error) {
+      console.error(
+        "Erro ao criar agendamento manual:",
+        error
+      );
+
+      setErro(
+        "Não foi possível criar o agendamento."
+      );
+    } finally {
+      setProcessando(false);
+    }
+  }
+
+  async function vincularClienteAoAgendamento(
+    agendamento
+  ) {
+    try {
+      setProcessando(true);
+      setErro("");
+
+      const clienteId =
+        await encontrarOuCriarCliente({
+          nome: agendamento.nome,
+          whatsapp: agendamento.whatsapp,
+          instagram: agendamento.instagram,
+          email: agendamento.email,
+        });
+
+      await updateDoc(
+        doc(
+          db,
+          "agendamentos",
+          agendamento.id
+        ),
+        {
+          clienteId,
+          atualizadoEm:
+            serverTimestamp(),
+        }
+      );
+    } catch (error) {
+      console.error(error);
+
+      setErro(
+        "Não foi possível vincular o cliente ao CRM."
+      );
+    } finally {
+      setProcessando(false);
+    }
+  }
+
+  /*
+   * ============================================================
+   * FINANCEIRO
+   * ============================================================
+   */
+
+  function abrirFinanceiro(agendamento) {
+    setDadosFinanceiros({
+      valorTotal:
+        agendamento.valorTotal !== undefined
+          ? String(agendamento.valorTotal)
+          : "",
+
+      valorSinal:
+        agendamento.valorSinal !== undefined
+          ? String(agendamento.valorSinal)
+          : "",
+
+      formaPagamentoSinal:
+        agendamento.formaPagamentoSinal || "",
+
+      restantePago:
+        Boolean(
+          agendamento.restantePago
+        ),
+
+      formaPagamentoRestante:
+        agendamento.formaPagamentoRestante || "",
+    });
+
+    setModalFinanceiro(agendamento);
+  }
+
+  async function salvarFinanceiro() {
+    if (!modalFinanceiro) return;
+
+    try {
+      setProcessando(true);
+      setErro("");
+
+      const valorTotal =
+        converterValor(
+          dadosFinanceiros.valorTotal
         );
 
-        await batch.commit();
-      }
-    };
+      const valorSinal =
+        converterValor(
+          dadosFinanceiros.valorSinal
+        );
 
-  /* =========================================================
-     BLOQUEAR HORÁRIO
-  ========================================================= */
+      const valorRestante =
+        Math.max(
+          valorTotal - valorSinal,
+          0
+        );
 
-  const bloquearHorario =
-    async (
-      horario
-    ) => {
+      await updateDoc(
+        doc(
+          db,
+          "agendamentos",
+          modalFinanceiro.id
+        ),
+        {
+          valorTotal,
+          valorSinal,
+          valorRestante,
+
+          sinalPago:
+            valorSinal > 0,
+
+          formaPagamentoSinal:
+            dadosFinanceiros.formaPagamentoSinal,
+
+          restantePago:
+            Boolean(
+              dadosFinanceiros.restantePago
+            ),
+
+          formaPagamentoRestante:
+            dadosFinanceiros.formaPagamentoRestante,
+
+          atualizadoEm:
+            serverTimestamp(),
+        }
+      );
+
+      setModalFinanceiro(null);
+    } catch (error) {
+      console.error(error);
+
+      setErro(
+        "Não foi possível salvar os dados financeiros."
+      );
+    } finally {
+      setProcessando(false);
+    }
+  }
+
+  /*
+   * ============================================================
+   * STATUS
+   * ============================================================
+   */
+
+  async function alterarStatus(
+    agendamento,
+    novoStatus
+  ) {
+    if (!agendamento?.id) return;
+
+    try {
+      setProcessando(true);
+      setErro("");
+
+      await updateDoc(
+        doc(
+          db,
+          "agendamentos",
+          agendamento.id
+        ),
+        {
+          status: novoStatus,
+          atualizadoEm:
+            serverTimestamp(),
+        }
+      );
+
+      const slotId = criarIdHorario(
+        agendamento.data,
+        agendamento.horario
+      );
+
+      const slot = obterHorario(
+        agendamento.data,
+        agendamento.horario
+      );
+
+      const slotRef = doc(
+        db,
+        "horariosOcupados",
+        slotId
+      );
+
       if (
-        !dataSelecionada ||
-        !horario
+        novoStatus === "cancelado" ||
+        novoStatus === "excluido"
       ) {
+        if (slot?.horarioExtra) {
+          await setDoc(
+            slotRef,
+            {
+              data:
+                agendamento.data,
+              horario:
+                agendamento.horario,
+              horarioExtra: true,
+              agendamentoId:
+                deleteField(),
+              clienteId:
+                deleteField(),
+              atualizadoEm:
+                serverTimestamp(),
+            },
+            { merge: true }
+          );
+        } else if (slot?.bloqueado) {
+          await updateDoc(
+            slotRef,
+            {
+              agendamentoId:
+                deleteField(),
+              clienteId:
+                deleteField(),
+              atualizadoEm:
+                serverTimestamp(),
+            }
+          );
+        } else {
+          await deleteDoc(
+            slotRef
+          );
+        }
+
         return;
       }
 
+      await setDoc(
+        slotRef,
+        {
+          data:
+            agendamento.data,
+
+          horario:
+            agendamento.horario,
+
+          agendamentoId:
+            agendamento.id,
+
+          ...(agendamento.clienteId
+            ? {
+                clienteId:
+                  agendamento.clienteId,
+              }
+            : {}),
+
+          atualizadoEm:
+            serverTimestamp(),
+        },
+        { merge: true }
+      );
+    } catch (error) {
+      console.error(error);
+
+      setErro(
+        "Não foi possível alterar o status."
+      );
+    } finally {
+      setProcessando(false);
+    }
+  }
+
+  /*
+   * ============================================================
+   * CONCLUIR
+   * ============================================================
+   */
+
+  async function concluirAtendimento(
+    agendamento
+  ) {
+    const confirmar = window.confirm(
+      `Marcar o atendimento de ${agendamento.nome} como concluído?`
+    );
+
+    if (!confirmar) return;
+
+    try {
+      setProcessando(true);
       setErro("");
-      setProcessandoDisponibilidade(
-        true
+
+      let clienteId =
+        agendamento.clienteId;
+
+      if (!clienteId) {
+        clienteId =
+          await encontrarOuCriarCliente({
+            nome:
+              agendamento.nome,
+            whatsapp:
+              agendamento.whatsapp,
+            instagram:
+              agendamento.instagram,
+            email:
+              agendamento.email,
+          });
+      }
+
+      const clientesSnapshot =
+        await getDocs(
+          collection(
+            db,
+            "clientes"
+          )
+        );
+
+      let clienteAtual = null;
+
+      clientesSnapshot.forEach(
+        (item) => {
+          if (
+            item.id === clienteId
+          ) {
+            clienteAtual =
+              item.data();
+          }
+        }
       );
 
-      try {
-        const slotId =
-          criarIdHorario(
-            dataSelecionada,
-            horario
-          );
+      const quantidadeAtual =
+        Number(
+          clienteAtual?.quantidadeTrabalhos ||
+            0
+        );
 
-        const slotRef =
+      const novaQuantidade =
+        quantidadeAtual + 1;
+
+      await setDoc(
+        doc(
+          db,
+          "clientes",
+          clienteId
+        ),
+        {
+          quantidadeTrabalhos:
+            novaQuantidade,
+
+          statusCliente:
+            obterStatusCliente(
+              novaQuantidade
+            ),
+
+          ultimoAgendamento:
+            agendamento.data || "",
+
+          ultimoHorario:
+            agendamento.horario || "",
+
+          atualizadoEm:
+            serverTimestamp(),
+        },
+        { merge: true }
+      );
+
+      await updateDoc(
+        doc(
+          db,
+          "agendamentos",
+          agendamento.id
+        ),
+        {
+          status:
+            "concluido",
+
+          clienteId,
+
+          concluidoEm:
+            serverTimestamp(),
+
+          atualizadoEm:
+            serverTimestamp(),
+        }
+      );
+
+      const slotId =
+        criarIdHorario(
+          agendamento.data,
+          agendamento.horario
+        );
+
+      const slot =
+        obterHorario(
+          agendamento.data,
+          agendamento.horario
+        );
+
+      if (slot?.horarioExtra) {
+        await updateDoc(
           doc(
             db,
             "horariosOcupados",
             slotId
-          );
-
-        await setDoc(
-          slotRef,
+          ),
           {
-            data:
-              dataSelecionada,
+            agendamentoId:
+              deleteField(),
 
-            horario,
+            clienteId:
+              deleteField(),
 
-            bloqueado:
+            atualizadoEm:
+              serverTimestamp(),
+          }
+        );
+      } else if (slot?.bloqueado) {
+        await updateDoc(
+          doc(
+            db,
+            "horariosOcupados",
+            slotId
+          ),
+          {
+            agendamentoId:
+              deleteField(),
+
+            clienteId:
+              deleteField(),
+
+            atualizadoEm:
+              serverTimestamp(),
+          }
+        );
+      } else {
+        await deleteDoc(
+          doc(
+            db,
+            "horariosOcupados",
+            slotId
+          )
+        );
+      }
+    } catch (error) {
+      console.error(error);
+
+      setErro(
+        "Não foi possível concluir o atendimento."
+      );
+    } finally {
+      setProcessando(false);
+    }
+  }
+
+  /*
+   * ============================================================
+   * EXCLUIR
+   * ============================================================
+   */
+
+  async function excluirAgendamento(
+    agendamento
+  ) {
+    const confirmar =
+      window.confirm(
+        `Excluir o agendamento de ${agendamento.nome}?`
+      );
+
+    if (!confirmar) return;
+
+    try {
+      setProcessando(true);
+      setErro("");
+
+      await deleteDoc(
+        doc(
+          db,
+          "agendamentos",
+          agendamento.id
+        )
+      );
+
+      const slotId =
+        criarIdHorario(
+          agendamento.data,
+          agendamento.horario
+        );
+
+      const slot =
+        obterHorario(
+          agendamento.data,
+          agendamento.horario
+        );
+
+      if (slot?.horarioExtra) {
+        await setDoc(
+          doc(
+            db,
+            "horariosOcupados",
+            slotId
+          ),
+          {
+            agendamentoId:
+              deleteField(),
+
+            clienteId:
+              deleteField(),
+
+            horarioExtra:
               true,
 
-            motivo:
-              motivoBloqueio.trim() ||
-              "Bloqueio manual",
-
-            criadoEm:
+            atualizadoEm:
               serverTimestamp(),
           },
-          {
-            merge: true,
-          }
+          { merge: true }
         );
-
-        setMotivoBloqueio("");
-      } catch (error) {
-        console.error(
-          "Erro ao bloquear horário:",
-          error
-        );
-
-        setErro(
-          "Não foi possível bloquear o horário."
-        );
-      } finally {
-        setProcessandoDisponibilidade(
-          false
-        );
-      }
-    };
-
-  /* =========================================================
-     LIBERAR HORÁRIO
-  ========================================================= */
-
-  const liberarHorario =
-    async (
-      horario
-    ) => {
-      if (
-        !dataSelecionada ||
-        !horario
-      ) {
-        return;
-      }
-
-      setErro("");
-      setProcessandoDisponibilidade(
-        true
-      );
-
-      try {
-        const slotId =
-          criarIdHorario(
-            dataSelecionada,
-            horario
-          );
-
-        const slot =
-          obterHorario(
-            dataSelecionada,
-            horario
-          );
-
-        const slotRef =
+      } else if (slot?.bloqueado) {
+        await updateDoc(
           doc(
             db,
             "horariosOcupados",
             slotId
-          );
+          ),
+          {
+            agendamentoId:
+              deleteField(),
 
-        /*
-          Se existe agendamento nesse horário,
-          retiramos somente o bloqueio.
+            clienteId:
+              deleteField(),
 
-          O agendamento continua ocupando o horário.
-        */
-
-        if (
-          slot?.agendamentoId
-        ) {
-          await updateDoc(
-            slotRef,
-            {
-              bloqueado:
-                deleteField(),
-
-              motivo:
-                deleteField(),
-            }
-          );
-
-          return;
-        }
-
-        /*
-          Se não existe agendamento,
-          podemos remover completamente
-          o documento.
-        */
-
-        if (
-          slot?.horarioExtra ===
-          true
-        ) {
-          /*
-            Horário extra continua existindo.
-            Apenas retiramos o bloqueio.
-          */
-
-          await updateDoc(
-            slotRef,
-            {
-              bloqueado:
-                deleteField(),
-
-              motivo:
-                deleteField(),
-            }
-          );
-
-          return;
-        }
-
+            atualizadoEm:
+              serverTimestamp(),
+          }
+        );
+      } else {
         await deleteDoc(
-          slotRef
-        );
-      } catch (error) {
-        console.error(
-          "Erro ao liberar horário:",
-          error
-        );
-
-        setErro(
-          "Não foi possível liberar o horário."
-        );
-      } finally {
-        setProcessandoDisponibilidade(
-          false
+          doc(
+            db,
+            "horariosOcupados",
+            slotId
+          )
         );
       }
-    };
+    } catch (error) {
+      console.error(error);
 
-  /* =========================================================
-     BLOQUEAR DIA INTEIRO
-  ========================================================= */
+      setErro(
+        "Não foi possível excluir o agendamento."
+      );
+    } finally {
+      setProcessando(false);
+    }
+  }
 
-  const bloquearDiaInteiro =
-    async () => {
-      if (!dataSelecionada) {
+  /*
+   * ============================================================
+   * BATCH
+   * ============================================================
+   */
+
+  async function executarBatch(
+    operacoes
+  ) {
+    const limite = 400;
+
+    for (
+      let inicio = 0;
+      inicio < operacoes.length;
+      inicio += limite
+    ) {
+      const grupo =
+        operacoes.slice(
+          inicio,
+          inicio + limite
+        );
+
+      const batch =
+        writeBatch(db);
+
+      grupo.forEach(
+        (operacao) => {
+          const referencia =
+            doc(
+              db,
+              "horariosOcupados",
+              operacao.id
+            );
+
+          if (
+            operacao.tipo ===
+            "delete"
+          ) {
+            batch.delete(
+              referencia
+            );
+          }
+
+          if (
+            operacao.tipo ===
+            "set"
+          ) {
+            batch.set(
+              referencia,
+              operacao.dados,
+              {
+                merge: true,
+              }
+            );
+          }
+
+          if (
+            operacao.tipo ===
+            "update"
+          ) {
+            batch.update(
+              referencia,
+              operacao.dados
+            );
+          }
+        }
+      );
+
+      await batch.commit();
+    }
+  }
+
+  /*
+   * ============================================================
+   * BLOQUEIO INDIVIDUAL
+   * ============================================================
+   */
+
+  async function bloquearHorario(
+    horario
+  ) {
+    const confirmar =
+      window.confirm(
+        `Bloquear o horário ${horario}?`
+      );
+
+    if (!confirmar) return;
+
+    try {
+      setProcessando(true);
+      setErro("");
+
+      const id =
+        criarIdHorario(
+          dataSelecionada,
+          horario
+        );
+
+      await setDoc(
+        doc(
+          db,
+          "horariosOcupados",
+          id
+        ),
+        {
+          data:
+            dataSelecionada,
+
+          horario,
+
+          bloqueado:
+            true,
+
+          motivo:
+            "",
+
+          atualizadoEm:
+            serverTimestamp(),
+        },
+        {
+          merge: true,
+        }
+      );
+    } catch (error) {
+      console.error(error);
+
+      setErro(
+        "Não foi possível bloquear o horário."
+      );
+    } finally {
+      setProcessando(false);
+    }
+  }
+
+  async function liberarHorario(
+    horario
+  ) {
+    try {
+      setProcessando(true);
+      setErro("");
+
+      const id =
+        criarIdHorario(
+          dataSelecionada,
+          horario
+        );
+
+      const item =
+        obterHorario(
+          dataSelecionada,
+          horario
+        );
+
+      if (!item) return;
+
+      const referencia =
+        doc(
+          db,
+          "horariosOcupados",
+          id
+        );
+
+      if (item.agendamentoId) {
+        await updateDoc(
+          referencia,
+          {
+            bloqueado:
+              deleteField(),
+
+            motivo:
+              deleteField(),
+
+            atualizadoEm:
+              serverTimestamp(),
+          }
+        );
+
         return;
       }
 
-      const possuiAgendamento =
-        diaTemAgendamento(
-          dataSelecionada
+      if (item.horarioExtra) {
+        await updateDoc(
+          referencia,
+          {
+            bloqueado:
+              deleteField(),
+
+            motivo:
+              deleteField(),
+
+            atualizadoEm:
+              serverTimestamp(),
+          }
         );
 
-      if (
-        possuiAgendamento
-      ) {
-        const confirmou =
-          window.confirm(
-            "Esta data possui agendamento(s). Deseja bloquear todos os horários mesmo assim?"
-          );
-
-        if (!confirmou) {
-          return;
-        }
+        return;
       }
 
-      setErro("");
-      setProcessandoDisponibilidade(
-        true
+      await deleteDoc(
+        referencia
+      );
+    } catch (error) {
+      console.error(error);
+
+      setErro(
+        "Não foi possível liberar o horário."
+      );
+    } finally {
+      setProcessando(false);
+    }
+  }
+
+  /*
+   * ============================================================
+   * BLOQUEAR DIA
+   * ============================================================
+   */
+
+  async function bloquearDia() {
+    const confirmar =
+      window.confirm(
+        `Bloquear os horários padrão de ${formatarDataCurta(
+          dataSelecionada
+        )}?`
       );
 
-      try {
-        const operacoes =
-          HORARIOS_PADRAO.map(
-            (horario) => ({
-              tipo: "set",
+    if (!confirmar) return;
 
-              ref: doc(
-                db,
-                "horariosOcupados",
+    try {
+      setProcessando(true);
+      setErro("");
+
+      const operacoes =
+        HORARIOS_PADRAO.map(
+          (horario) => ({
+            tipo: "set",
+
+            id:
+              criarIdHorario(
+                dataSelecionada,
+                horario
+              ),
+
+            dados: {
+              data:
+                dataSelecionada,
+
+              horario,
+
+              bloqueado:
+                true,
+
+              motivo:
+                motivoBloqueioDia.trim(),
+
+              atualizadoEm:
+                serverTimestamp(),
+            },
+          })
+        );
+
+      await executarBatch(
+        operacoes
+      );
+
+      setMotivoBloqueioDia("");
+    } catch (error) {
+      console.error(error);
+
+      setErro(
+        "Não foi possível bloquear o dia."
+      );
+    } finally {
+      setProcessando(false);
+    }
+  }
+
+  async function liberarDia() {
+    const confirmar =
+      window.confirm(
+        `Liberar os horários padrão de ${formatarDataCurta(
+          dataSelecionada
+        )}?`
+      );
+
+    if (!confirmar) return;
+
+    try {
+      setProcessando(true);
+      setErro("");
+
+      const operacoes = [];
+
+      HORARIOS_PADRAO.forEach(
+        (horario) => {
+          const item =
+            obterHorario(
+              dataSelecionada,
+              horario
+            );
+
+          if (!item) return;
+
+          if (item.agendamentoId) {
+            operacoes.push({
+              tipo:
+                "update",
+
+              id:
                 criarIdHorario(
                   dataSelecionada,
                   horario
-                )
-              ),
+                ),
+
+              dados: {
+                bloqueado:
+                  deleteField(),
+
+                motivo:
+                  deleteField(),
+
+                atualizadoEm:
+                  serverTimestamp(),
+              },
+            });
+          } else {
+            operacoes.push({
+              tipo:
+                "delete",
+
+              id:
+                criarIdHorario(
+                  dataSelecionada,
+                  horario
+                ),
+            });
+          }
+        }
+      );
+
+      await executarBatch(
+        operacoes
+      );
+    } catch (error) {
+      console.error(error);
+
+      setErro(
+        "Não foi possível liberar o dia."
+      );
+    } finally {
+      setProcessando(false);
+    }
+  }
+
+  /*
+   * ============================================================
+   * HORÁRIO EXTRA
+   * ============================================================
+   */
+
+  async function adicionarHorarioExtra() {
+    const horario =
+      novoHorarioExtra.trim();
+
+    if (!horarioValido(horario)) {
+      setErro(
+        "Informe um horário válido."
+      );
+
+      return;
+    }
+
+    if (
+      obterHorario(
+        dataSelecionada,
+        horario
+      )
+    ) {
+      setErro(
+        "Esse horário já existe neste dia."
+      );
+
+      return;
+    }
+
+    try {
+      setProcessando(true);
+      setErro("");
+
+      const id =
+        criarIdHorario(
+          dataSelecionada,
+          horario
+        );
+
+      await setDoc(
+        doc(
+          db,
+          "horariosOcupados",
+          id
+        ),
+        {
+          data:
+            dataSelecionada,
+
+          horario,
+
+          horarioExtra:
+            true,
+
+          bloqueado:
+            false,
+
+          motivo:
+            novoHorarioExtraMotivo.trim(),
+
+          criadoEm:
+            serverTimestamp(),
+
+          atualizadoEm:
+            serverTimestamp(),
+        }
+      );
+
+      setNovoHorarioExtra("");
+      setNovoHorarioExtraMotivo("");
+    } catch (error) {
+      console.error(error);
+
+      setErro(
+        "Não foi possível adicionar o horário."
+      );
+    } finally {
+      setProcessando(false);
+    }
+  }
+
+  async function removerHorarioExtra(
+    horario
+  ) {
+    const item =
+      obterHorario(
+        dataSelecionada,
+        horario
+      );
+
+    if (!item?.horarioExtra)
+      return;
+
+    if (item.agendamentoId) {
+      window.alert(
+        "Este horário possui um agendamento e não pode ser removido."
+      );
+
+      return;
+    }
+
+    const confirmar =
+      window.confirm(
+        `Remover o horário extra ${horario}?`
+      );
+
+    if (!confirmar) return;
+
+    try {
+      setProcessando(true);
+
+      await deleteDoc(
+        doc(
+          db,
+          "horariosOcupados",
+          criarIdHorario(
+            dataSelecionada,
+            horario
+          )
+        )
+      );
+    } catch (error) {
+      console.error(error);
+
+      setErro(
+        "Não foi possível remover o horário."
+      );
+    } finally {
+      setProcessando(false);
+    }
+  }
+
+  /*
+   * ============================================================
+   * PERÍODO
+   * ============================================================
+   */
+
+  async function bloquearPeriodo() {
+    if (
+      !periodoInicio ||
+      !periodoFim
+    ) {
+      setErro(
+        "Informe o período."
+      );
+
+      return;
+    }
+
+    const inicio =
+      new Date(
+        `${periodoInicio}T00:00:00`
+      );
+
+    const fim =
+      new Date(
+        `${periodoFim}T00:00:00`
+      );
+
+    if (inicio > fim) {
+      setErro(
+        "A data inicial não pode ser maior que a final."
+      );
+
+      return;
+    }
+
+    const confirmar =
+      window.confirm(
+        `Bloquear os horários de ${formatarDataCurta(
+          periodoInicio
+        )} até ${formatarDataCurta(
+          periodoFim
+        )}?`
+      );
+
+    if (!confirmar) return;
+
+    try {
+      setProcessando(true);
+      setErro("");
+
+      const operacoes = [];
+
+      let dataAtual =
+        new Date(inicio);
+
+      while (
+        dataAtual <= fim
+      ) {
+        const dataISO =
+          formatarDataISO(
+            dataAtual
+          );
+
+        HORARIOS_PADRAO.forEach(
+          (horario) => {
+            operacoes.push({
+              tipo: "set",
+
+              id:
+                criarIdHorario(
+                  dataISO,
+                  horario
+                ),
 
               dados: {
                 data:
-                  dataSelecionada,
+                  dataISO,
 
                 horario,
 
@@ -1184,942 +2072,257 @@ function AgendamentoAdmin() {
                   true,
 
                 motivo:
-                  motivoBloqueio.trim() ||
-                  "Dia inteiro bloqueado",
+                  periodoMotivo.trim(),
 
-                criadoEm:
+                atualizadoEm:
                   serverTimestamp(),
               },
-            })
-          );
-
-        await executarOperacoes(
-          operacoes
-        );
-
-        setMotivoBloqueio("");
-      } catch (error) {
-        console.error(
-          "Erro ao bloquear dia:",
-          error
-        );
-
-        setErro(
-          "Não foi possível bloquear a data."
-        );
-      } finally {
-        setProcessandoDisponibilidade(
-          false
-        );
-      }
-    };
-
-  /* =========================================================
-     LIBERAR DIA INTEIRO
-  ========================================================= */
-
-  const liberarDiaInteiro =
-    async () => {
-      if (!dataSelecionada) {
-        return;
-      }
-
-      setErro("");
-      setProcessandoDisponibilidade(
-        true
-      );
-
-      try {
-        const operacoes =
-          HORARIOS_PADRAO.map(
-            (horario) => {
-              const slot =
-                obterHorario(
-                  dataSelecionada,
-                  horario
-                );
-
-              if (!slot) {
-                return null;
-              }
-
-              const slotRef =
-                doc(
-                  db,
-                  "horariosOcupados",
-                  criarIdHorario(
-                    dataSelecionada,
-                    horario
-                  )
-                );
-
-              /*
-                Se há agendamento,
-                preservamos o documento.
-              */
-
-              if (
-                slot.agendamentoId
-              ) {
-                return {
-                  tipo: "update",
-
-                  ref: slotRef,
-
-                  dados: {
-                    bloqueado:
-                      deleteField(),
-
-                    motivo:
-                      deleteField(),
-                  },
-                };
-              }
-
-              /*
-                Se é somente bloqueio,
-                apagamos o documento.
-              */
-
-              return {
-                tipo: "delete",
-                ref: slotRef,
-              };
-            }
-          ).filter(Boolean);
-
-        await executarOperacoes(
-          operacoes
-        );
-      } catch (error) {
-        console.error(
-          "Erro ao liberar dia:",
-          error
-        );
-
-        setErro(
-          "Não foi possível liberar a data."
-        );
-      } finally {
-        setProcessandoDisponibilidade(
-          false
-        );
-      }
-    };
-
-  /* =========================================================
-     ADICIONAR HORÁRIO EXTRA
-  ========================================================= */
-
-  const adicionarHorarioExtra =
-    async () => {
-      const horario =
-        novoHorario.trim();
-
-      if (
-        !horarioValido(horario)
-      ) {
-        setErro(
-          "Digite um horário válido no formato HH:MM."
-        );
-
-        return;
-      }
-
-      if (
-        todosHorariosDaData.includes(
-          horario
-        )
-      ) {
-        setErro(
-          "Esse horário já existe nesta data."
-        );
-
-        return;
-      }
-
-      if (!dataSelecionada) {
-        setErro(
-          "Selecione uma data primeiro."
-        );
-
-        return;
-      }
-
-      setErro("");
-      setProcessandoDisponibilidade(
-        true
-      );
-
-      try {
-        const slotId =
-          criarIdHorarioExtra(
-            dataSelecionada,
-            horario
-          );
-
-        const slotRef =
-          doc(
-            db,
-            "horariosOcupados",
-            slotId
-          );
-
-        await setDoc(
-          slotRef,
-          {
-            data:
-              dataSelecionada,
-
-            horario,
-
-            horarioExtra:
-              true,
-
-            bloqueado:
-              false,
-
-            motivo:
-              motivoHorarioExtra.trim() ||
-              "Horário extra",
-
-            criadoEm:
-              serverTimestamp(),
-          },
-          {
-            merge: true,
+            });
           }
         );
 
-        setNovoHorario("");
-        setMotivoHorarioExtra("");
-
-        setMostrandoAdicionarHorario(
-          false
-        );
-      } catch (error) {
-        console.error(
-          "Erro ao adicionar horário extra:",
-          error
-        );
-
-        setErro(
-          "Não foi possível adicionar o horário extra."
-        );
-      } finally {
-        setProcessandoDisponibilidade(
-          false
-        );
-      }
-    };
-
-  /* =========================================================
-     REMOVER HORÁRIO EXTRA
-  ========================================================= */
-
-  const removerHorarioExtra =
-    async (
-      horario
-    ) => {
-      if (!dataSelecionada) {
-        return;
+        dataAtual =
+          adicionarDias(
+            dataAtual,
+            1
+          );
       }
 
-      const confirmou =
-        window.confirm(
-          `Remover o horário extra ${horario} desta data?`
-        );
-
-      if (!confirmou) {
-        return;
-      }
-
-      setErro("");
-      setProcessandoDisponibilidade(
-        true
+      await executarBatch(
+        operacoes
       );
 
-      try {
-        const slot =
-          obterHorario(
-            dataSelecionada,
-            horario
+      setPeriodoInicio("");
+      setPeriodoFim("");
+      setPeriodoMotivo("");
+    } catch (error) {
+      console.error(error);
+
+      setErro(
+        "Não foi possível bloquear o período."
+      );
+    } finally {
+      setProcessando(false);
+    }
+  }
+
+  async function liberarPeriodo() {
+    if (
+      !periodoInicio ||
+      !periodoFim
+    ) {
+      setErro(
+        "Informe o período."
+      );
+
+      return;
+    }
+
+    const inicio =
+      new Date(
+        `${periodoInicio}T00:00:00`
+      );
+
+    const fim =
+      new Date(
+        `${periodoFim}T00:00:00`
+      );
+
+    if (inicio > fim) {
+      setErro(
+        "A data inicial não pode ser maior que a final."
+      );
+
+      return;
+    }
+
+    const confirmar =
+      window.confirm(
+        `Liberar os horários de ${formatarDataCurta(
+          periodoInicio
+        )} até ${formatarDataCurta(
+          periodoFim
+        )}?`
+      );
+
+    if (!confirmar) return;
+
+    try {
+      setProcessando(true);
+      setErro("");
+
+      const operacoes = [];
+
+      let dataAtual =
+        new Date(inicio);
+
+      while (
+        dataAtual <= fim
+      ) {
+        const dataISO =
+          formatarDataISO(
+            dataAtual
           );
 
-        if (!slot) {
-          return;
-        }
-
-        /*
-          Não permitimos apagar um horário
-          extra que já possui agendamento.
-        */
-
-        if (
-          slot.agendamentoId
-        ) {
-          setErro(
-            "Esse horário possui um agendamento e não pode ser removido."
-          );
-
-          return;
-        }
-
-        const slotRef =
-          doc(
-            db,
-            "horariosOcupados",
-            criarIdHorario(
-              dataSelecionada,
-              horario
-            )
-          );
-
-        await deleteDoc(
-          slotRef
-        );
-      } catch (error) {
-        console.error(
-          "Erro ao remover horário extra:",
-          error
-        );
-
-        setErro(
-          "Não foi possível remover o horário extra."
-        );
-      } finally {
-        setProcessandoDisponibilidade(
-          false
-        );
-      }
-    };
-
-  /* =========================================================
-     BLOQUEAR PERÍODO
-  ========================================================= */
-
-  const bloquearPeriodo =
-    async () => {
-      if (
-        !dataInicioPeriodo ||
-        !dataFimPeriodo
-      ) {
-        setErro(
-          "Informe a data inicial e final."
-        );
-
-        return;
-      }
-
-      const inicio =
-        criarDataLocal(
-          dataInicioPeriodo
-        );
-
-      const fim =
-        criarDataLocal(
-          dataFimPeriodo
-        );
-
-      if (
-        !inicio ||
-        !fim
-      ) {
-        setErro(
-          "Informe datas válidas."
-        );
-
-        return;
-      }
-
-      if (
-        inicio > fim
-      ) {
-        setErro(
-          "A data inicial não pode ser posterior à data final."
-        );
-
-        return;
-      }
-
-      const possuiAgendamento =
-        agendamentos.some(
-          (item) => {
-            if (
-              item.status ===
-                "cancelado" ||
-              item.status ===
-                "excluido"
-            ) {
-              return false;
-            }
-
-            const data =
-              criarDataLocal(
-                item.data
+        HORARIOS_PADRAO.forEach(
+          (horario) => {
+            const item =
+              obterHorario(
+                dataISO,
+                horario
               );
 
-            return (
-              data &&
-              data >= inicio &&
-              data <= fim
-            );
-          }
-        );
+            if (!item) return;
 
-      if (
-        possuiAgendamento
-      ) {
-        const confirmou =
-          window.confirm(
-            "Existe pelo menos um agendamento dentro desse período. Deseja bloquear o período mesmo assim?"
-          );
-
-        if (!confirmou) {
-          return;
-        }
-      }
-
-      setErro("");
-      setProcessandoDisponibilidade(
-        true
-      );
-
-      try {
-        const operacoes =
-          [];
-
-        let dataAtual =
-          new Date(
-            inicio
-          );
-
-        while (
-          dataAtual <= fim
-        ) {
-          const dataISO =
-            formatarDataISO(
-              dataAtual
-            );
-
-          HORARIOS_PADRAO.forEach(
-            (horario) => {
+            if (
+              item.agendamentoId
+            ) {
               operacoes.push({
-                tipo: "set",
+                tipo:
+                  "update",
 
-                ref: doc(
-                  db,
-                  "horariosOcupados",
+                id:
                   criarIdHorario(
                     dataISO,
                     horario
-                  )
-                ),
+                  ),
 
                 dados: {
-                  data:
-                    dataISO,
-
-                  horario,
-
                   bloqueado:
-                    true,
+                    deleteField(),
 
                   motivo:
-                    motivoPeriodo.trim() ||
-                    "Período bloqueado",
+                    deleteField(),
 
-                  criadoEm:
+                  atualizadoEm:
                     serverTimestamp(),
                 },
               });
-            }
-          );
+            } else {
+              operacoes.push({
+                tipo:
+                  "delete",
 
-          dataAtual =
-            adicionarDias(
-              dataAtual,
-              1
-            );
-        }
-
-        await executarOperacoes(
-          operacoes
-        );
-
-        setMotivoPeriodo("");
-      } catch (error) {
-        console.error(
-          "Erro ao bloquear período:",
-          error
-        );
-
-        setErro(
-          "Não foi possível bloquear o período."
-        );
-      } finally {
-        setProcessandoDisponibilidade(
-          false
-        );
-      }
-    };
-
-  /* =========================================================
-     LIBERAR PERÍODO
-  ========================================================= */
-
-  const liberarPeriodo =
-    async () => {
-      if (
-        !dataInicioPeriodo ||
-        !dataFimPeriodo
-      ) {
-        setErro(
-          "Informe a data inicial e final."
-        );
-
-        return;
-      }
-
-      const inicio =
-        criarDataLocal(
-          dataInicioPeriodo
-        );
-
-      const fim =
-        criarDataLocal(
-          dataFimPeriodo
-        );
-
-      if (
-        !inicio ||
-        !fim ||
-        inicio > fim
-      ) {
-        setErro(
-          "Informe um período válido."
-        );
-
-        return;
-      }
-
-      const confirmou =
-        window.confirm(
-          "Liberar os bloqueios manuais desse período?"
-        );
-
-      if (!confirmou) {
-        return;
-      }
-
-      setErro("");
-      setProcessandoDisponibilidade(
-        true
-      );
-
-      try {
-        const operacoes =
-          [];
-
-        let dataAtual =
-          new Date(
-            inicio
-          );
-
-        while (
-          dataAtual <= fim
-        ) {
-          const dataISO =
-            formatarDataISO(
-              dataAtual
-            );
-
-          HORARIOS_PADRAO.forEach(
-            (horario) => {
-              const slot =
-                obterHorario(
-                  dataISO,
-                  horario
-                );
-
-              if (!slot) {
-                return;
-              }
-
-              const slotRef =
-                doc(
-                  db,
-                  "horariosOcupados",
+                id:
                   criarIdHorario(
                     dataISO,
                     horario
-                  )
-                );
-
-              if (
-                slot.agendamentoId
-              ) {
-                operacoes.push({
-                  tipo: "update",
-
-                  ref: slotRef,
-
-                  dados: {
-                    bloqueado:
-                      deleteField(),
-
-                    motivo:
-                      deleteField(),
-                  },
-                });
-              } else {
-                operacoes.push({
-                  tipo: "delete",
-
-                  ref: slotRef,
-                });
-              }
+                  ),
+              });
             }
-          );
-
-          dataAtual =
-            adicionarDias(
-              dataAtual,
-              1
-            );
-        }
-
-        await executarOperacoes(
-          operacoes
-        );
-      } catch (error) {
-        console.error(
-          "Erro ao liberar período:",
-          error
-        );
-
-        setErro(
-          "Não foi possível liberar o período."
-        );
-      } finally {
-        setProcessandoDisponibilidade(
-          false
-        );
-      }
-    };
-
-  /* =========================================================
-     STATUS DO AGENDAMENTO
-  ========================================================= */
-
-  const alterarStatus =
-    async (
-      id,
-      novoStatus
-    ) => {
-      try {
-        setErro("");
-
-        const agendamento =
-          agendamentos.find(
-            (item) =>
-              item.id === id
-          );
-
-        if (!agendamento) {
-          return;
-        }
-
-        const agendamentoRef =
-          doc(
-            db,
-            "agendamentos",
-            id
-          );
-
-        await updateDoc(
-          agendamentoRef,
-          {
-            status:
-              novoStatus,
           }
         );
 
-        if (
-          !agendamento.data ||
-          !agendamento.horario
-        ) {
-          return;
-        }
-
-        const slotId =
-          criarIdHorario(
-            agendamento.data,
-            agendamento.horario
-          );
-
-        const slotRef =
-          doc(
-            db,
-            "horariosOcupados",
-            slotId
-          );
-
-        const slot =
-          obterHorario(
-            agendamento.data,
-            agendamento.horario
-          );
-
-        /*
-          CANCELAMENTO
-        */
-
-        if (
-          novoStatus ===
-          "cancelado"
-        ) {
-          if (
-            slot?.bloqueado ===
-            true
-          ) {
-            /*
-              Preserva o bloqueio manual,
-              mas remove o agendamento.
-            */
-
-            await updateDoc(
-              slotRef,
-              {
-                agendamentoId:
-                  deleteField(),
-              }
-            );
-          } else {
-            await deleteDoc(
-              slotRef
-            );
-          }
-
-          return;
-        }
-
-        /*
-          REATIVAÇÃO
-        */
-
-        if (
-          novoStatus ===
-            "pendente" ||
-          novoStatus ===
-            "confirmado"
-        ) {
-          await setDoc(
-            slotRef,
-            {
-              data:
-                agendamento.data,
-
-              horario:
-                agendamento.horario,
-
-              agendamentoId:
-                id,
-            },
-            {
-              merge: true,
-            }
-          );
-        }
-      } catch (error) {
-        console.error(
-          "Erro ao alterar status:",
-          error
-        );
-
-        setErro(
-          "Não foi possível alterar o status."
-        );
-      }
-    };
-
-  /* =========================================================
-     EXCLUIR AGENDAMENTO
-  ========================================================= */
-
-  const excluirAgendamento =
-    async (
-      id
-    ) => {
-      const confirmou =
-        window.confirm(
-          "Tem certeza que deseja excluir este agendamento?"
-        );
-
-      if (!confirmou) {
-        return;
-      }
-
-      try {
-        setErro("");
-
-        const agendamento =
-          agendamentos.find(
-            (item) =>
-              item.id === id
-          );
-
-        if (!agendamento) {
-          return;
-        }
-
-        const agendamentoRef =
-          doc(
-            db,
-            "agendamentos",
-            id
-          );
-
-        await deleteDoc(
-          agendamentoRef
-        );
-
-        if (
-          agendamento.data &&
-          agendamento.horario
-        ) {
-          const slot =
-            obterHorario(
-              agendamento.data,
-              agendamento.horario
-            );
-
-          const slotRef =
-            doc(
-              db,
-              "horariosOcupados",
-              criarIdHorario(
-                agendamento.data,
-                agendamento.horario
-              )
-            );
-
-          if (
-            slot?.bloqueado ===
-            true
-          ) {
-            await updateDoc(
-              slotRef,
-              {
-                agendamentoId:
-                  deleteField(),
-              }
-            );
-          } else {
-            await deleteDoc(
-              slotRef
-            );
-          }
-        }
-      } catch (error) {
-        console.error(
-          "Erro ao excluir agendamento:",
-          error
-        );
-
-        setErro(
-          "Não foi possível excluir o agendamento."
-        );
-      }
-    };
-
-  /* =========================================================
-     DATA CRIADA
-  ========================================================= */
-
-  const formatarCriadoEm =
-    (valor) => {
-      if (
-        !valor
-      ) {
-        return "—";
-      }
-
-      if (
-        typeof valor.toDate ===
-        "function"
-      ) {
-        return valor
-          .toDate()
-          .toLocaleString(
-            "pt-BR"
+        dataAtual =
+          adicionarDias(
+            dataAtual,
+            1
           );
       }
 
-      return "—";
-    };
+      await executarBatch(
+        operacoes
+      );
 
-  /* =========================================================
-     AGENDAMENTOS FILTRADOS
-  ========================================================= */
+      setPeriodoInicio("");
+      setPeriodoFim("");
+      setPeriodoMotivo("");
+    } catch (error) {
+      console.error(error);
+
+      setErro(
+        "Não foi possível liberar o período."
+      );
+    } finally {
+      setProcessando(false);
+    }
+  }
+
+  /*
+   * ============================================================
+   * LISTA
+   * ============================================================
+   */
 
   const agendamentosFiltrados =
     useMemo(() => {
-      if (
-        filtroStatus ===
-        "todos"
-      ) {
-        return agendamentos;
-      }
-
       return agendamentos.filter(
-        (item) =>
-          item.status ===
-          filtroStatus
+        (agendamento) => {
+          if (
+            filtroStatus ===
+            "todos"
+          ) {
+            return true;
+          }
+
+          return (
+            agendamento.status ===
+            filtroStatus
+          );
+        }
       );
     }, [
       agendamentos,
       filtroStatus,
     ]);
 
-  /* =========================================================
-     CONTADORES
-  ========================================================= */
+  const agendamentosDoDia =
+    useMemo(() => {
+      return agendamentosFiltrados
+        .filter(
+          (agendamento) =>
+            agendamento.data ===
+            dataSelecionada
+        )
+        .sort((a, b) =>
+          String(
+            a.horario || ""
+          ).localeCompare(
+            String(
+              b.horario || ""
+            )
+          )
+        );
+    }, [
+      agendamentosFiltrados,
+      dataSelecionada,
+    ]);
 
-  const totalPendentes =
+  const quantidadeAtivos =
+    agendamentos.filter(
+      (item) =>
+        item.status !==
+          "cancelado" &&
+        item.status !==
+          "excluido"
+    ).length;
+
+  const quantidadePendentes =
     agendamentos.filter(
       (item) =>
         item.status ===
         "pendente"
     ).length;
 
-  const totalConfirmados =
+  const quantidadeConfirmados =
     agendamentos.filter(
       (item) =>
         item.status ===
         "confirmado"
     ).length;
 
-  const totalCancelados =
-    agendamentos.filter(
-      (item) =>
-        item.status ===
-        "cancelado"
-    ).length;
-
-  /* =========================================================
-     RENDER
-  ========================================================= */
+  /*
+   * ============================================================
+   * RENDER
+   * ============================================================
+   */
 
   return (
     <main className="admin-agendamento-page">
 
-      {/* =====================================================
-          HEADER
-      ===================================================== */}
+      {/* HEADER */}
 
       <header className="admin-agendamento-header">
-
         <button
           type="button"
           className="admin-agendamento-back"
@@ -2129,42 +2332,37 @@ function AgendamentoAdmin() {
             )
           }
         >
-          <FaArrowLeft />
-          VOLTAR
+          <FiArrowLeft />
+          <span>Voltar</span>
         </button>
 
-        <div className="admin-agendamento-title">
-          <span>
-            KSA STUDIO
-          </span>
-
-          <h1>
+        <div className="admin-agendamento-title-area">
+          <h1 className="admin-agendamento-title">
+            <FiCalendar />
             Agenda
           </h1>
-
-          <p>
-            Gerencie agendamentos e disponibilidade
-          </p>
         </div>
 
         <div className="admin-agendamento-counter">
-          <strong>
-            {agendamentos.length}
-          </strong>
+          <FiUsers />
 
-          <span>
-            SOLICITAÇÕES
-          </span>
+          <div>
+            <strong>
+              {quantidadeAtivos}
+            </strong>
+
+            <span>
+              agendamentos ativos
+            </span>
+          </div>
         </div>
       </header>
 
-      {/* =====================================================
-          ERRO
-      ===================================================== */}
+      {/* ERRO */}
 
       {erro && (
         <div className="admin-agendamento-error">
-          <FaExclamationTriangle />
+          <FiX />
 
           <span>
             {erro}
@@ -2176,112 +2374,74 @@ function AgendamentoAdmin() {
               setErro("")
             }
           >
-            <FaTimes />
+            <FiX />
           </button>
         </div>
       )}
 
-      {/* =====================================================
-          GERENCIADOR DE DISPONIBILIDADE
-      ===================================================== */}
+      {/* DISPONIBILIDADE */}
 
       <section className="admin-disponibilidade">
 
         <div className="admin-disponibilidade-header">
-
           <div>
             <span className="admin-section-eyebrow">
-              CONTROLE DA AGENDA
+              DISPONIBILIDADE
             </span>
 
-            <h2>
-              Disponibilidade
+            <h2 className="admin-disponibilidade-date">
+              {formatarDataTexto(
+                dataSelecionada
+              )}
             </h2>
-
-            <p>
-              Libere horários extras, bloqueie horários ou reserve dias inteiros.
-            </p>
           </div>
-
-          <div className="admin-disponibilidade-date">
-            <FaCalendarAlt />
-
-            <div>
-              <span>
-                DATA SELECIONADA
-              </span>
-
-              <strong>
-                {formatarDataCurta(
-                  dataSelecionada
-                )}
-              </strong>
-            </div>
-          </div>
-
         </div>
 
         <div className="admin-disponibilidade-content">
 
-          {/* =================================================
-              CALENDÁRIO ADMIN
-          ================================================= */}
+          {/* CALENDÁRIO */}
 
           <div className="admin-calendar-card">
 
             <div className="admin-calendar-top">
+              <button
+                type="button"
+                className="admin-calendar-nav"
+                onClick={() =>
+                  mudarMes(-1)
+                }
+              >
+                <FiChevronLeft />
+              </button>
+
+              <strong>
+                {MESES[mesAtual]}{" "}
+                {anoAtual}
+              </strong>
 
               <button
                 type="button"
                 className="admin-calendar-nav"
-                onClick={
-                  mesAnterior
+                onClick={() =>
+                  mudarMes(1)
                 }
-                aria-label="Mês anterior"
               >
-                <FaChevronLeft />
+                <FiChevronRight />
               </button>
-
-              <div>
-                <strong>
-                  {
-                    nomesMeses[
-                      mesAtual.getMonth()
-                    ]
-                  }
-                </strong>
-
-                <span>
-                  {mesAtual.getFullYear()}
-                </span>
-              </div>
 
               <button
                 type="button"
-                className="admin-calendar-nav"
+                className="admin-calendar-today"
                 onClick={
-                  proximoMes
+                  voltarParaHoje
                 }
-                aria-label="Próximo mês"
               >
-                <FaChevronRight />
+                Hoje
               </button>
-
             </div>
 
-            <button
-              type="button"
-              className="admin-calendar-today"
-              onClick={
-                voltarParaHoje
-              }
-            >
-              <FaRegCalendarAlt />
-              IR PARA HOJE
-            </button>
-
             <div className="admin-calendar-weekdays">
-              {nomesDiasSemana.map(
+              {DIAS_SEMANA.map(
                 (dia) => (
                   <span key={dia}>
                     {dia}
@@ -2291,225 +2451,206 @@ function AgendamentoAdmin() {
             </div>
 
             <div className="admin-calendar-grid">
-
               {diasDoMes.map(
-                (data, index) => {
-                  if (!data) {
+                (item) => {
+                  if (
+                    item.vazio
+                  ) {
                     return (
                       <div
-                        key={`empty-${index}`}
+                        key={
+                          item.id
+                        }
                         className="admin-calendar-day admin-calendar-day--empty"
                       />
                     );
                   }
 
-                  const dataISO =
-                    formatarDataISO(
-                      data
-                    );
-
-                  const selecionada =
-                    dataISO ===
+                  const selecionado =
+                    item.dataISO ===
                     dataSelecionada;
 
-                  const bloqueada =
-                    diaEstaBloqueado(
-                      dataISO
-                    );
-
-                  const temBloqueio =
-                    diaTemBloqueio(
-                      dataISO
-                    );
-
-                  const temAgendamento =
-                    diaTemAgendamento(
-                      dataISO
-                    );
-
-                  const ehHoje =
-                    dataISO ===
+                  const hojeISO =
                     formatarDataISO(
-                      hoje
+                      new Date()
                     );
 
-                  const classes = [
-                    "admin-calendar-day",
+                  const bloqueado =
+                    diaEstaBloqueado(
+                      item.dataISO
+                    );
 
-                    selecionada
-                      ? "admin-calendar-day--selected"
-                      : "",
+                  const parcial =
+                    diaTemBloqueio(
+                      item.dataISO
+                    );
 
-                    bloqueada
-                      ? "admin-calendar-day--blocked"
-                      : "",
+                  const agendamento =
+                    diaTemAgendamento(
+                      item.dataISO
+                    );
 
-                    temBloqueio &&
-                    !bloqueada
-                      ? "admin-calendar-day--partial"
-                      : "",
-
-                    temAgendamento
-                      ? "admin-calendar-day--appointment"
-                      : "",
-
-                    ehHoje
-                      ? "admin-calendar-day--today"
-                      : "",
-                  ]
-                    .filter(Boolean)
-                    .join(" ");
+                  const extra =
+                    diaTemExtra(
+                      item.dataISO
+                    );
 
                   return (
                     <button
                       type="button"
-                      key={dataISO}
-                      className={
-                        classes
+                      key={
+                        item.dataISO
                       }
+                      className={[
+                        "admin-calendar-day",
+
+                        selecionado
+                          ? "admin-calendar-day--selected"
+                          : "",
+
+                        bloqueado
+                          ? "admin-calendar-day--blocked"
+                          : "",
+
+                        parcial &&
+                        !bloqueado
+                          ? "admin-calendar-day--partial"
+                          : "",
+
+                        agendamento
+                          ? "admin-calendar-day--appointment"
+                          : "",
+
+                        item.dataISO ===
+                        hojeISO
+                          ? "admin-calendar-day--today"
+                          : "",
+                      ]
+                        .filter(
+                          Boolean
+                        )
+                        .join(
+                          " "
+                        )}
                       onClick={() =>
-                        selecionarDia(
-                          data
+                        selecionarData(
+                          item.dataISO
                         )
                       }
                     >
                       <span className="admin-calendar-day-number">
-                        {data.getDate()}
+                        {item.dia}
                       </span>
 
-                      <span className="admin-calendar-indicators">
+                      <div className="admin-calendar-day-indicators">
 
-                        {temAgendamento && (
-                          <span className="admin-indicator admin-indicator--appointment" />
+                        {agendamento && (
+                          <span className="admin-calendar-dot admin-calendar-dot--appointment" />
                         )}
 
-                        {temBloqueio && (
-                          <span className="admin-indicator admin-indicator--blocked" />
+                        {extra && (
+                          <span className="admin-calendar-dot admin-calendar-dot--extra" />
                         )}
 
-                      </span>
+                        {bloqueado && (
+                          <span className="admin-calendar-dot admin-calendar-dot--blocked" />
+                        )}
+
+                      </div>
                     </button>
                   );
                 }
               )}
-
             </div>
 
             <div className="admin-calendar-legend">
 
-              <div>
-                <span className="admin-legend-dot admin-legend-dot--appointment" />
+              <span>
+                <i className="admin-calendar-legend-dot admin-calendar-legend-dot--appointment" />
                 Agendamento
-              </div>
+              </span>
 
-              <div>
-                <span className="admin-legend-dot admin-legend-dot--blocked" />
-                Bloqueio
-              </div>
+              <span>
+                <i className="admin-calendar-legend-dot admin-calendar-legend-dot--blocked" />
+                Bloqueado
+              </span>
 
-              <div>
-                <span className="admin-legend-dot admin-legend-dot--selected" />
-                Selecionado
-              </div>
+              <span>
+                <i className="admin-calendar-legend-dot admin-calendar-legend-dot--extra" />
+                Extra
+              </span>
 
             </div>
-
           </div>
 
-          {/* =================================================
-              CONTROLE DA DATA
-          ================================================= */}
+          {/* PAINEL */}
 
-          <div className="admin-availability-panel">
+          <aside className="admin-availability-panel">
 
             <div className="admin-selected-date">
-
-              <div className="admin-selected-date-icon">
-                <FaCalendarAlt />
+              <div>
+                <FiCalendar />
               </div>
 
-              <div>
+              <section>
                 <span>
                   DATA SELECIONADA
                 </span>
 
-                <h3>
-                  {formatarDataTexto(
+                <strong>
+                  {formatarDataCurta(
                     dataSelecionada
                   )}
-                </h3>
-              </div>
-
+                </strong>
+              </section>
             </div>
 
-            {/* ===============================================
-                BLOQUEIO DO DIA
-            =============================================== */}
+            {/* DIA INTEIRO */}
 
             <div className="admin-block-day">
 
               <div className="admin-control-title">
-
                 <div>
+                  <FiLock />
                   <span>
-                    DIA INTEIRO
+                    Dia inteiro
                   </span>
-
-                  <h3>
-                    {diaEstaBloqueado(
-                      dataSelecionada
-                    )
-                      ? "Data bloqueada"
-                      : "Data disponível"}
-                  </h3>
                 </div>
 
-                <div
-                  className={
+                <span
+                  className={`admin-status-pill ${
                     diaEstaBloqueado(
                       dataSelecionada
                     )
-                      ? "admin-status-pill admin-status-pill--blocked"
-                      : "admin-status-pill admin-status-pill--available"
-                  }
+                      ? "admin-status-pill--blocked"
+                      : "admin-status-pill--available"
+                  }`}
                 >
                   {diaEstaBloqueado(
                     dataSelecionada
-                  ) ? (
-                    <>
-                      <FaLock />
-                      BLOQUEADO
-                    </>
-                  ) : (
-                    <>
-                      <FaCheck />
-                      DISPONÍVEL
-                    </>
-                  )}
-                </div>
-
+                  )
+                    ? "Bloqueado"
+                    : "Disponível"}
+                </span>
               </div>
 
-              <div className="admin-control-description">
-                {diaEstaBloqueado(
-                  dataSelecionada
-                )
-                  ? "Todos os horários padrão desta data estão bloqueados."
-                  : "Bloqueie todos os horários padrão desta data de uma vez."}
-              </div>
+              <p className="admin-control-description">
+                Bloqueie todos os horários
+                padrão deste dia.
+              </p>
 
               <input
                 type="text"
                 className="admin-control-input"
+                placeholder="Motivo do bloqueio"
                 value={
-                  motivoBloqueio
+                  motivoBloqueioDia
                 }
                 onChange={(event) =>
-                  setMotivoBloqueio(
+                  setMotivoBloqueioDia(
                     event.target.value
                   )
                 }
-                placeholder="Motivo do bloqueio (opcional)"
               />
 
               <div className="admin-control-buttons">
@@ -2521,50 +2662,46 @@ function AgendamentoAdmin() {
                     type="button"
                     className="admin-action-button admin-action-button--unlock"
                     onClick={
-                      liberarDiaInteiro
+                      liberarDia
                     }
                     disabled={
-                      processandoDisponibilidade
+                      processando
                     }
                   >
-                    <FaUnlock />
-                    LIBERAR DIA INTEIRO
+                    <FiUnlock />
+                    Liberar dia
                   </button>
                 ) : (
                   <button
                     type="button"
                     className="admin-action-button admin-action-button--block"
                     onClick={
-                      bloquearDiaInteiro
+                      bloquearDia
                     }
                     disabled={
-                      processandoDisponibilidade
+                      processando
                     }
                   >
-                    <FaLock />
-                    BLOQUEAR DIA INTEIRO
+                    <FiLock />
+                    Bloquear dia
                   </button>
                 )}
 
               </div>
-
             </div>
 
-            {/* ===============================================
-                HORÁRIOS
-            =============================================== */}
+            {/* HORÁRIOS */}
 
             <div className="admin-hours-section">
 
               <div className="admin-hours-header">
-
                 <div>
-                  <span>
+                  <span className="admin-section-eyebrow">
                     HORÁRIOS
                   </span>
 
                   <h3>
-                    Controle dos horários
+                    Disponibilidade
                   </h3>
                 </div>
 
@@ -2572,121 +2709,99 @@ function AgendamentoAdmin() {
                   type="button"
                   className="admin-add-hour-button"
                   onClick={() =>
-                    setMostrandoAdicionarHorario(
-                      !mostrandoAdicionarHorario
+                    setNovoHorarioExtra(
+                      "18:30"
                     )
                   }
                 >
-                  <FaPlus />
-                  ADICIONAR HORÁRIO
+                  <FiPlus />
+                  Adicionar
                 </button>
-
               </div>
 
-              {/* =============================================
-                  FORMULÁRIO HORÁRIO EXTRA
-              ============================================= */}
-
-              {mostrandoAdicionarHorario && (
+              {novoHorarioExtra && (
                 <div className="admin-extra-hour-form">
 
                   <div className="admin-extra-hour-form-title">
-                    <FaPlus />
-
-                    <div>
-                      <strong>
-                        Novo horário extra
-                      </strong>
-
-                      <span>
-                        Esse horário ficará disponível somente nesta data.
-                      </span>
-                    </div>
+                    <FiPlus />
+                    <span>
+                      Novo horário extra
+                    </span>
                   </div>
 
-                  <div className="admin-extra-hour-fields">
+                  <div className="admin-extra-hour-form-fields">
 
-                    <div>
-                      <label>
-                        HORÁRIO
-                      </label>
+                    <label>
+                      Horário
 
                       <input
                         type="time"
                         value={
-                          novoHorario
+                          novoHorarioExtra
                         }
                         onChange={(event) =>
-                          setNovoHorario(
+                          setNovoHorarioExtra(
                             event.target.value
                           )
                         }
                       />
-                    </div>
+                    </label>
 
-                    <div>
-                      <label>
-                        OBSERVAÇÃO
-                      </label>
+                    <label>
+                      Observação
 
                       <input
                         type="text"
+                        placeholder="Ex.: encaixe"
                         value={
-                          motivoHorarioExtra
+                          novoHorarioExtraMotivo
                         }
                         onChange={(event) =>
-                          setMotivoHorarioExtra(
+                          setNovoHorarioExtraMotivo(
                             event.target.value
                           )
                         }
-                        placeholder="Ex.: encaixe à noite"
                       />
-                    </div>
+                    </label>
 
                   </div>
 
-                  <div className="admin-extra-hour-actions">
+                  <div className="admin-extra-hour-form-actions">
 
                     <button
                       type="button"
-                      className="admin-extra-cancel"
                       onClick={() => {
-                        setMostrandoAdicionarHorario(
-                          false
-                        );
-                        setNovoHorario(
+                        setNovoHorarioExtra(
                           ""
                         );
-                        setMotivoHorarioExtra(
+
+                        setNovoHorarioExtraMotivo(
                           ""
                         );
                       }}
                     >
-                      CANCELAR
+                      Cancelar
                     </button>
 
                     <button
                       type="button"
-                      className="admin-extra-confirm"
                       onClick={
                         adicionarHorarioExtra
                       }
                       disabled={
-                        processandoDisponibilidade
+                        processando
                       }
                     >
-                      <FaPlus />
-                      LIBERAR HORÁRIO
+                      Adicionar horário
                     </button>
 
                   </div>
-
                 </div>
               )}
 
               <div className="admin-hours-list">
 
-                {todosHorariosDaData.map(
+                {todosHorariosDoDia.map(
                   (horario) => {
                     const item =
                       obterHorario(
@@ -2694,22 +2809,36 @@ function AgendamentoAdmin() {
                         horario
                       );
 
-                    const bloqueado =
-                      item?.bloqueado ===
-                      true;
-
-                    const agendado =
-                      Boolean(
-                        item?.agendamentoId
-                      );
-
                     const extra =
                       item?.horarioExtra ===
                       true;
 
+                    const ocupado =
+                      horarioEstaOcupado(
+                        dataSelecionada,
+                        horario
+                      );
+
+                    const bloqueado =
+                      horarioEstaBloqueado(
+                        dataSelecionada,
+                        horario
+                      );
+
+                    const agendamento =
+                      item?.agendamentoId
+                        ? agendamentos.find(
+                            (a) =>
+                              a.id ===
+                              item.agendamentoId
+                          )
+                        : null;
+
                     return (
                       <div
-                        key={horario}
+                        key={
+                          horario
+                        }
                         className={[
                           "admin-hour-row",
 
@@ -2717,7 +2846,7 @@ function AgendamentoAdmin() {
                             ? "admin-hour-row--blocked"
                             : "",
 
-                          agendado
+                          ocupado
                             ? "admin-hour-row--booked"
                             : "",
 
@@ -2725,14 +2854,18 @@ function AgendamentoAdmin() {
                             ? "admin-hour-row--extra"
                             : "",
                         ]
-                          .filter(Boolean)
-                          .join(" ")}
+                          .filter(
+                            Boolean
+                          )
+                          .join(
+                            " "
+                          )}
                       >
 
                         <div className="admin-hour-main">
 
                           <div className="admin-hour-icon">
-                            <FaClock />
+                            <FiClock />
                           </div>
 
                           <div className="admin-hour-info">
@@ -2741,36 +2874,44 @@ function AgendamentoAdmin() {
                               {horario}
                             </strong>
 
-                            <span>
+                            <div>
 
-                              {agendado
-                                ? "Agendado"
-                                : bloqueado
-                                ? "Bloqueado manualmente"
-                                : extra
-                                ? "Horário extra"
-                                : "Disponível"}
+                              {extra && (
+                                <span className="admin-extra-badge">
+                                  EXTRA
+                                </span>
+                              )}
 
-                            </span>
+                              {ocupado && (
+                                <span>
+                                  {agendamento?.nome ||
+                                    "Agendado"}
+                                </span>
+                              )}
+
+                              {!ocupado &&
+                                bloqueado && (
+                                  <span>
+                                    {item?.motivo ||
+                                      "Bloqueado"}
+                                  </span>
+                                )}
+
+                              {!ocupado &&
+                                !bloqueado && (
+                                  <span>
+                                    Disponível
+                                  </span>
+                                )}
+
+                            </div>
 
                           </div>
-
-                          {extra && (
-                            <span className="admin-extra-badge">
-                              EXTRA
-                            </span>
-                          )}
-
                         </div>
 
                         <div className="admin-hour-actions">
 
-                          {agendado ? (
-                            <span className="admin-hour-status admin-hour-status--booked">
-                              <FaCheck />
-                              AGENDADO
-                            </span>
-                          ) : bloqueado ? (
+                          {bloqueado ? (
                             <button
                               type="button"
                               className="admin-hour-action admin-hour-action--unlock"
@@ -2779,33 +2920,29 @@ function AgendamentoAdmin() {
                                   horario
                                 )
                               }
-                              disabled={
-                                processandoDisponibilidade
-                              }
                             >
-                              <FaUnlock />
-                              LIBERAR
+                              <FiUnlock />
+                              Liberar
                             </button>
                           ) : (
-                            <button
-                              type="button"
-                              className="admin-hour-action admin-hour-action--block"
-                              onClick={() =>
-                                bloquearHorario(
-                                  horario
-                                )
-                              }
-                              disabled={
-                                processandoDisponibilidade
-                              }
-                            >
-                              <FaLock />
-                              BLOQUEAR
-                            </button>
+                            !ocupado && (
+                              <button
+                                type="button"
+                                className="admin-hour-action admin-hour-action--block"
+                                onClick={() =>
+                                  bloquearHorario(
+                                    horario
+                                  )
+                                }
+                              >
+                                <FiLock />
+                                Bloquear
+                              </button>
+                            )
                           )}
 
                           {extra &&
-                            !agendado && (
+                            !ocupado && (
                               <button
                                 type="button"
                                 className="admin-hour-action admin-hour-action--delete"
@@ -2814,104 +2951,92 @@ function AgendamentoAdmin() {
                                     horario
                                   )
                                 }
-                                disabled={
-                                  processandoDisponibilidade
-                                }
-                                title="Remover horário extra"
                               >
-                                <FaTrash />
+                                <FiX />
+                                Remover
                               </button>
                             )}
 
                         </div>
-
                       </div>
                     );
                   }
                 )}
 
               </div>
-
             </div>
 
-            {/* ===============================================
-                PERÍODO
-            =============================================== */}
+            {/* PERÍODO */}
 
             <div className="admin-period-section">
 
-              <div className="admin-control-title">
+              <div>
+                <span className="admin-section-eyebrow">
+                  PERÍODO
+                </span>
 
-                <div>
-                  <span>
-                    PERÍODO
-                  </span>
-
-                  <h3>
-                    Bloquear vários dias
-                  </h3>
-                </div>
-
-                <FaRegCalendarAlt />
+                <h3>
+                  Bloqueio em período
+                </h3>
               </div>
 
-              <div className="admin-period-description">
-                Ideal para férias, viagens, feriados ou dias em que o studio não funcionará.
-              </div>
+              <p className="admin-period-description">
+                Bloqueie os horários padrão
+                de vários dias.
+              </p>
 
               <div className="admin-period-fields">
 
-                <div>
-                  <label>
-                    INÍCIO
-                  </label>
+                <label>
+                  De
 
                   <input
                     type="date"
                     value={
-                      dataInicioPeriodo
+                      periodoInicio
                     }
                     onChange={(event) =>
-                      setDataInicioPeriodo(
+                      setPeriodoInicio(
                         event.target.value
                       )
                     }
                   />
-                </div>
+                </label>
 
-                <div>
-                  <label>
-                    FIM
-                  </label>
+                <label>
+                  Até
 
                   <input
                     type="date"
                     value={
-                      dataFimPeriodo
+                      periodoFim
                     }
                     onChange={(event) =>
-                      setDataFimPeriodo(
+                      setPeriodoFim(
                         event.target.value
                       )
                     }
                   />
-                </div>
+                </label>
+
+                <label>
+                  Motivo
+
+                  <input
+                    type="text"
+                    placeholder="Ex.: férias"
+                    value={
+                      periodoMotivo
+                    }
+                    onChange={(event) =>
+                      setPeriodoMotivo(
+                        event.target.value
+                      )
+                    }
+                  />
+                </label>
 
               </div>
-
-              <input
-                type="text"
-                className="admin-control-input"
-                value={
-                  motivoPeriodo
-                }
-                onChange={(event) =>
-                  setMotivoPeriodo(
-                    event.target.value
-                  )
-                }
-                placeholder="Motivo do período (opcional)"
-              />
 
               <div className="admin-period-actions">
 
@@ -2921,12 +3046,9 @@ function AgendamentoAdmin() {
                   onClick={
                     bloquearPeriodo
                   }
-                  disabled={
-                    processandoDisponibilidade
-                  }
                 >
-                  <FaLock />
-                  BLOQUEAR PERÍODO
+                  <FiLock />
+                  Bloquear
                 </button>
 
                 <button
@@ -2935,62 +3057,56 @@ function AgendamentoAdmin() {
                   onClick={
                     liberarPeriodo
                   }
-                  disabled={
-                    processandoDisponibilidade
-                  }
                 >
-                  <FaUnlock />
-                  LIBERAR PERÍODO
+                  <FiUnlock />
+                  Liberar
                 </button>
 
               </div>
-
             </div>
 
-            {/* ===============================================
-                RESUMO DO DIA
-            =============================================== */}
+            {/* RESUMO */}
 
             <div className="admin-day-summary">
 
               <div>
-                <FaCalendarAlt />
-
                 <span>
-                  {agendamentosDaData.length}
+                  Horários
                 </span>
 
-                <small>
-                  agendamento(s)
-                </small>
+                <strong>
+                  {
+                    todosHorariosDoDia.length
+                  }
+                </strong>
               </div>
 
               <div>
-                <FaClock />
-
                 <span>
+                  Agendados
+                </span>
+
+                <strong>
                   {
-                    todosHorariosDaData.filter(
+                    todosHorariosDoDia.filter(
                       (horario) =>
-                        !horarioEstaOcupado(
+                        horarioEstaOcupado(
                           dataSelecionada,
                           horario
                         )
                     ).length
                   }
-                </span>
-
-                <small>
-                  horário(s) livres
-                </small>
+                </strong>
               </div>
 
               <div>
-                <FaLock />
-
                 <span>
+                  Bloqueados
+                </span>
+
+                <strong>
                   {
-                    todosHorariosDaData.filter(
+                    todosHorariosDoDia.filter(
                       (horario) =>
                         horarioEstaBloqueado(
                           dataSelecionada,
@@ -2998,155 +3114,175 @@ function AgendamentoAdmin() {
                         )
                     ).length
                   }
-                </span>
-
-                <small>
-                  bloqueado(s)
-                </small>
+                </strong>
               </div>
 
             </div>
 
-          </div>
-
+          </aside>
         </div>
       </section>
 
-      {/* =====================================================
-          LISTA DE AGENDAMENTOS
-      ===================================================== */}
+      {/* ======================================================
+          AGENDAMENTOS
+      ====================================================== */}
 
       <section className="admin-agendamentos-section">
 
-        <div className="admin-agendamentos-section-header">
+        <div className="admin-agendamentos-header">
 
           <div>
             <span className="admin-section-eyebrow">
-              SOLICITAÇÕES RECEBIDAS
+              ATENDIMENTOS
             </span>
 
             <h2>
               Agendamentos
             </h2>
+
+            <p>
+              Gerencie seus clientes e
+              atendimentos.
+            </p>
           </div>
+
+          <button
+            type="button"
+            className="admin-new-appointment-button"
+            onClick={
+              abrirNovoAgendamento
+            }
+          >
+            <FiPlus />
+            Novo agendamento
+          </button>
 
           <div className="admin-agendamento-filtros">
 
-            <button
-              type="button"
-              className={
-                filtroStatus ===
-                "todos"
-                  ? "active"
-                  : ""
-              }
-              onClick={() =>
-                setFiltroStatus(
-                  "todos"
-                )
-              }
-            >
-              TODOS
-            </button>
-
-            <button
-              type="button"
-              className={
-                filtroStatus ===
-                "pendente"
-                  ? "active"
-                  : ""
-              }
-              onClick={() =>
-                setFiltroStatus(
-                  "pendente"
-                )
-              }
-            >
-              PENDENTES
-              <span>
-                {totalPendentes}
-              </span>
-            </button>
-
-            <button
-              type="button"
-              className={
-                filtroStatus ===
-                "confirmado"
-                  ? "active"
-                  : ""
-              }
-              onClick={() =>
-                setFiltroStatus(
-                  "confirmado"
-                )
-              }
-            >
-              CONFIRMADOS
-              <span>
-                {totalConfirmados}
-              </span>
-            </button>
-
-            <button
-              type="button"
-              className={
-                filtroStatus ===
-                "cancelado"
-                  ? "active"
-                  : ""
-              }
-              onClick={() =>
-                setFiltroStatus(
-                  "cancelado"
-                )
-              }
-            >
-              CANCELADOS
-              <span>
-                {totalCancelados}
-              </span>
-            </button>
+            {STATUS_FILTROS.map(
+              (filtro) => (
+                <button
+                  type="button"
+                  key={
+                    filtro.valor
+                  }
+                  className={
+                    filtroStatus ===
+                    filtro.valor
+                      ? "active"
+                      : ""
+                  }
+                  onClick={() =>
+                    setFiltroStatus(
+                      filtro.valor
+                    )
+                  }
+                >
+                  {
+                    filtro.label
+                  }
+                </button>
+              )
+            )}
 
           </div>
 
         </div>
 
-        {carregandoAgendamentos ? (
-          <div className="admin-agendamento-loading">
-            <FaSyncAlt />
+        {/* RESUMO */}
 
+        <div className="admin-agenda-summary">
+
+          <div className="admin-agenda-summary-card">
             <span>
-              Carregando agendamentos...
+              ATIVOS
             </span>
-          </div>
-        ) : agendamentosFiltrados.length ===
-          0 ? (
-          <div className="admin-agendamento-empty">
 
-            <div>
-              <FaCalendarAlt />
-            </div>
+            <strong>
+              {quantidadeAtivos}
+            </strong>
+          </div>
+
+          <div className="admin-agenda-summary-card">
+            <span>
+              PENDENTES
+            </span>
+
+            <strong>
+              {quantidadePendentes}
+            </strong>
+          </div>
+
+          <div className="admin-agenda-summary-card">
+            <span>
+              CONFIRMADOS
+            </span>
+
+            <strong>
+              {quantidadeConfirmados}
+            </strong>
+          </div>
+
+        </div>
+
+        {agendamentosDoDia.length ===
+        0 ? (
+          <div className="admin-agendamentos-empty">
+
+            <FiCalendar />
 
             <h3>
-              Nenhum agendamento encontrado
+              Nenhum atendimento neste dia
             </h3>
 
             <p>
-              As solicitações recebidas aparecerão aqui.
+              Você pode criar um
+              agendamento manualmente.
             </p>
+
+            <button
+              type="button"
+              className="admin-new-appointment-button admin-new-appointment-button--empty"
+              onClick={
+                abrirNovoAgendamento
+              }
+            >
+              <FiPlus />
+              Criar agendamento
+            </button>
 
           </div>
         ) : (
-          <div className="admin-agendamento-list">
+          <div className="admin-agendamentos-list">
 
-            {agendamentosFiltrados.map(
+            {agendamentosDoDia.map(
               (agendamento) => {
 
-                const status =
-                  agendamento.status ||
-                  "pendente";
+                const valorTotal =
+                  converterValor(
+                    agendamento.valorTotal
+                  );
+
+                const valorSinal =
+                  converterValor(
+                    agendamento.valorSinal
+                  );
+
+                const valorRestante =
+                  agendamento.valorRestante !==
+                  undefined
+                    ? converterValor(
+                        agendamento.valorRestante
+                      )
+                    : Math.max(
+                        valorTotal -
+                          valorSinal,
+                        0
+                      );
+
+                const clienteStatus =
+                  agendamento.statusCliente ||
+                  "novo";
 
                 return (
                   <article
@@ -3155,67 +3291,171 @@ function AgendamentoAdmin() {
                     }
                     className={[
                       "admin-agendamento-card",
-                      `admin-agendamento-card--${status}`,
+                      `admin-agendamento-card--${
+                        agendamento.status ||
+                        "pendente"
+                      }`,
                     ].join(" ")}
                   >
 
-                    <div className="admin-card-top">
+                    {/* CLIENTE */}
 
-                      <div className="admin-card-client">
+                    <div className="admin-client-card-header">
+
+                      <div className="admin-client-main">
 
                         <div className="admin-client-avatar">
-                          <FaUser />
+                          {agendamento.nome
+                            ? agendamento.nome
+                                .charAt(
+                                  0
+                                )
+                                .toUpperCase()
+                            : "?"}
                         </div>
 
-                        <div>
-                          <span>
+                        <div className="admin-client-identity">
+
+                          <span className="admin-card-eyebrow">
                             CLIENTE
                           </span>
 
                           <h3>
-                            {
-                              agendamento.nome ||
-                              "Sem nome"
-                            }
+                            {agendamento.nome ||
+                              "Cliente"}
                           </h3>
+
+                          <div className="admin-client-tags">
+
+                            <span
+                              className={`admin-client-status admin-client-status--${clienteStatus}`}
+                            >
+                              <FiUser />
+
+                              {obterStatusClienteLabel(
+                                clienteStatus
+                              )}
+                            </span>
+
+                            <span
+                              className={`admin-agendamento-status admin-agendamento-status--${
+                                agendamento.status ||
+                                "pendente"
+                              }`}
+                            >
+                              {
+                                obterNomeStatus(
+                                  agendamento.status
+                                )
+                              }
+                            </span>
+
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="admin-client-crm">
+
+                        {agendamento.clienteId ? (
+                          <button
+                            type="button"
+                            onClick={() =>
+                              navigate(
+                                `/admin/crm?cliente=${agendamento.clienteId}`
+                              )
+                            }
+                          >
+                            <FiUsers />
+                            Ver no CRM
+                            <FiExternalLink />
+                          </button>
+                        ) : (
+                          <button
+                            type="button"
+                            onClick={() =>
+                              vincularClienteAoAgendamento(
+                                agendamento
+                              )
+                            }
+                            disabled={
+                              processando
+                            }
+                          >
+                            <FiPlus />
+                            Vincular ao CRM
+                          </button>
+                        )}
+
+                      </div>
+                    </div>
+
+                    {/* CONTATO */}
+
+                    <div className="admin-client-contact">
+
+                      {agendamento.whatsapp && (
+                        <div className="admin-contact-item">
+
+                          <FiMessageCircle />
+
+                          <div>
+                            <span>
+                              WhatsApp
+                            </span>
+
+                            <strong>
+                              {
+                                agendamento.whatsapp
+                              }
+                            </strong>
+                          </div>
+
+                        </div>
+                      )}
+
+                      {agendamento.email && (
+                        <div className="admin-contact-item">
+
+                          <FiMail />
+
+                          <div>
+                            <span>
+                              E-mail
+                            </span>
+
+                            <strong>
+                              {
+                                agendamento.email
+                              }
+                            </strong>
+                          </div>
+
+                        </div>
+                      )}
+
+                    </div>
+
+                    {/* AGENDAMENTO */}
+
+                    <div className="admin-appointment-box">
+
+                      <div className="admin-box-heading">
+
+                        <FiCalendar />
+
+                        <div>
+                          <span>
+                            AGENDAMENTO
+                          </span>
+
+                          <strong>
+                            Atendimento
+                          </strong>
                         </div>
 
                       </div>
 
-                      <span
-                        className={[
-                          "admin-status",
-                          `admin-status--${status}`,
-                        ].join(" ")}
-                      >
-                        {status ===
-                          "pendente" &&
-                          "PENDENTE"}
-
-                        {status ===
-                          "confirmado" &&
-                          "CONFIRMADO"}
-
-                        {status ===
-                          "cancelado" &&
-                          "CANCELADO"}
-
-                        {![
-                          "pendente",
-                          "confirmado",
-                          "cancelado",
-                        ].includes(
-                          status
-                        ) &&
-                          status.toUpperCase()}
-                      </span>
-
-                    </div>
-
-                    <div className="admin-card-info">
-
-                      <div className="admin-info-item">
-                        <FaCalendarAlt />
+                      <div className="admin-appointment-details">
 
                         <div>
                           <span>
@@ -3223,17 +3463,11 @@ function AgendamentoAdmin() {
                           </span>
 
                           <strong>
-                            {
-                              formatarDataCurta(
-                                agendamento.data
-                              )
-                            }
+                            {formatarDataCurta(
+                              agendamento.data
+                            )}
                           </strong>
                         </div>
-                      </div>
-
-                      <div className="admin-info-item">
-                        <FaClock />
 
                         <div>
                           <span>
@@ -3242,174 +3476,277 @@ function AgendamentoAdmin() {
 
                           <strong>
                             {
-                              agendamento.horario ||
-                              "—"
+                              agendamento.horario
                             }
                           </strong>
                         </div>
-                      </div>
 
-                      <div className="admin-info-item">
-                        <FaWhatsapp />
-
-                        <div>
-                          <span>
-                            WHATSAPP
-                          </span>
-
-                          <strong>
-                            {
-                              agendamento.whatsapp ||
-                              agendamento.telefone ||
-                              "—"
-                            }
-                          </strong>
-                        </div>
-                      </div>
-
-                      <div className="admin-info-item">
-                        <FaMapMarkerAlt />
-
-                        <div>
-                          <span>
-                            LOCAL
-                          </span>
-
-                          <strong>
-                            {
-                              agendamento.localCorpo ||
-                              agendamento.local ||
-                              "—"
-                            }
-                          </strong>
-                        </div>
                       </div>
 
                     </div>
 
-                    <div className="admin-card-details">
+                    {/* OBSERVAÇÕES */}
 
-                      <div>
+                    {agendamento.observacoes && (
+                      <div className="admin-client-notes">
+
                         <span>
-                          TIPO DE TATUAGEM
+                          OBSERVAÇÕES
                         </span>
 
-                        <strong>
+                        <p>
                           {
-                            agendamento.tipoTatuagem ||
-                            "Não informado"
+                            agendamento.observacoes
                           }
-                        </strong>
+                        </p>
+
                       </div>
+                    )}
 
-                      {agendamento.email && (
-                        <div>
-                          <span>
-                            E-MAIL
-                          </span>
+                    {/* FINANCEIRO */}
 
-                          <strong>
-                            {
-                              agendamento.email
-                            }
-                          </strong>
+                    <div className="admin-finance-card">
+
+                      <div className="admin-finance-header">
+
+                        <div className="admin-box-heading">
+
+                          <FiDollarSign />
+
+                          <div>
+                            <span>
+                              FINANCEIRO
+                            </span>
+
+                            <strong>
+                              Valores do atendimento
+                            </strong>
+                          </div>
+
                         </div>
-                      )}
-
-                      {agendamento.observacoes && (
-                        <div className="admin-details-full">
-                          <span>
-                            OBSERVAÇÕES
-                          </span>
-
-                          <p>
-                            {
-                              agendamento.observacoes
-                            }
-                          </p>
-                        </div>
-                      )}
-
-                    </div>
-
-                    <div className="admin-card-footer">
-
-                      <span className="admin-created">
-                        SOLICITADO EM{" "}
-                        {formatarCriadoEm(
-                          agendamento.criadoEm
-                        )}
-                      </span>
-
-                      <div className="admin-card-actions">
-
-                        {status ===
-                          "pendente" && (
-                          <button
-                            type="button"
-                            className="admin-card-action admin-card-action--confirm"
-                            onClick={() =>
-                              alterarStatus(
-                                agendamento.id,
-                                "confirmado"
-                              )
-                            }
-                          >
-                            <FaCheck />
-                            CONFIRMAR
-                          </button>
-                        )}
-
-                        {status !==
-                          "cancelado" && (
-                          <button
-                            type="button"
-                            className="admin-card-action admin-card-action--cancel"
-                            onClick={() =>
-                              alterarStatus(
-                                agendamento.id,
-                                "cancelado"
-                              )
-                            }
-                          >
-                            <FaTimes />
-                            CANCELAR
-                          </button>
-                        )}
-
-                        {status ===
-                          "cancelado" && (
-                          <button
-                            type="button"
-                            className="admin-card-action admin-card-action--confirm"
-                            onClick={() =>
-                              alterarStatus(
-                                agendamento.id,
-                                "pendente"
-                              )
-                            }
-                          >
-                            <FaSyncAlt />
-                            REATIVAR
-                          </button>
-                        )}
 
                         <button
                           type="button"
-                          className="admin-card-action admin-card-action--delete"
+                          className="admin-finance-edit"
                           onClick={() =>
-                            excluirAgendamento(
-                              agendamento.id
+                            abrirFinanceiro(
+                              agendamento
                             )
                           }
                         >
-                          <FaTrash />
-                          EXCLUIR
+                          <FiEdit3 />
+                          Editar
                         </button>
 
                       </div>
 
+                      <div className="admin-finance-values">
+
+                        <div className="admin-finance-value admin-finance-value--total">
+                          <span>
+                            VALOR TOTAL
+                          </span>
+
+                          <strong>
+                            {valorTotal >
+                            0
+                              ? formatarMoeda(
+                                  valorTotal
+                                )
+                              : "—"}
+                          </strong>
+                        </div>
+
+                        <div className="admin-finance-value">
+                          <span>
+                            SINAL
+                          </span>
+
+                          <strong>
+                            {valorSinal >
+                            0
+                              ? formatarMoeda(
+                                  valorSinal
+                                )
+                              : "—"}
+                          </strong>
+                        </div>
+
+                        <div className="admin-finance-value">
+                          <span>
+                            RESTANTE
+                          </span>
+
+                          <strong>
+                            {formatarMoeda(
+                              valorRestante
+                            )}
+                          </strong>
+                        </div>
+
+                      </div>
+
+                      <div className="admin-finance-status">
+
+                        <div
+                          className={
+                            agendamento.sinalPago
+                              ? "paid"
+                              : "pending"
+                          }
+                        >
+                          <span>
+                            {agendamento.sinalPago ? (
+                              <FiCheck />
+                            ) : (
+                              <FiClock />
+                            )}
+                          </span>
+
+                          <div>
+                            <strong>
+                              {agendamento.sinalPago
+                                ? "Sinal pago"
+                                : "Sinal pendente"}
+                            </strong>
+
+                            <small>
+                              {agendamento.formaPagamentoSinal
+                                ? `Via ${agendamento.formaPagamentoSinal}`
+                                : "Forma de pagamento não informada"}
+                            </small>
+                          </div>
+                        </div>
+
+                        <div
+                          className={
+                            agendamento.restantePago
+                              ? "paid"
+                              : "pending"
+                          }
+                        >
+                          <span>
+                            {agendamento.restantePago ? (
+                              <FiCheck />
+                            ) : (
+                              <FiClock />
+                            )}
+                          </span>
+
+                          <div>
+                            <strong>
+                              {agendamento.restantePago
+                                ? "Pagamento final pago"
+                                : "Pagamento final pendente"}
+                            </strong>
+
+                            <small>
+                              {agendamento.formaPagamentoRestante
+                                ? `Via ${agendamento.formaPagamentoRestante}`
+                                : "Ainda não registrado"}
+                            </small>
+                          </div>
+                        </div>
+
+                      </div>
                     </div>
+
+                    {/* AÇÕES */}
+
+                    <footer className="admin-agendamento-card-footer">
+
+                      <span className="admin-agendamento-created">
+                        {agendamento.criadoEm?.seconds
+                          ? `Criado em ${new Date(
+                              agendamento.criadoEm.seconds *
+                                1000
+                            ).toLocaleDateString(
+                              "pt-BR"
+                            )}`
+                          : ""}
+                      </span>
+
+                      <div className="admin-agendamento-actions">
+
+                        {agendamento.status ===
+                          "pendente" && (
+                          <button
+                            type="button"
+                            className="admin-agendamento-action admin-agendamento-action--confirm"
+                            onClick={() =>
+                              alterarStatus(
+                                agendamento,
+                                "confirmado"
+                              )
+                            }
+                            disabled={
+                              processando
+                            }
+                          >
+                            <FiCheck />
+                            Confirmar
+                          </button>
+                        )}
+
+                        {agendamento.status ===
+                          "confirmado" && (
+                          <button
+                            type="button"
+                            className="admin-agendamento-action admin-agendamento-action--confirm"
+                            onClick={() =>
+                              concluirAtendimento(
+                                agendamento
+                              )
+                            }
+                            disabled={
+                              processando
+                            }
+                          >
+                            <FiCheck />
+                            Concluir
+                          </button>
+                        )}
+
+                        {agendamento.status !==
+                          "cancelado" &&
+                          agendamento.status !==
+                            "concluido" &&
+                          agendamento.status !==
+                            "excluido" && (
+                            <button
+                              type="button"
+                              className="admin-agendamento-action admin-agendamento-action--cancel"
+                              onClick={() =>
+                                alterarStatus(
+                                  agendamento,
+                                  "cancelado"
+                                )
+                              }
+                              disabled={
+                                processando
+                              }
+                            >
+                              Cancelar
+                            </button>
+                          )}
+
+                        <button
+                          type="button"
+                          className="admin-agendamento-action admin-agendamento-action--delete"
+                          onClick={() =>
+                            excluirAgendamento(
+                              agendamento
+                            )
+                          }
+                          disabled={
+                            processando
+                          }
+                        >
+                          Excluir
+                        </button>
+
+                      </div>
+                    </footer>
 
                   </article>
                 );
@@ -3420,6 +3757,896 @@ function AgendamentoAdmin() {
         )}
 
       </section>
+
+      {/* ======================================================
+          MODAL NOVO AGENDAMENTO
+      ====================================================== */}
+
+      {modalNovoAgendamento && (
+        <div
+          className="admin-modal-overlay"
+          onMouseDown={(event) => {
+            if (
+              event.target ===
+              event.currentTarget
+            ) {
+              fecharNovoAgendamento();
+            }
+          }}
+        >
+          <div className="admin-modal admin-new-appointment-modal">
+
+            <div className="admin-modal-header">
+
+              <div>
+                <span className="admin-section-eyebrow">
+                  NOVO ATENDIMENTO
+                </span>
+
+                <h2>
+                  Novo agendamento
+                </h2>
+
+                <p>
+                  Cadastre manualmente um
+                  atendimento na agenda.
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={
+                  fecharNovoAgendamento
+                }
+                disabled={
+                  processando
+                }
+              >
+                <FiX />
+              </button>
+
+            </div>
+
+            <div className="admin-modal-form">
+
+              {/* CLIENTE */}
+
+              <div className="admin-form-section">
+                <div className="admin-form-section-title">
+                  <FiUser />
+                  <div>
+                    <span>
+                      CLIENTE
+                    </span>
+                    <strong>
+                      Dados do cliente
+                    </strong>
+                  </div>
+                </div>
+
+                <div className="admin-form-grid">
+
+                  <label>
+                    Nome *
+
+                    <input
+                      type="text"
+                      placeholder="Nome completo"
+                      value={
+                        novoAgendamento.nome
+                      }
+                      onChange={(event) =>
+                        setNovoAgendamento(
+                          (anterior) => ({
+                            ...anterior,
+                            nome:
+                              event.target.value,
+                          })
+                        )
+                      }
+                    />
+                  </label>
+
+                  <label>
+                    WhatsApp
+
+                    <input
+                      type="tel"
+                      placeholder="(34) 99999-9999"
+                      value={
+                        novoAgendamento.whatsapp
+                      }
+                      onChange={(event) =>
+                        setNovoAgendamento(
+                          (anterior) => ({
+                            ...anterior,
+                            whatsapp:
+                              event.target.value,
+                          })
+                        )
+                      }
+                    />
+                  </label>
+
+                  <label className="admin-form-field-full">
+                    E-mail
+
+                    <input
+                      type="email"
+                      placeholder="cliente@email.com"
+                      value={
+                        novoAgendamento.email
+                      }
+                      onChange={(event) =>
+                        setNovoAgendamento(
+                          (anterior) => ({
+                            ...anterior,
+                            email:
+                              event.target.value,
+                          })
+                        )
+                      }
+                    />
+                  </label>
+
+                </div>
+              </div>
+
+              {/* DATA E HORÁRIO */}
+
+              <div className="admin-form-section">
+                <div className="admin-form-section-title">
+                  <FiCalendar />
+                  <div>
+                    <span>
+                      AGENDA
+                    </span>
+                    <strong>
+                      Data e horário
+                    </strong>
+                  </div>
+                </div>
+
+                <div className="admin-form-grid">
+
+                  <label>
+                    Data *
+
+                    <input
+                      type="date"
+                      value={
+                        novoAgendamento.data
+                      }
+                      onChange={(event) => {
+                        const novaData =
+                          event.target.value;
+
+                        setNovoAgendamento(
+                          (anterior) => ({
+                            ...anterior,
+                            data:
+                              novaData,
+                            horario:
+                              "",
+                          })
+                        );
+
+                        if (
+                          novaData
+                        ) {
+                          const partes =
+                            novaData
+                              .split("-")
+                              .map(
+                                Number
+                              );
+
+                          setAnoAtual(
+                            partes[0]
+                          );
+
+                          setMesAtual(
+                            partes[1] - 1
+                          );
+
+                          setDataSelecionada(
+                            novaData
+                          );
+                        }
+                      }}
+                    />
+                  </label>
+
+                  <label>
+                    Horário *
+
+                    <select
+                      value={
+                        novoAgendamento.horario
+                      }
+                      onChange={(event) =>
+                        setNovoAgendamento(
+                          (anterior) => ({
+                            ...anterior,
+                            horario:
+                              event.target.value,
+                          })
+                        )
+                      }
+                    >
+                      <option value="">
+                        Selecione
+                      </option>
+
+                      {HORARIOS_PADRAO.map(
+                        (horario) => {
+                          const ocupado =
+                            horarioEstaOcupado(
+                              novoAgendamento.data,
+                              horario
+                            );
+
+                          const bloqueado =
+                            horarioEstaBloqueado(
+                              novoAgendamento.data,
+                              horario
+                            );
+
+                          return (
+                            <option
+                              key={
+                                horario
+                              }
+                              value={
+                                horario
+                              }
+                              disabled={
+                                ocupado ||
+                                bloqueado
+                              }
+                            >
+                              {horario}
+                              {ocupado
+                                ? " — ocupado"
+                                : bloqueado
+                                ? " — bloqueado"
+                                : ""}
+                            </option>
+                          );
+                        }
+                      )}
+
+                      {horariosOcupados
+                        .filter(
+                          (item) =>
+                            item.data ===
+                              novoAgendamento.data &&
+                            item.horarioExtra ===
+                              true
+                        )
+                        .sort(
+                          (a, b) =>
+                            a.horario.localeCompare(
+                              b.horario
+                            )
+                        )
+                        .map(
+                          (item) => {
+                            const ocupado =
+                              Boolean(
+                                item.agendamentoId
+                              );
+
+                            const bloqueado =
+                              Boolean(
+                                item.bloqueado
+                              );
+
+                            return (
+                              <option
+                                key={
+                                  item.horario
+                                }
+                                value={
+                                  item.horario
+                                }
+                                disabled={
+                                  ocupado ||
+                                  bloqueado
+                                }
+                              >
+                                {item.horario}
+                                {" — extra"}
+                                {ocupado
+                                  ? " — ocupado"
+                                  : bloqueado
+                                  ? " — bloqueado"
+                                  : ""}
+                              </option>
+                            );
+                          }
+                        )}
+
+                    </select>
+                  </label>
+
+                </div>
+              </div>
+
+              {/* FINANCEIRO */}
+
+              <div className="admin-form-section">
+                <div className="admin-form-section-title">
+                  <FiDollarSign />
+                  <div>
+                    <span>
+                      FINANCEIRO
+                    </span>
+                    <strong>
+                      Valores do atendimento
+                    </strong>
+                  </div>
+                </div>
+
+                <div className="admin-form-grid">
+
+                  <label>
+                    Valor total
+
+                    <div className="admin-input-money">
+                      <span>
+                        R$
+                      </span>
+
+                      <input
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        placeholder="0,00"
+                        value={
+                          novoAgendamento.valorTotal
+                        }
+                        onChange={(event) =>
+                          setNovoAgendamento(
+                            (anterior) => ({
+                              ...anterior,
+                              valorTotal:
+                                event.target.value,
+                            })
+                          )
+                        }
+                      />
+                    </div>
+                  </label>
+
+                  <label>
+                    Valor do sinal
+
+                    <div className="admin-input-money">
+                      <span>
+                        R$
+                      </span>
+
+                      <input
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        placeholder="0,00"
+                        value={
+                          novoAgendamento.valorSinal
+                        }
+                        onChange={(event) =>
+                          setNovoAgendamento(
+                            (anterior) => ({
+                              ...anterior,
+                              valorSinal:
+                                event.target.value,
+                            })
+                          )
+                        }
+                      />
+                    </div>
+                  </label>
+
+                  <label>
+                    Forma de pagamento do sinal
+
+                    <select
+                      value={
+                        novoAgendamento.formaPagamentoSinal
+                      }
+                      onChange={(event) =>
+                        setNovoAgendamento(
+                          (anterior) => ({
+                            ...anterior,
+                            formaPagamentoSinal:
+                              event.target.value,
+                          })
+                        )
+                      }
+                    >
+                      <option value="">
+                        Selecione
+                      </option>
+
+                      <option value="pix">
+                        PIX
+                      </option>
+
+                      <option value="dinheiro">
+                        Dinheiro
+                      </option>
+
+                      <option value="cartao">
+                        Cartão
+                      </option>
+
+                      <option value="transferencia">
+                        Transferência
+                      </option>
+                    </select>
+                  </label>
+
+                  <div className="admin-new-appointment-summary">
+
+                    <div>
+                      <span>
+                        RESTANTE
+                      </span>
+
+                      <strong>
+                        {formatarMoeda(
+                          Math.max(
+                            converterValor(
+                              novoAgendamento.valorTotal
+                            ) -
+                              converterValor(
+                                novoAgendamento.valorSinal
+                              ),
+                            0
+                          )
+                        )}
+                      </strong>
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <label className="admin-checkbox-label">
+                  <input
+                    type="checkbox"
+                    checked={
+                      novoAgendamento.restantePago
+                    }
+                    onChange={(event) =>
+                      setNovoAgendamento(
+                        (anterior) => ({
+                          ...anterior,
+                          restantePago:
+                            event.target.checked,
+                        })
+                      )
+                    }
+                  />
+
+                  <span>
+                    Pagamento restante já realizado
+                  </span>
+                </label>
+
+                {novoAgendamento.restantePago && (
+                  <label>
+                    Forma de pagamento restante
+
+                    <select
+                      value={
+                        novoAgendamento.formaPagamentoRestante
+                      }
+                      onChange={(event) =>
+                        setNovoAgendamento(
+                          (anterior) => ({
+                            ...anterior,
+                            formaPagamentoRestante:
+                              event.target.value,
+                          })
+                        )
+                      }
+                    >
+                      <option value="">
+                        Selecione
+                      </option>
+
+                      <option value="pix">
+                        PIX
+                      </option>
+
+                      <option value="dinheiro">
+                        Dinheiro
+                      </option>
+
+                      <option value="cartao">
+                        Cartão
+                      </option>
+
+                      <option value="transferencia">
+                        Transferência
+                      </option>
+                    </select>
+                  </label>
+                )}
+              </div>
+
+              {/* OBSERVAÇÕES */}
+
+              <div className="admin-form-section">
+                <div className="admin-form-section-title">
+                  <FiMessageCircle />
+                  <div>
+                    <span>
+                      DETALHES
+                    </span>
+                    <strong>
+                      Observações
+                    </strong>
+                  </div>
+                </div>
+
+                <label>
+                  Observações do atendimento
+
+                  <textarea
+                    rows="4"
+                    placeholder="Ex.: tatuagem no braço, tamanho aproximado, referência..."
+                    value={
+                      novoAgendamento.observacoes
+                    }
+                    onChange={(event) =>
+                      setNovoAgendamento(
+                        (anterior) => ({
+                          ...anterior,
+                          observacoes:
+                            event.target.value,
+                        })
+                      )
+                    }
+                  />
+                </label>
+              </div>
+
+            </div>
+
+            <div className="admin-modal-actions">
+
+              <button
+                type="button"
+                onClick={
+                  fecharNovoAgendamento
+                }
+                disabled={
+                  processando
+                }
+              >
+                Cancelar
+              </button>
+
+              <button
+                type="button"
+                onClick={
+                  criarAgendamentoManual
+                }
+                disabled={
+                  processando
+                }
+              >
+                <FiCheck />
+
+                {processando
+                  ? "Salvando..."
+                  : "Criar agendamento"}
+              </button>
+
+            </div>
+
+          </div>
+        </div>
+      )}
+
+      {/* ======================================================
+          MODAL FINANCEIRO
+      ====================================================== */}
+
+      {modalFinanceiro && (
+        <div className="admin-modal-overlay">
+
+          <div className="admin-modal admin-finance-modal">
+
+            <div className="admin-modal-header">
+
+              <div>
+                <span className="admin-section-eyebrow">
+                  FINANCEIRO
+                </span>
+
+                <h2>
+                  {modalFinanceiro.nome ||
+                    "Cliente"}
+                </h2>
+
+                <p>
+                  Configure os valores deste
+                  atendimento.
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={() =>
+                  setModalFinanceiro(
+                    null
+                  )
+                }
+              >
+                <FiX />
+              </button>
+
+            </div>
+
+            <div className="admin-modal-form">
+
+              <div className="admin-finance-form-highlight">
+
+                <span>
+                  VALOR TOTAL
+                </span>
+
+                <div>
+                  <span>
+                    R$
+                  </span>
+
+                  <input
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    placeholder="0,00"
+                    value={
+                      dadosFinanceiros.valorTotal
+                    }
+                    onChange={(event) =>
+                      setDadosFinanceiros(
+                        (anterior) => ({
+                          ...anterior,
+                          valorTotal:
+                            event.target.value,
+                        })
+                      )
+                    }
+                  />
+                </div>
+
+              </div>
+
+              <label>
+                Valor do sinal
+
+                <div className="admin-input-money">
+
+                  <span>
+                    R$
+                  </span>
+
+                  <input
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    placeholder="0,00"
+                    value={
+                      dadosFinanceiros.valorSinal
+                    }
+                    onChange={(event) =>
+                      setDadosFinanceiros(
+                        (anterior) => ({
+                          ...anterior,
+                          valorSinal:
+                            event.target.value,
+                        })
+                      )
+                    }
+                  />
+
+                </div>
+              </label>
+
+              <label>
+                Forma de pagamento do sinal
+
+                <select
+                  value={
+                    dadosFinanceiros.formaPagamentoSinal
+                  }
+                  onChange={(event) =>
+                    setDadosFinanceiros(
+                      (anterior) => ({
+                        ...anterior,
+                        formaPagamentoSinal:
+                          event.target.value,
+                      })
+                    )
+                  }
+                >
+                  <option value="">
+                    Selecione
+                  </option>
+
+                  <option value="pix">
+                    PIX
+                  </option>
+
+                  <option value="dinheiro">
+                    Dinheiro
+                  </option>
+
+                  <option value="cartao">
+                    Cartão
+                  </option>
+
+                  <option value="transferencia">
+                    Transferência
+                  </option>
+                </select>
+              </label>
+
+              <div className="admin-finance-modal-summary">
+
+                <div>
+                  <span>
+                    TOTAL
+                  </span>
+
+                  <strong>
+                    {formatarMoeda(
+                      converterValor(
+                        dadosFinanceiros.valorTotal
+                      )
+                    )}
+                  </strong>
+                </div>
+
+                <div>
+                  <span>
+                    SINAL
+                  </span>
+
+                  <strong>
+                    {formatarMoeda(
+                      converterValor(
+                        dadosFinanceiros.valorSinal
+                      )
+                    )}
+                  </strong>
+                </div>
+
+                <div>
+                  <span>
+                    RESTANTE
+                  </span>
+
+                  <strong>
+                    {formatarMoeda(
+                      Math.max(
+                        converterValor(
+                          dadosFinanceiros.valorTotal
+                        ) -
+                          converterValor(
+                            dadosFinanceiros.valorSinal
+                          ),
+                        0
+                      )
+                    )}
+                  </strong>
+                </div>
+
+              </div>
+
+              <label className="admin-checkbox-label">
+
+                <input
+                  type="checkbox"
+                  checked={
+                    dadosFinanceiros.restantePago
+                  }
+                  onChange={(event) =>
+                    setDadosFinanceiros(
+                      (anterior) => ({
+                        ...anterior,
+                        restantePago:
+                          event.target.checked,
+                      })
+                    )
+                  }
+                />
+
+                <span>
+                  Pagamento restante já realizado
+                </span>
+
+              </label>
+
+              {dadosFinanceiros.restantePago && (
+                <label>
+                  Forma de pagamento restante
+
+                  <select
+                    value={
+                      dadosFinanceiros.formaPagamentoRestante
+                    }
+                    onChange={(event) =>
+                      setDadosFinanceiros(
+                        (anterior) => ({
+                          ...anterior,
+                          formaPagamentoRestante:
+                            event.target.value,
+                        })
+                      )
+                    }
+                  >
+                    <option value="">
+                      Selecione
+                    </option>
+
+                    <option value="pix">
+                      PIX
+                    </option>
+
+                    <option value="dinheiro">
+                      Dinheiro
+                    </option>
+
+                    <option value="cartao">
+                      Cartão
+                    </option>
+
+                    <option value="transferencia">
+                      Transferência
+                    </option>
+                  </select>
+                </label>
+              )}
+
+            </div>
+
+            <div className="admin-modal-actions">
+
+              <button
+                type="button"
+                onClick={() =>
+                  setModalFinanceiro(
+                    null
+                  )
+                }
+              >
+                Cancelar
+              </button>
+
+              <button
+                type="button"
+                onClick={
+                  salvarFinanceiro
+                }
+                disabled={
+                  processando
+                }
+              >
+                <FiCheck />
+                Salvar financeiro
+              </button>
+
+            </div>
+
+          </div>
+        </div>
+      )}
 
     </main>
   );
