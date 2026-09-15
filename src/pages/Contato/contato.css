@@ -1,0 +1,1487 @@
+/* =========================================================
+   KSA STUDIO — CONTATO
+   Preto • Dourado • Vermelho
+   Desktop • Tablet • Mobile
+========================================================= */
+
+.contato-page {
+  min-height: 100vh;
+  width: 100%;
+  padding-bottom: 90px;
+  box-sizing: border-box;
+
+  background:
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(135, 20, 30, 0.08),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 85% 75%,
+      rgba(201, 164, 92, 0.04),
+      transparent 35%
+    ),
+    #080708;
+
+  color: #f2eee7;
+}
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.contato-main {
+  width: 100%;
+  max-width: 1180px;
+
+  margin: 0 auto;
+
+  padding: 100px 24px 80px;
+
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.contato-hero {
+  width: 100%;
+  max-width: 680px;
+
+  margin: 0 auto 65px;
+
+  text-align: center;
+}
+
+.contato-eyebrow {
+  display: block;
+
+  margin-bottom: 14px;
+
+  color: #c9a45c;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  letter-spacing: 5px;
+
+  text-transform: uppercase;
+}
+
+.contato-hero h1 {
+  margin: 0;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: clamp(40px, 6vw, 60px);
+
+  font-weight: 400;
+
+  letter-spacing: 1px;
+
+  color: #f5f1e9;
+}
+
+.contato-line {
+  width: 55px;
+  height: 1px;
+
+  margin: 22px auto;
+
+  background: #c9a45c;
+}
+
+.contato-hero p {
+  max-width: 540px;
+
+  margin: 0 auto;
+
+  color: rgba(242, 238, 231, 0.62);
+
+  font-size: 14px;
+
+  line-height: 1.8;
+}
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.contato-container {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 0.85fr)
+    minmax(0, 1.15fr);
+
+  gap: 25px;
+
+  align-items: stretch;
+}
+
+/* =========================================================
+   CARDS
+========================================================= */
+
+.contato-info,
+.contato-form-card {
+  min-width: 0;
+
+  border: 1px solid rgba(201, 164, 92, 0.22);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.035),
+      rgba(255, 255, 255, 0.012)
+    );
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.35);
+
+  border-radius: 2px;
+
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   INFORMAÇÕES
+========================================================= */
+
+.contato-info {
+  padding: 38px 34px;
+}
+
+.contato-info-header {
+  margin-bottom: 32px;
+}
+
+.contato-label {
+  display: block;
+
+  color: #c9a45c;
+
+  font-size: 9px;
+
+  font-weight: 600;
+
+  letter-spacing: 2.5px;
+
+  text-transform: uppercase;
+}
+
+.contato-info-header h2 {
+  margin: 10px 0 13px;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 31px;
+
+  font-weight: 400;
+
+  line-height: 1.2;
+
+  color: #f2eee7;
+}
+
+.contato-info-header p {
+  margin: 0;
+
+  color: rgba(242, 238, 231, 0.55);
+
+  font-size: 12px;
+
+  line-height: 1.8;
+}
+
+/* =========================================================
+   WHATSAPP
+========================================================= */
+
+.contato-whatsapp {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  width: 100%;
+
+  padding: 17px;
+
+  box-sizing: border-box;
+
+  border: 1px solid rgba(201, 164, 92, 0.3);
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(201, 164, 92, 0.08),
+      rgba(201, 164, 92, 0.025)
+    );
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.contato-whatsapp:hover {
+  border-color: rgba(201, 164, 92, 0.75);
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(201, 164, 92, 0.12),
+      rgba(201, 164, 92, 0.04)
+    );
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.25);
+}
+
+.contato-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 46px;
+  height: 46px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #c9a45c;
+
+  color: #0b0909;
+
+  font-size: 21px;
+}
+
+.contato-whatsapp-text {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+
+  flex: 1;
+}
+
+.contato-whatsapp-text span,
+.contato-social span {
+  margin-bottom: 4px;
+
+  color: rgba(242, 238, 231, 0.4);
+
+  font-size: 8px;
+
+  font-weight: 600;
+
+  letter-spacing: 1.5px;
+
+  text-transform: uppercase;
+}
+
+.contato-whatsapp-text strong {
+  color: #f2eee7;
+
+  font-size: 13px;
+
+  font-weight: 400;
+}
+
+.contato-whatsapp-text small {
+  margin-top: 4px;
+
+  color: rgba(242, 238, 231, 0.4);
+
+  font-size: 9px;
+}
+
+/* =========================================================
+   INSTAGRAM
+========================================================= */
+
+.contato-social {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  width: 100%;
+
+  margin-top: 10px;
+
+  padding: 15px 17px;
+
+  box-sizing: border-box;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  background: rgba(255, 255, 255, 0.015);
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+.contato-social:hover {
+  border-color: rgba(201, 164, 92, 0.45);
+
+  background: rgba(201, 164, 92, 0.035);
+
+  transform: translateY(-1px);
+}
+
+.contato-social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 38px;
+  height: 38px;
+
+  flex-shrink: 0;
+
+  border: 1px solid rgba(201, 164, 92, 0.25);
+
+  color: #c9a45c;
+
+  font-size: 17px;
+}
+
+.contato-social div:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+
+  flex: 1;
+}
+
+.contato-social strong {
+  color: rgba(242, 238, 231, 0.8);
+
+  font-size: 11px;
+
+  font-weight: 400;
+}
+
+/* =========================================================
+   SETAS
+========================================================= */
+
+.contato-arrow {
+  flex-shrink: 0;
+
+  color: #c9a45c;
+
+  font-size: 11px;
+
+  transition: transform 0.25s ease;
+}
+
+.contato-whatsapp:hover .contato-arrow,
+.contato-social:hover .contato-arrow {
+  transform: translateX(5px);
+}
+
+/* =========================================================
+   LOCAIS
+========================================================= */
+
+.contato-locais {
+  margin-top: 38px;
+
+  padding-top: 28px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.contato-local {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 12px;
+
+  margin-top: 18px;
+}
+
+.contato-local > svg {
+  margin-top: 2px;
+
+  flex-shrink: 0;
+
+  color: #c9a45c;
+
+  font-size: 13px;
+}
+
+.contato-local div {
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+
+  min-width: 0;
+}
+
+.contato-local strong {
+  color: rgba(242, 238, 231, 0.82);
+
+  font-size: 11px;
+
+  font-weight: 400;
+}
+
+.contato-local span {
+  color: rgba(242, 238, 231, 0.38);
+
+  font-size: 9px;
+}
+
+/* =========================================================
+   FORM CARD
+========================================================= */
+
+.contato-form-card {
+  padding: 38px 36px;
+}
+
+.contato-form-header {
+  margin-bottom: 28px;
+}
+
+.contato-form-header h2 {
+  margin: 10px 0 9px;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 29px;
+
+  font-weight: 400;
+
+  color: #f2eee7;
+}
+
+.contato-form-header p {
+  max-width: 480px;
+
+  margin: 0;
+
+  color: rgba(242, 238, 231, 0.5);
+
+  font-size: 11px;
+
+  line-height: 1.7;
+}
+
+/* =========================================================
+   SUCESSO
+========================================================= */
+
+.contato-success {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 20px;
+
+  padding: 12px 14px;
+
+  border: 1px solid rgba(120, 175, 110, 0.3);
+
+  background: rgba(100, 160, 90, 0.07);
+
+  color: #a9d4a2;
+
+  font-size: 10px;
+}
+
+.contato-success div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 20px;
+  height: 20px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #82b77b;
+
+  color: #0a0c09;
+
+  font-size: 9px;
+}
+
+/* =========================================================
+   FORMULÁRIO
+========================================================= */
+
+.contato-form {
+  display: flex;
+  flex-direction: column;
+
+  gap: 18px;
+
+  width: 100%;
+}
+
+.contato-field {
+  display: flex;
+  flex-direction: column;
+
+  gap: 7px;
+
+  width: 100%;
+}
+
+.contato-field label {
+  color: rgba(242, 238, 231, 0.48);
+
+  font-size: 8px;
+
+  font-weight: 600;
+
+  letter-spacing: 1.8px;
+
+  text-transform: uppercase;
+}
+
+.contato-field input,
+.contato-field select,
+.contato-field textarea {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  border: 1px solid rgba(255, 255, 255, 0.11);
+
+  border-radius: 0;
+
+  outline: none;
+
+  background: rgba(255, 255, 255, 0.025);
+
+  color: #f2eee7;
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  font-size: 11px;
+
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.contato-field input,
+.contato-field select {
+  height: 46px;
+
+  padding: 0 13px;
+}
+
+.contato-field textarea {
+  min-height: 125px;
+
+  padding: 13px;
+
+  resize: vertical;
+
+  line-height: 1.6;
+}
+
+.contato-field input::placeholder,
+.contato-field textarea::placeholder {
+  color: rgba(242, 238, 231, 0.25);
+}
+
+.contato-field select {
+  appearance: none;
+  -webkit-appearance: none;
+
+  cursor: pointer;
+}
+
+.contato-field select option {
+  background: #121012;
+
+  color: #f2eee7;
+}
+
+.contato-field input:focus,
+.contato-field select:focus,
+.contato-field textarea:focus {
+  border-color: rgba(201, 164, 92, 0.65);
+
+  background: rgba(201, 164, 92, 0.025);
+
+  box-shadow:
+    0 0 0 1px rgba(201, 164, 92, 0.08);
+}
+
+/* =========================================================
+   DUAS COLUNAS
+========================================================= */
+
+.contato-fields-row {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 14px;
+
+  width: 100%;
+}
+
+/* =========================================================
+   CAIXA DE ORÇAMENTO
+========================================================= */
+
+.contato-orcamento-box {
+  width: 100%;
+
+  margin-top: 8px;
+
+  padding: 24px 20px;
+
+  box-sizing: border-box;
+
+  border: 1px solid rgba(201, 164, 92, 0.28);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(201, 164, 92, 0.045),
+      rgba(201, 164, 92, 0.015)
+    );
+
+  animation: contatoOrcamentoEntrada 0.35s ease;
+}
+
+.contato-orcamento-header {
+  margin-bottom: 22px;
+}
+
+.contato-orcamento-header h3 {
+  margin: 8px 0 10px;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 21px;
+
+  font-weight: 400;
+
+  color: #f2ead8;
+}
+
+.contato-orcamento-header p {
+  margin: 0;
+
+  color: rgba(255, 255, 255, 0.64);
+
+  font-size: 12px;
+
+  line-height: 1.7;
+}
+
+@keyframes contatoOrcamentoEntrada {
+  from {
+    opacity: 0;
+
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+/* =========================================================
+   UPLOAD DE REFERÊNCIAS
+========================================================= */
+
+.contato-upload-field {
+  position: relative;
+
+  width: 100%;
+
+  margin-top: 4px;
+}
+
+/* =========================================================
+   ÁREA CLICÁVEL
+========================================================= */
+
+.contato-upload {
+  position: relative;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 11px;
+
+  width: 100%;
+
+  min-height: 190px;
+
+  margin-top: 10px;
+
+  padding: 24px 20px;
+
+  box-sizing: border-box;
+
+  border: 1px dashed rgba(201, 164, 92, 0.58);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(201, 164, 92, 0.055),
+      rgba(255, 255, 255, 0.012)
+    );
+
+  cursor: pointer;
+
+  overflow: hidden;
+
+  transition:
+    border-color 0.3s ease,
+    background 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* =========================================================
+   BORDA INTERNA
+========================================================= */
+
+.contato-upload::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 7px;
+
+  border: 1px solid rgba(201, 164, 92, 0.09);
+
+  pointer-events: none;
+}
+
+/* =========================================================
+   BRILHO
+========================================================= */
+
+.contato-upload::after {
+  content: "";
+
+  position: absolute;
+
+  width: 220px;
+  height: 220px;
+
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(201, 164, 92, 0.09),
+      transparent 70%
+    );
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transition: opacity 0.4s ease;
+}
+
+.contato-upload:hover::after {
+  opacity: 1;
+}
+
+.contato-upload:hover {
+  border-color: rgba(201, 164, 92, 0.95);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(201, 164, 92, 0.075),
+      rgba(255, 255, 255, 0.018)
+    );
+
+  box-shadow:
+    0 10px 35px rgba(0, 0, 0, 0.3),
+    inset 0 0 35px rgba(201, 164, 92, 0.025);
+
+  transform: translateY(-2px);
+}
+
+.contato-upload:active {
+  transform: translateY(0);
+}
+
+/* =========================================================
+   ÍCONE DO UPLOAD
+========================================================= */
+
+.contato-upload-icon {
+  position: relative;
+
+  z-index: 2;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 48px;
+  height: 48px;
+
+  flex-shrink: 0;
+
+  border: 1px solid rgba(201, 164, 92, 0.62);
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(201, 164, 92, 0.11),
+      transparent 72%
+    );
+
+  color: #c9a45c;
+
+  font-size: 18px;
+
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.contato-upload:hover .contato-upload-icon {
+  border-color: #c9a45c;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(201, 164, 92, 0.2),
+      transparent 72%
+    );
+
+  box-shadow:
+    0 0 20px rgba(201, 164, 92, 0.12);
+
+  transform: scale(1.05);
+}
+
+/* =========================================================
+   TEXTOS DO UPLOAD
+========================================================= */
+
+.contato-upload-text {
+  position: relative;
+
+  z-index: 2;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 5px;
+
+  width: 100%;
+
+  text-align: center;
+}
+
+.contato-upload-text strong {
+  color: #c9a45c;
+
+  font-size: 10px;
+
+  font-weight: 600;
+
+  letter-spacing: 1.8px;
+
+  text-transform: uppercase;
+}
+
+.contato-upload-text span {
+  max-width: 340px;
+
+  color: rgba(255, 255, 255, 0.56);
+
+  font-size: 9px;
+
+  line-height: 1.5;
+}
+
+.contato-upload-text small {
+  display: block;
+
+  margin-top: 2px;
+
+  color: rgba(201, 164, 92, 0.65);
+
+  font-size: 7px;
+
+  letter-spacing: 0.8px;
+}
+
+/* =========================================================
+   BOTÃO ADICIONAR FOTOS
+========================================================= */
+
+.contato-upload-action {
+  position: relative;
+
+  z-index: 4;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  min-width: 145px;
+
+  min-height: 40px;
+
+  margin-top: 5px;
+
+  padding: 0 18px;
+
+  box-sizing: border-box;
+
+  border: 1px solid rgba(201, 164, 92, 0.7);
+
+  background: rgba(201, 164, 92, 0.055);
+
+  color: #c9a45c;
+
+  font-size: 8px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.8px;
+
+  text-transform: uppercase;
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.contato-upload:hover .contato-upload-action {
+  background: #c9a45c;
+
+  border-color: #c9a45c;
+
+  color: #0b0909;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 6px 18px rgba(201, 164, 92, 0.14);
+}
+
+/* =========================================================
+   INPUT REAL — TOTALMENTE INVISÍVEL
+========================================================= */
+
+.contato-file-input,
+.contato-upload-field input[type="file"] {
+  position: absolute !important;
+
+  width: 1px !important;
+  height: 1px !important;
+
+  padding: 0 !important;
+
+  margin: -1px !important;
+
+  overflow: hidden !important;
+
+  clip: rect(0, 0, 0, 0) !important;
+
+  clip-path: inset(50%) !important;
+
+  white-space: nowrap !important;
+
+  border: 0 !important;
+
+  opacity: 0 !important;
+}
+
+/* =========================================================
+   PREVIEW DAS IMAGENS
+========================================================= */
+
+.contato-image-preview {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 10px;
+
+  width: 100%;
+
+  margin-top: 14px;
+}
+
+.contato-image-item {
+  position: relative;
+
+  width: 100%;
+
+  aspect-ratio: 1 / 1;
+
+  overflow: hidden;
+
+  background: #111;
+
+  border: 1px solid rgba(201, 164, 92, 0.25);
+}
+
+.contato-image-item img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition: transform 0.3s ease;
+}
+
+.contato-image-item:hover img {
+  transform: scale(1.04);
+}
+
+/* =========================================================
+   REMOVER IMAGEM
+========================================================= */
+
+.contato-remove-image {
+  position: absolute;
+
+  top: 7px;
+  right: 7px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 28px;
+  height: 28px;
+
+  padding: 0;
+
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  border-radius: 50%;
+
+  background: rgba(0, 0, 0, 0.82);
+
+  color: #fff;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.contato-remove-image:hover {
+  background: #c9a45c;
+
+  color: #111;
+
+  transform: scale(1.06);
+}
+
+/* =========================================================
+   BOTÃO ENVIAR
+========================================================= */
+
+.contato-submit {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  width: 100%;
+
+  min-height: 53px;
+
+  margin-top: 4px;
+
+  padding: 0 18px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #c9a45c;
+
+  background: #c9a45c;
+
+  color: #0b0909;
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.8px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.contato-submit svg:last-child {
+  font-size: 10px;
+}
+
+.contato-submit:hover {
+  background: #dfc078;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 25px rgba(201, 164, 92, 0.12);
+}
+
+.contato-submit:active {
+  transform: translateY(0);
+}
+
+/* =========================================================
+   AVISO
+========================================================= */
+
+.contato-form-note {
+  margin: 0;
+
+  color: rgba(242, 238, 231, 0.27);
+
+  font-size: 8px;
+
+  line-height: 1.6;
+
+  text-align: center;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+  .contato-container {
+    grid-template-columns: 1fr;
+
+    gap: 20px;
+  }
+
+  .contato-info {
+    padding: 32px;
+  }
+
+  .contato-form-card {
+    padding: 32px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+  .contato-main {
+    padding: 75px 15px 60px;
+  }
+
+  .contato-hero {
+    margin-bottom: 38px;
+  }
+
+  .contato-hero h1 {
+    font-size: 38px;
+  }
+
+  .contato-hero p {
+    padding: 0 8px;
+
+    font-size: 12px;
+  }
+
+  .contato-info,
+  .contato-form-card {
+    padding: 24px 18px;
+  }
+
+  .contato-info-header h2 {
+    font-size: 27px;
+  }
+
+  .contato-form-header h2 {
+    font-size: 26px;
+  }
+
+  .contato-fields-row {
+    grid-template-columns: 1fr;
+
+    gap: 18px;
+  }
+
+  .contato-whatsapp {
+    padding: 14px;
+  }
+
+  .contato-whatsapp-text strong {
+    font-size: 12px;
+  }
+
+  .contato-social {
+    padding: 13px 14px;
+  }
+
+  /* =======================================================
+     UPLOAD MOBILE
+  ======================================================= */
+
+  .contato-upload {
+    min-height: 205px;
+
+    margin-top: 10px;
+
+    padding: 22px 14px;
+
+    gap: 9px;
+  }
+
+  .contato-upload::before {
+    inset: 6px;
+  }
+
+  .contato-upload-icon {
+    width: 46px;
+    height: 46px;
+
+    font-size: 17px;
+  }
+
+  .contato-upload-text {
+    width: 100%;
+
+    gap: 5px;
+  }
+
+  .contato-upload-text strong {
+    font-size: 9px;
+
+    letter-spacing: 1.5px;
+  }
+
+  .contato-upload-text span {
+    max-width: 260px;
+
+    font-size: 8px;
+
+    line-height: 1.6;
+  }
+
+  .contato-upload-text small {
+    margin-top: 1px;
+
+    font-size: 7px;
+  }
+
+  /* =======================================================
+     BOTÃO FOTOS MOBILE
+  ======================================================= */
+
+  .contato-upload-action {
+    min-width: 150px;
+
+    min-height: 42px;
+
+    margin-top: 5px;
+
+    padding: 0 20px;
+
+    font-size: 8px;
+
+    letter-spacing: 1.7px;
+  }
+
+  /* =======================================================
+     PREVIEW MOBILE
+  ======================================================= */
+
+  .contato-image-preview {
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 8px;
+  }
+
+  .contato-remove-image {
+    width: 25px;
+    height: 25px;
+
+    top: 6px;
+    right: 6px;
+  }
+
+  /* =======================================================
+     ORÇAMENTO MOBILE
+  ======================================================= */
+
+  .contato-orcamento-box {
+    padding: 20px 15px;
+  }
+
+  .contato-orcamento-header h3 {
+    font-size: 19px;
+  }
+
+  .contato-orcamento-header p {
+    font-size: 11px;
+  }
+}
+
+/* =========================================================
+   CELULAR PEQUENO
+========================================================= */
+
+@media (max-width: 380px) {
+  .contato-main {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .contato-info,
+  .contato-form-card {
+    padding: 20px 14px;
+  }
+
+  .contato-info-header h2 {
+    font-size: 24px;
+  }
+
+  .contato-form-header h2 {
+    font-size: 23px;
+  }
+
+  .contato-submit {
+    min-height: 50px;
+
+    font-size: 8px;
+
+    letter-spacing: 1.3px;
+  }
+
+  /* =======================================================
+     UPLOAD PEQUENO
+  ======================================================= */
+
+  .contato-upload {
+    min-height: 195px;
+
+    padding: 18px 10px;
+
+    gap: 7px;
+  }
+
+  .contato-upload-icon {
+    width: 43px;
+    height: 43px;
+
+    font-size: 16px;
+  }
+
+  .contato-upload-text strong {
+    font-size: 8px;
+
+    letter-spacing: 1.3px;
+  }
+
+  .contato-upload-text span {
+    max-width: 230px;
+
+    font-size: 7.5px;
+  }
+
+  .contato-upload-text small {
+    font-size: 6.5px;
+  }
+
+  .contato-upload-action {
+    min-width: 140px;
+
+    min-height: 40px;
+
+    font-size: 7px;
+
+    letter-spacing: 1.4px;
+  }
+
+  .contato-image-preview {
+    gap: 7px;
+  }
+}
+
+/* =========================================================
+   ACESSIBILIDADE
+========================================================= */
+
+.contato-upload:focus-visible,
+.contato-whatsapp:focus-visible,
+.contato-social:focus-visible,
+.contato-submit:focus-visible,
+.contato-remove-image:focus-visible {
+  outline: 1px solid #c9a45c;
+
+  outline-offset: 4px;
+}

@@ -1,0 +1,578 @@
+/* =========================================================
+   KSA STUDIO — ADMIN DASHBOARD
+========================================================= */
+
+.admin-dashboard {
+  min-height: 100vh;
+
+  padding-bottom: 50px;
+
+  background:
+    radial-gradient(
+      circle at 10% 10%,
+      rgba(130, 20, 30, 0.07),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 90% 80%,
+      rgba(201, 164, 92, 0.04),
+      transparent 35%
+    ),
+    #080708;
+
+  color: #f2eee7;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.admin-dashboard-header {
+  width: 100%;
+
+  min-height: 82px;
+
+  padding: 0 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  box-sizing: border-box;
+
+  border-bottom: 1px solid rgba(201, 164, 92, 0.16);
+
+  background: rgba(8, 7, 8, 0.95);
+
+  position: sticky;
+  top: 0;
+
+  z-index: 20;
+}
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.admin-dashboard-brand {
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+}
+
+.admin-dashboard-brand span {
+  color: #c9a45c;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 17px;
+
+  letter-spacing: 4px;
+}
+
+.admin-dashboard-brand small {
+  color: rgba(242, 238, 231, 0.32);
+
+  font-size: 7px;
+
+  font-weight: 600;
+
+  letter-spacing: 2px;
+}
+
+/* =========================================================
+   USUÁRIO
+========================================================= */
+
+.admin-dashboard-user {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+}
+
+.admin-dashboard-user img {
+  width: 36px;
+  height: 36px;
+
+  border-radius: 50%;
+
+  object-fit: cover;
+
+  border: 1px solid rgba(201, 164, 92, 0.4);
+}
+
+.admin-dashboard-user > div {
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+
+  min-width: 0;
+}
+
+.admin-dashboard-user strong {
+  color: rgba(242, 238, 231, 0.85);
+
+  font-size: 10px;
+
+  font-weight: 500;
+}
+
+.admin-dashboard-user span {
+  color: rgba(242, 238, 231, 0.3);
+
+  font-size: 7px;
+
+  max-width: 220px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-dashboard-user button {
+  width: 35px;
+  height: 35px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-left: 8px;
+
+  border: 1px solid rgba(201, 164, 92, 0.25);
+
+  background: transparent;
+
+  color: #c9a45c;
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.admin-dashboard-user button:hover {
+  background: rgba(201, 164, 92, 0.08);
+
+  border-color: rgba(201, 164, 92, 0.7);
+}
+
+/* =========================================================
+   CONTEÚDO
+========================================================= */
+
+.admin-dashboard-content {
+  width: 100%;
+
+  max-width: 1180px;
+
+  margin: 0 auto;
+
+  padding: 65px 30px;
+
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.admin-dashboard-intro {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-end;
+
+  gap: 30px;
+
+  margin-bottom: 40px;
+}
+
+.admin-dashboard-intro > div:first-child > span,
+.admin-dashboard-section-title > span {
+  color: #c9a45c;
+
+  font-size: 8px;
+
+  font-weight: 600;
+
+  letter-spacing: 2.5px;
+}
+
+.admin-dashboard-intro h1 {
+  margin: 10px 0 8px;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 48px;
+
+  font-weight: 400;
+
+  color: #f5f1e9;
+}
+
+.admin-dashboard-intro p {
+  margin: 0;
+
+  color: rgba(242, 238, 231, 0.42);
+
+  font-size: 11px;
+}
+
+.admin-dashboard-date {
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-end;
+
+  color: rgba(201, 164, 92, 0.65);
+
+  font-size: 8px;
+
+  letter-spacing: 2px;
+}
+
+.admin-dashboard-date small {
+  margin-top: 5px;
+
+  color: rgba(242, 238, 231, 0.25);
+
+  font-size: 7px;
+
+  letter-spacing: 1px;
+}
+
+/* =========================================================
+   RESUMO
+========================================================= */
+
+.admin-dashboard-summary {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 12px;
+
+  margin-bottom: 65px;
+}
+
+.admin-dashboard-summary > div {
+  min-height: 105px;
+
+  padding: 22px;
+
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  border: 1px solid rgba(201, 164, 92, 0.17);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.035),
+      rgba(255, 255, 255, 0.01)
+    );
+}
+
+.admin-dashboard-summary span {
+  color: rgba(242, 238, 231, 0.32);
+
+  font-size: 7px;
+
+  font-weight: 600;
+
+  letter-spacing: 1.7px;
+}
+
+.admin-dashboard-summary strong {
+  color: #c9a45c;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 28px;
+
+  font-weight: 400;
+}
+
+/* =========================================================
+   TÍTULO SEÇÃO
+========================================================= */
+
+.admin-dashboard-section-title {
+  margin-bottom: 22px;
+}
+
+.admin-dashboard-section-title h2 {
+  margin: 8px 0 0;
+
+  color: #f2eee7;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 28px;
+
+  font-weight: 400;
+}
+
+/* =========================================================
+   MÓDULOS
+========================================================= */
+
+.admin-dashboard-modules {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 12px;
+}
+
+.admin-module-card {
+  min-height: 95px;
+
+  padding: 20px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 16px;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.035),
+      rgba(255, 255, 255, 0.01)
+    );
+
+  color: #f2eee7;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+.admin-module-card:hover {
+  border-color: rgba(201, 164, 92, 0.45);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(201, 164, 92, 0.06),
+      rgba(255, 255, 255, 0.015)
+    );
+
+  transform: translateY(-2px);
+}
+
+/* =========================================================
+   ÍCONE
+========================================================= */
+
+.admin-module-icon {
+  width: 45px;
+  height: 45px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(201, 164, 92, 0.28);
+
+  color: #c9a45c;
+
+  font-size: 16px;
+}
+
+/* =========================================================
+   CONTEÚDO
+========================================================= */
+
+.admin-module-content {
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+
+  flex: 1;
+
+  min-width: 0;
+}
+
+.admin-module-content span {
+  color: rgba(242, 238, 231, 0.88);
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 17px;
+}
+
+.admin-module-content small {
+  color: rgba(242, 238, 231, 0.32);
+
+  font-size: 8px;
+
+  line-height: 1.5;
+}
+
+.admin-module-card > strong {
+  color: rgba(201, 164, 92, 0.55);
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 17px;
+
+  font-weight: 400;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 800px) {
+
+  .admin-dashboard-header {
+    padding: 0 22px;
+  }
+
+  .admin-dashboard-content {
+    padding: 50px 22px;
+  }
+
+  .admin-dashboard-summary {
+    grid-template-columns: repeat(2, 1fr);
+
+    margin-bottom: 50px;
+  }
+
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .admin-dashboard-header {
+    min-height: 70px;
+
+    padding: 0 15px;
+  }
+
+  .admin-dashboard-brand span {
+    font-size: 12px;
+
+    letter-spacing: 3px;
+  }
+
+  .admin-dashboard-brand small {
+    font-size: 6px;
+
+    letter-spacing: 1.5px;
+  }
+
+  .admin-dashboard-user > div {
+    display: none;
+  }
+
+  .admin-dashboard-user img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .admin-dashboard-user button {
+    width: 32px;
+    height: 32px;
+
+    margin-left: 0;
+  }
+
+  .admin-dashboard-content {
+    padding: 40px 15px;
+  }
+
+  .admin-dashboard-intro {
+    align-items: flex-start;
+
+    margin-bottom: 30px;
+  }
+
+  .admin-dashboard-intro h1 {
+    font-size: 39px;
+  }
+
+  .admin-dashboard-date {
+    display: none;
+  }
+
+  .admin-dashboard-summary {
+    gap: 8px;
+
+    margin-bottom: 45px;
+  }
+
+  .admin-dashboard-summary > div {
+    min-height: 90px;
+
+    padding: 16px;
+  }
+
+  .admin-dashboard-summary strong {
+    font-size: 23px;
+  }
+
+  .admin-dashboard-modules {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-module-card {
+    min-height: 85px;
+
+    padding: 16px;
+  }
+
+  .admin-module-content span {
+    font-size: 16px;
+  }
+
+}
+
+/* =========================================================
+   CELULAR PEQUENO
+========================================================= */
+
+@media (max-width: 380px) {
+
+  .admin-dashboard-summary > div {
+    min-height: 82px;
+
+    padding: 13px;
+  }
+
+  .admin-dashboard-summary strong {
+    font-size: 20px;
+  }
+
+  .admin-module-icon {
+    width: 40px;
+    height: 40px;
+
+    font-size: 14px;
+  }
+
+}

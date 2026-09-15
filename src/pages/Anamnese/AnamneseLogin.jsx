@@ -1,139 +1,109 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
+import {
+  onAuthStateChanged,
+  signInWithPopup,
+  GoogleAuthProvider,
+} from "firebase/auth";
 
-import { supabase } from "../../lib/supabase";
-
+import { auth } from "../../lib/firebase";
 import "./AnamneseLogin.css";
-
 import paginaLogin from "../../assets/images/paginalogin.png";
 
 export default function AnamneseLogin() {
   const navigate = useNavigate();
-
   const [loading, setLoading] = useState(true);
 
-  // =========================
-  // VERIFICAR SESSÃO
-  // =========================
   useEffect(() => {
-    const verificarSessao = async () => {
-      const { data, error } = await supabase.auth.getSession();
-
-      if (error) {
-        console.error("Erro ao verificar sessão:", error);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log("Usuário autenticado:", user);
+        navigate("/anamnese/formulario", { replace: true });
+      } else {
         setLoading(false);
-        return;
-      }
-
-      if (data.session) {
-        console.log("Usuário autenticado:", data.session.user);
-
-        navigate("/anamnese/formulario", { replace: true });
-        return;
-      }
-
-      setLoading(false);
-    };
-
-    verificarSessao();
-
-    // Observa mudanças no login/logout
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log("Evento de autenticação:", event);
-
-      if (session) {
-        console.log("Usuário autenticado:", session.user);
-
-        navigate("/anamnese/formulario", { replace: true });
       }
     });
 
-    return () => {
-      subscription.unsubscribe();
-    };
+    return () => unsubscribe();
   }, [navigate]);
 
-  // =========================
-  // LOGIN COM GOOGLE
-  // =========================
   const handleGoogleLogin = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: `${window.location.origin}/anamnese`,
-      },
-    });
+    try {
+      setLoading(true);
 
-    if (error) {
+      const provider = new GoogleAuthProvider();
+
+      provider.setCustomParameters({
+        prompt: "select_account",
+      });
+
+      const result = await signInWithPopup(auth, provider);
+
+      console.log("Login realizado:", result.user);
+
+      navigate("/anamnese/formulario", { replace: true });
+    } catch (error) {
       console.error("Erro ao entrar com Google:", error);
 
-      alert(
-        "Não foi possível entrar com o Google. Tente novamente."
-      );
+      setLoading(false);
+
+      if (error.code === "auth/popup-closed-by-user") {
+        return;
+      }
+
+      if (error.code === "auth/popup-blocked") {
+        alert(
+          "O navegador bloqueou a janela de login. Permita pop-ups para este site e tente novamente."
+        );
+        return;
+      }
+
+      alert("Não foi possível entrar com o Google. Tente novamente.");
     }
   };
 
-  // =========================
-  // CARREGANDO
-  // =========================
   if (loading) {
     return (
       <main
         className="anamnese-login"
-        style={{
-          backgroundImage: `url(${paginaLogin})`,
-        }}
+        style={{ backgroundImage: `url(${paginaLogin})` }}
       >
         <div className="anamnese-login__overlay"></div>
 
-        <section className="anamnese-login__content">
+        <div className="anamnese-login__content">
+          <div className="anamnese-login__header">
+            <span className="anamnese-login__small-title">
+              KSA STUDIO
+            </span>
 
-          <p>Verificando seu acesso...</p>
+            <h1>ANAMNESE</h1>
 
-        </section>
+            <p>Verificando seu acesso...</p>
+          </div>
+        </div>
       </main>
     );
   }
 
-  // =========================
-  // TELA DE LOGIN
-  // =========================
   return (
     <main
       className="anamnese-login"
-      style={{
-        backgroundImage: `url(${paginaLogin})`,
-      }}
+      style={{ backgroundImage: `url(${paginaLogin})` }}
     >
       <div className="anamnese-login__overlay"></div>
 
-      <section className="anamnese-login__content">
+      <div className="anamnese-login__content">
 
-        {/* =========================
-            BOTÃO INÍCIO
-        ========================= */}
-
+        {/* TOPO */}
         <div className="anamnese-login__topbar">
-
-          <button
-            type="button"
-            className="anamnese-home-button"
-            onClick={() => navigate("/")}
-          >
-            INÍCIO
-          </button>
-
+          <Link to="/" className="anamnese-home-button">
+            ← INÍCIO
+          </Link>
         </div>
 
-        {/* =========================
-            CABEÇALHO
-        ========================= */}
-
+        {/* CABEÇALHO */}
         <div className="anamnese-login__header">
-
           <span className="anamnese-login__small-title">
             KSA STUDIO
           </span>
@@ -141,70 +111,52 @@ export default function AnamneseLogin() {
           <h1>ANAMNESE</h1>
 
           <p>
-            Antes de realizar sua tatuagem,
-            precisamos conhecer um pouco sobre você.
+            Antes da sua tatuagem, precisamos conhecer algumas
+            informações importantes sobre você.
           </p>
-
         </div>
 
-        {/* =========================
-            CARD
-        ========================= */}
-
+        {/* CARD */}
         <div className="anamnese-login__card">
 
-          <h2>
-            Acesse sua ficha
-          </h2>
+          <h2>Acesse sua ficha</h2>
 
           <p>
-            Entre com sua conta Google para continuar
-            com o preenchimento da sua Anamnese.
+            Para preencher sua anamnese, entre com sua conta Google.
           </p>
 
           <button
             type="button"
             className="google-login-button"
             onClick={handleGoogleLogin}
+            disabled={loading}
           >
-            <FcGoogle className="google-icon" />
-
-            <span>
-              CONTINUAR COM GOOGLE
+            <span className="google-icon">
+              <FcGoogle size={22} />
             </span>
+
+            ENTRAR COM GOOGLE
           </button>
 
-          {/* =========================
-              PRIVACIDADE
-          ========================= */}
-
+          {/* PRIVACIDADE */}
           <div className="anamnese-login__privacy">
-
-            <strong>
-              Privacidade e proteção de dados
-            </strong>
+            <strong>Privacidade</strong>
 
             <p>
-              As informações fornecidas nesta Anamnese
-              serão utilizadas para finalidades relacionadas
-              ao seu atendimento e procedimento de tatuagem,
-              respeitando a legislação aplicável de proteção
-              de dados.
+              Seus dados serão utilizados exclusivamente para o
+              atendimento e preenchimento da sua ficha de anamnese.
             </p>
 
             <Link
               to="/politica-privacidade"
               className="privacy-link"
             >
-              LEIA NOSSA POLÍTICA DE PRIVACIDADE
+              Política de Privacidade
             </Link>
-
           </div>
 
         </div>
-
-      </section>
-
+      </div>
     </main>
   );
 }

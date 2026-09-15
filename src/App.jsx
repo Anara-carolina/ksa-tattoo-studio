@@ -1,7 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ScrollToTop from "./components/ScrollToTop";
 
 import Home from "./pages/Home/Home";
 import Portfolio from "./pages/Portfolio/Portfolio";
+import Sobre from "./pages/Sobre/Sobre";
 
 import AnamneseLogin from "./pages/Anamnese/AnamneseLogin";
 import AnamneseForm from "./pages/Anamnese/AnamneseForm";
@@ -13,16 +15,26 @@ import Flash from "./pages/Flash/Flash";
 
 import PoliticaPrivacidade from "./pages/PoliticaPrivacidade/PoliticaPrivacidade";
 
+import Agendamento from "./pages/Agendamento/Agendamento";
+
+import Contato from "./pages/Contato/Contato";
+
+/* =========================================================
+   ADMIN
+========================================================= */
+
+import AdminLogin from "./pages/Admin/AdminLogin";
+import AdminDashboard from "./pages/Admin/AdminDashboard";
+import AdminTrabalhos from "./pages/Admin/AdminTrabalhos";
+import AgendamentoAdmin from "./pages/Admin/AgendamentoAdmin";
 
 function App() {
-
   return (
-
     <BrowserRouter>
+      {/* Volta automaticamente para o topo ao mudar de página */}
+      <ScrollToTop />
 
       <Routes>
-
-
         {/* =====================================================
             HOME
         ===================================================== */}
@@ -31,7 +43,6 @@ function App() {
           path="/"
           element={<Home />}
         />
-
 
         {/* =====================================================
             PORTFÓLIO
@@ -47,6 +58,14 @@ function App() {
           element={<Portfolio />}
         />
 
+        {/* =====================================================
+            SOBRE A ARTISTA
+        ===================================================== */}
+
+        <Route
+          path="/sobre"
+          element={<Sobre />}
+        />
 
         {/* =====================================================
             FLASH
@@ -57,6 +76,23 @@ function App() {
           element={<Flash />}
         />
 
+        {/* =====================================================
+            AGENDAMENTO
+        ===================================================== */}
+
+        <Route
+          path="/agendamento"
+          element={<Agendamento />}
+        />
+
+        {/* =====================================================
+            CONTATO
+        ===================================================== */}
+
+        <Route
+          path="/contato"
+          element={<Contato />}
+        />
 
         {/* =====================================================
             ANAMNESE
@@ -72,7 +108,6 @@ function App() {
           element={<AnamneseForm />}
         />
 
-
         {/* =====================================================
             DOCUMENTAÇÃO
         ===================================================== */}
@@ -81,7 +116,6 @@ function App() {
           path="/documentacao"
           element={<Documentacao />}
         />
-
 
         {/* =====================================================
             CUIDADOS COM A TATUAGEM
@@ -92,7 +126,6 @@ function App() {
           element={<Cuidados />}
         />
 
-
         {/* =====================================================
             POLÍTICA DE PRIVACIDADE
         ===================================================== */}
@@ -102,14 +135,32 @@ function App() {
           element={<PoliticaPrivacidade />}
         />
 
+        {/* =====================================================
+            ÁREA ADMINISTRATIVA
+        ===================================================== */}
 
+        <Route
+          path="/admin"
+          element={<AdminLogin />}
+        />
+
+        <Route
+          path="/admin/dashboard"
+          element={<AdminDashboard />}
+        />
+
+        <Route
+          path="/admin/trabalhos"
+          element={<AdminTrabalhos />}
+        />
+
+        <Route
+          path="/admin/agendamento"
+          element={<AgendamentoAdmin />}
+        />
       </Routes>
-
     </BrowserRouter>
-
   );
-
 }
-
 
 export default App;

@@ -1,0 +1,2081 @@
+/* =========================================
+   KSA STUDIO — AGENDAMENTO
+========================================= */
+
+.agendamento-page {
+  width: 100%;
+  min-height: 100vh;
+
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(180, 25, 35, 0.08),
+      transparent 35%
+    ),
+    #080708;
+
+  color: #f2eee7;
+
+  padding-bottom: 90px;
+
+  box-sizing: border-box;
+
+  overflow-x: hidden;
+}
+
+.agendamento-page *,
+.agendamento-page *::before,
+.agendamento-page *::after {
+  box-sizing: border-box;
+}
+
+/* =========================================
+   MAIN
+========================================= */
+
+.agendamento-main {
+  width: 100%;
+  max-width: 1180px;
+
+  margin: 0 auto;
+
+  padding: 100px 24px 80px;
+
+  box-sizing: border-box;
+}
+
+/* =========================================
+   HERO / CABEÇALHO
+========================================= */
+
+.agendamento-hero {
+  width: 100%;
+
+  max-width: none;
+
+  margin: 0 auto;
+
+  padding: 80px 24px 0;
+
+  box-sizing: border-box;
+}
+
+.agendamento-eyebrow {
+  display: block;
+
+  margin-bottom: 14px;
+
+  color: #c9a45c;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  letter-spacing: 5px;
+
+  text-align: center;
+}
+
+.agendamento-hero h1 {
+  margin: 0;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: clamp(38px, 6vw, 58px);
+
+  font-weight: 400;
+
+  letter-spacing: 2px;
+
+  color: #f5f1e9;
+
+  text-align: center;
+}
+
+.agendamento-line {
+  width: 55px;
+  height: 1px;
+
+  margin: 22px auto;
+
+  background: #c9a45c;
+}
+
+.agendamento-hero p {
+  max-width: 520px;
+
+  margin: 0 auto;
+
+  color: rgba(242, 238, 231, 0.68);
+
+  font-size: 14px;
+
+  line-height: 1.8;
+
+  text-align: center;
+}
+
+/* =========================================
+   CONTAINER
+========================================= */
+
+.agendamento-container {
+  width: 100%;
+  max-width: 1180px;
+
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.15fr)
+    minmax(340px, 0.85fr);
+
+  gap: 25px;
+
+  align-items: stretch;
+
+  box-sizing: border-box;
+}
+
+/* =========================================
+   CABEÇALHO DO AGENDAMENTO
+   KSA STUDIO
+   AGENDAMENTO
+   ESCOLHA A MELHOR DATA
+========================================= */
+
+.agendamento-card-header {
+  grid-column: 1 / -1;
+
+  width: 100%;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 0;
+
+  margin: 0;
+
+  padding: 0 10px 5px;
+
+  text-align: center;
+}
+
+.agendamento-label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #c9a45c;
+
+  font-size: 9px;
+  font-weight: 600;
+
+  letter-spacing: 3px;
+}
+
+.agendamento-card-header h1 {
+  margin: 0;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 42px;
+
+  font-weight: 400;
+
+  line-height: 1.15;
+
+  letter-spacing: 1px;
+
+  color: #f5f1e9;
+}
+
+.agendamento-card-header h1 span {
+  color: rgba(242, 238, 231, 0.42);
+}
+
+.agendamento-card-header p {
+  max-width: 520px;
+
+  margin: 10px auto 0;
+
+  color: rgba(242, 238, 231, 0.58);
+
+  font-size: 13px;
+
+  line-height: 1.7;
+}
+
+/* =========================================
+   CARDS
+========================================= */
+
+.agendamento-card,
+.agendamento-side {
+  width: 100%;
+
+  min-width: 0;
+
+  box-sizing: border-box;
+
+  border: 1px solid rgba(201, 164, 92, 0.22);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.035),
+      rgba(255, 255, 255, 0.012)
+    );
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.35);
+
+  border-radius: 2px;
+}
+
+.agendamento-card {
+  padding: 35px;
+}
+
+/* =========================================
+   BOTÃO HOJE
+========================================= */
+
+.agendamento-hoje {
+  width: fit-content;
+
+  align-self: flex-end;
+
+  margin: 0 0 22px;
+
+  border: 1px solid rgba(201, 164, 92, 0.35);
+
+  background: transparent;
+
+  padding: 9px 15px;
+
+  color: #c9a45c;
+
+  font-size: 9px;
+  font-weight: 600;
+
+  letter-spacing: 1.5px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.agendamento-hoje:hover {
+  background: rgba(201, 164, 92, 0.08);
+
+  border-color: #c9a45c;
+
+  color: #ead18c;
+}
+
+/* =========================================
+   NAVEGAÇÃO
+========================================= */
+
+.agendamento-calendar-navigation {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  width: 100%;
+
+  margin-bottom: 24px;
+
+  padding: 13px 0;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.agendamento-calendar-navigation > strong {
+  flex: 1;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 15px;
+
+  color: rgba(242, 238, 231, 0.85);
+
+  text-align: center;
+}
+
+.calendar-arrow {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  width: 35px;
+  height: 35px;
+
+  border: 1px solid rgba(201, 164, 92, 0.22);
+
+  background: transparent;
+
+  color: #c9a45c;
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.calendar-arrow:hover {
+  background: rgba(201, 164, 92, 0.08);
+
+  border-color: rgba(201, 164, 92, 0.55);
+
+  transform: translateY(-1px);
+}
+
+/* =========================================
+   DIAS DA SEMANA
+========================================= */
+
+.agendamento-weekdays {
+  display: grid;
+
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+
+  width: 100%;
+
+  margin-bottom: 8px;
+}
+
+.agendamento-weekdays span {
+  text-align: center;
+
+  color: rgba(242, 238, 231, 0.38);
+
+  font-size: 8px;
+
+  font-weight: 600;
+
+  letter-spacing: 1px;
+}
+
+/* =========================================
+   GRID CALENDÁRIO
+========================================= */
+
+.agendamento-calendar {
+  display: grid;
+
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+
+  gap: 5px;
+
+  width: 100%;
+}
+
+/* =========================================
+   DIA
+========================================= */
+
+.calendar-day {
+  position: relative;
+
+  width: 100%;
+  min-width: 0;
+
+  aspect-ratio: 1 / 1;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border: 1px solid transparent;
+
+  background: rgba(255, 255, 255, 0.018);
+
+  color: rgba(242, 238, 231, 0.55);
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  font-size: 12px;
+
+  cursor: default;
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.calendar-day--empty {
+  background: transparent;
+}
+
+/* =========================================
+   DIA DISPONÍVEL
+========================================= */
+
+.calendar-day--available {
+  border-color: rgba(117, 170, 110, 0.22);
+
+  background: rgba(85, 130, 80, 0.09);
+
+  color: #a9d4a2;
+
+  cursor: pointer;
+}
+
+.calendar-day--available:hover {
+  border-color: rgba(139, 195, 130, 0.65);
+
+  background: rgba(100, 160, 90, 0.17);
+
+  color: #d0edca;
+
+  transform: translateY(-2px);
+}
+
+/* =========================================
+   DIA LOTADO
+========================================= */
+
+.calendar-day--unavailable {
+  border-color: rgba(180, 25, 35, 0.35);
+
+  background: rgba(180, 25, 35, 0.08);
+
+  color: #d56f76;
+
+  cursor: not-allowed;
+
+  opacity: 0.78;
+}
+
+.calendar-day--unavailable:hover {
+  border-color: rgba(180, 25, 35, 0.5);
+
+  background: rgba(180, 25, 35, 0.12);
+
+  color: #e58a8a;
+
+  transform: none;
+}
+
+/* =========================================
+   DIA PASSADO
+========================================= */
+
+.calendar-day--past {
+  opacity: 0.2;
+
+  cursor: default;
+}
+
+/* =========================================
+   HOJE
+========================================= */
+
+.calendar-day--today {
+  box-shadow:
+    inset 0 0 0 1px rgba(201, 164, 92, 0.5);
+}
+
+/* =========================================
+   DIA SELECIONADO
+========================================= */
+
+.calendar-day--selected {
+  border-color: #c9a45c;
+
+  background: #c9a45c;
+
+  color: #0b0909;
+
+  box-shadow:
+    0 5px 20px rgba(201, 164, 92, 0.18);
+
+  transform: translateY(-2px);
+}
+
+.calendar-day--selected:hover {
+  background: #d8b66c;
+
+  color: #090707;
+}
+
+/* =========================================
+   PONTO DO CALENDÁRIO
+========================================= */
+
+.calendar-day-dot {
+  position: absolute;
+
+  bottom: 6px;
+
+  width: 3px;
+  height: 3px;
+
+  border-radius: 50%;
+
+  background: #82b77b;
+}
+
+.calendar-day--unavailable .calendar-day-dot {
+  background: #b41923;
+}
+
+.calendar-day--selected .calendar-day-dot {
+  background: #17100a;
+}
+
+/* =========================================
+   LEGENDA
+========================================= */
+
+.calendar-legend {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  justify-content: center;
+
+  gap: 18px;
+
+  margin-top: 25px;
+
+  padding-top: 20px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.legend-item {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  color: rgba(242, 238, 231, 0.5);
+
+  font-size: 9px;
+}
+
+.legend-dot {
+  width: 7px;
+  height: 7px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+}
+
+.legend-dot--available {
+  background: #82b77b;
+}
+
+.legend-dot--unavailable {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.legend-dot--unavailable-day {
+  background: #b41923;
+}
+
+.legend-dot--selected {
+  background: #c9a45c;
+}
+
+/* =========================================
+   LADO DIREITO
+========================================= */
+
+.agendamento-side {
+  display: flex;
+
+  flex-direction: column;
+
+  padding: 35px;
+
+  min-width: 0;
+}
+
+.agendamento-side-header {
+  margin-bottom: 30px;
+}
+
+.agendamento-side-header span {
+  color: rgba(242, 238, 231, 0.5);
+
+  font-size: 9px;
+
+  font-weight: 600;
+
+  letter-spacing: 2px;
+}
+
+.agendamento-side-header h2 {
+  margin: 9px 0 10px;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 28px;
+
+  font-weight: 400;
+
+  color: #f5f1e9;
+}
+
+.agendamento-side-header p {
+  margin: 0;
+
+  color: rgba(242, 238, 231, 0.55);
+
+  font-size: 12px;
+
+  line-height: 1.7;
+}
+
+/* =========================================
+   ESTADO VAZIO
+========================================= */
+
+.agendamento-empty {
+  flex: 1;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  min-height: 300px;
+
+  padding: 25px;
+
+  text-align: center;
+
+  border: 1px dashed rgba(201, 164, 92, 0.15);
+
+  background: rgba(255, 255, 255, 0.012);
+}
+
+.agendamento-empty-icon {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 55px;
+  height: 55px;
+
+  margin-bottom: 18px;
+
+  border: 1px solid rgba(201, 164, 92, 0.28);
+
+  border-radius: 50%;
+
+  color: #c9a45c;
+
+  font-size: 17px;
+}
+
+.agendamento-empty h2 {
+  margin: 0 0 8px;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 20px;
+
+  font-weight: 400;
+
+  color: #eee8df;
+}
+
+.agendamento-empty p {
+  max-width: 250px;
+
+  margin: 0;
+
+  color: rgba(242, 238, 231, 0.43);
+
+  font-size: 11px;
+
+  line-height: 1.7;
+}
+
+/* =========================================
+   DATA ESCOLHIDA
+========================================= */
+
+.data-escolhida {
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  margin-bottom: 30px;
+
+  padding: 16px;
+
+  border-left: 2px solid #c9a45c;
+
+  background: rgba(201, 164, 92, 0.055);
+}
+
+.data-escolhida > svg {
+  flex-shrink: 0;
+
+  color: #c9a45c;
+
+  font-size: 18px;
+}
+
+.data-escolhida div {
+  min-width: 0;
+}
+
+.data-escolhida span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: rgba(242, 238, 231, 0.4);
+
+  font-size: 8px;
+
+  font-weight: 600;
+
+  letter-spacing: 1.5px;
+}
+
+.data-escolhida strong {
+  display: block;
+
+  color: #eee8df;
+
+  font-size: 12px;
+
+  font-weight: 400;
+
+  text-transform: capitalize;
+}
+
+/* =========================================
+   HORÁRIOS
+========================================= */
+
+.horarios-header {
+  margin-bottom: 14px;
+
+  text-align: left;
+}
+
+.horarios-header span {
+  color: rgba(242, 238, 231, 0.5);
+
+  font-size: 9px;
+
+  font-weight: 600;
+
+  letter-spacing: 2px;
+}
+
+.horarios-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 9px;
+
+  width: 100%;
+}
+
+.horario-button {
+  width: 100%;
+
+  min-width: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 3px;
+
+  min-height: 46px;
+
+  padding: 8px;
+
+  border: 1px solid rgba(201, 164, 92, 0.2);
+
+  background: rgba(255, 255, 255, 0.018);
+
+  color: rgba(242, 238, 231, 0.7);
+
+  font-size: 11px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.horario-button svg {
+  color: #c9a45c;
+
+  font-size: 11px;
+
+  flex-shrink: 0;
+}
+
+.horario-button:hover {
+  border-color: rgba(201, 164, 92, 0.55);
+
+  background: rgba(201, 164, 92, 0.07);
+
+  color: #f1e8d8;
+
+  transform: translateY(-1px);
+}
+
+.horario-button--selected {
+  border-color: #c9a45c;
+
+  background: #c9a45c;
+
+  color: #0b0909;
+}
+
+.horario-button--selected svg {
+  color: #0b0909;
+}
+
+/* =========================================
+   HORÁRIO EXTRA
+========================================= */
+
+.horario-extra-label {
+  display: block;
+
+  margin-top: 2px;
+
+  font-size: 8px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+
+  opacity: 0.75;
+}
+
+/* =========================================
+   HORÁRIO OCUPADO
+========================================= */
+
+.horario-button--unavailable {
+  border-color: rgba(255, 255, 255, 0.055);
+
+  background: rgba(255, 255, 255, 0.008);
+
+  color: rgba(242, 238, 231, 0.22);
+
+  opacity: 0.42;
+
+  cursor: not-allowed;
+}
+
+.horario-button--unavailable svg {
+  color: rgba(242, 238, 231, 0.14);
+}
+
+.horario-button--unavailable:hover {
+  border-color: rgba(255, 255, 255, 0.055);
+
+  background: rgba(255, 255, 255, 0.008);
+
+  color: rgba(242, 238, 231, 0.22);
+
+  transform: none;
+}
+
+.horario-indisponivel-texto {
+  font-size: 7px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.8px;
+
+  color: rgba(229, 138, 138, 0.55);
+}
+
+/* =========================================
+   TODOS OS HORÁRIOS ESGOTADOS
+========================================= */
+
+.agendamento-horarios-esgotados {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 5px;
+
+  margin-top: 14px;
+
+  padding: 13px 14px;
+
+  border: 1px solid rgba(180, 25, 35, 0.25);
+
+  background: rgba(180, 25, 35, 0.055);
+
+  text-align: center;
+}
+
+.agendamento-horarios-esgotados strong {
+  color: #d56f76;
+
+  font-size: 10px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.5px;
+}
+
+.agendamento-horarios-esgotados span {
+  color: rgba(242, 238, 231, 0.38);
+
+  font-size: 9px;
+
+  line-height: 1.5;
+}
+
+/* =========================================
+   ETAPA 2 — DADOS
+========================================= */
+
+.agendamento-dados-container {
+  width: 100%;
+
+  max-width: 780px;
+
+  margin: 0 auto;
+}
+
+.agendamento-dados-card {
+  position: relative;
+
+  width: 100%;
+
+  border: 1px solid rgba(201, 164, 92, 0.22);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.035),
+      rgba(255, 255, 255, 0.012)
+    );
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.35);
+
+  padding: 40px;
+}
+
+/* =========================================
+   BOTÃO VOLTAR
+========================================= */
+
+.agendamento-voltar {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  margin-bottom: 35px;
+
+  border: 0;
+
+  background: transparent;
+
+  color: rgba(242, 238, 231, 0.45);
+
+  font-size: 9px;
+
+  font-weight: 600;
+
+  letter-spacing: 1.5px;
+
+  cursor: pointer;
+}
+
+.agendamento-voltar:hover {
+  color: #c9a45c;
+
+  transform: translateX(-3px);
+}
+
+/* =========================================
+   HEADER DADOS
+========================================= */
+
+.agendamento-dados-header {
+  margin-bottom: 30px;
+}
+
+.agendamento-dados-header h2 {
+  margin: 9px 0 10px;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 34px;
+
+  font-weight: 400;
+
+  color: #f5f1e9;
+}
+
+.agendamento-dados-header p {
+  max-width: 520px;
+
+  margin: 0;
+
+  color: rgba(242, 238, 231, 0.55);
+
+  font-size: 12px;
+
+  line-height: 1.7;
+}
+
+/* =========================================
+   RESUMO
+========================================= */
+
+.agendamento-resumo {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 12px;
+
+  margin-bottom: 30px;
+}
+
+.agendamento-resumo-item {
+  display: flex;
+
+  align-items: center;
+
+  gap: 13px;
+
+  min-width: 0;
+
+  padding: 15px;
+
+  border: 1px solid rgba(201, 164, 92, 0.18);
+
+  background: rgba(201, 164, 92, 0.035);
+}
+
+.agendamento-resumo-item > svg {
+  flex-shrink: 0;
+
+  color: #c9a45c;
+
+  font-size: 16px;
+}
+
+.agendamento-resumo-item div {
+  min-width: 0;
+}
+
+.agendamento-resumo-item span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: rgba(242, 238, 231, 0.38);
+
+  font-size: 8px;
+
+  font-weight: 600;
+
+  letter-spacing: 1.5px;
+}
+
+.agendamento-resumo-item strong {
+  display: block;
+
+  color: #eee8df;
+
+  font-size: 11px;
+
+  font-weight: 400;
+
+  line-height: 1.5;
+
+  text-transform: capitalize;
+}
+
+/* =========================================
+   FORMULÁRIO
+========================================= */
+
+.agendamento-form {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 20px;
+
+  width: 100%;
+}
+
+.agendamento-form-group {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 9px;
+
+  min-width: 0;
+}
+
+.agendamento-form-group-full {
+  grid-column: 1 / -1;
+}
+
+.agendamento-form-group label {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  color: rgba(242, 238, 231, 0.5);
+
+  font-size: 9px;
+
+  font-weight: 600;
+
+  letter-spacing: 1.5px;
+}
+
+.agendamento-form-group label svg {
+  color: #c9a45c;
+
+  font-size: 10px;
+}
+
+.agendamento-form-group input,
+.agendamento-form-group select,
+.agendamento-form-group textarea {
+  width: 100%;
+
+  border: 1px solid rgba(201, 164, 92, 0.18);
+
+  border-radius: 0;
+
+  outline: none;
+
+  background: rgba(255, 255, 255, 0.025);
+
+  color: #eee8df;
+
+  font-family: inherit;
+
+  font-size: 12px;
+}
+
+.agendamento-form-group input,
+.agendamento-form-group select {
+  height: 48px;
+
+  padding: 0 14px;
+}
+
+.agendamento-form-group textarea {
+  min-height: 125px;
+
+  padding: 14px;
+
+  resize: vertical;
+}
+
+.agendamento-form-group input::placeholder,
+.agendamento-form-group textarea::placeholder {
+  color: rgba(242, 238, 231, 0.25);
+}
+
+.agendamento-form-group select {
+  appearance: none;
+
+  cursor: pointer;
+}
+
+.agendamento-form-group select option {
+  background: #111;
+
+  color: #eee8df;
+}
+
+.agendamento-form-group input:focus,
+.agendamento-form-group select:focus,
+.agendamento-form-group textarea:focus {
+  border-color: rgba(201, 164, 92, 0.65);
+
+  background: rgba(201, 164, 92, 0.035);
+
+  box-shadow:
+    0 0 0 2px rgba(201, 164, 92, 0.06);
+}
+
+/* =========================================
+   BOTÃO ENVIAR
+========================================= */
+
+.agendamento-enviar {
+  grid-column: 1 / -1;
+
+  width: 100%;
+
+  min-height: 53px;
+
+  margin-top: 5px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 12px;
+
+  border: 1px solid #c9a45c;
+
+  background: #c9a45c;
+
+  color: #0b0909;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 2px;
+
+  cursor: pointer;
+}
+
+.agendamento-enviar:hover:not(:disabled) {
+  background: #dfc078;
+
+  transform: translateY(-2px);
+}
+
+.agendamento-enviar:disabled {
+  opacity: 0.5;
+
+  cursor: wait;
+}
+
+.agendamento-form-observacao {
+  grid-column: 1 / -1;
+
+  margin: -3px 0 0;
+
+  color: rgba(242, 238, 231, 0.42);
+
+  font-size: 9px;
+
+  line-height: 1.7;
+
+  text-align: center;
+}
+
+/* =========================================
+   CONFIRMAÇÃO VIA WHATSAPP
+========================================= */
+
+.agendamento-confirmacao {
+  width: 100%;
+
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 18px;
+
+  margin: 30px auto 0;
+
+  padding: 22px;
+
+  border: 1px solid rgba(201, 164, 92, 0.24);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(201, 164, 92, 0.07),
+      rgba(201, 164, 92, 0.025)
+    );
+
+  text-align: left;
+}
+
+.agendamento-confirmacao > svg {
+  flex-shrink: 0;
+
+  margin-top: 2px;
+
+  color: #c9a45c;
+
+  font-size: 23px;
+}
+
+.agendamento-confirmacao > div {
+  min-width: 0;
+
+  flex: 1;
+}
+
+.agendamento-confirmacao h2 {
+  margin: 0 0 10px;
+
+  color: #f1e8d8;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 20px;
+
+  font-weight: 400;
+
+  line-height: 1.35;
+}
+
+.agendamento-confirmacao p {
+  margin: 0 0 9px;
+
+  color: rgba(242, 238, 231, 0.58);
+
+  font-size: 11px;
+
+  line-height: 1.7;
+}
+
+.agendamento-confirmacao p:last-child {
+  margin-bottom: 0;
+}
+
+.agendamento-confirmacao strong {
+  color: #e7d5ae;
+
+  font-weight: 600;
+}
+
+/* =========================================
+   ERRO
+========================================= */
+
+.agendamento-erro {
+  grid-column: 1 / -1;
+
+  margin-top: 15px;
+
+  padding: 12px 14px;
+
+  border: 1px solid rgba(180, 25, 35, 0.35);
+
+  background: rgba(180, 25, 35, 0.07);
+
+  color: #e58a8a;
+
+  font-size: 11px;
+
+  line-height: 1.5;
+
+  text-align: center;
+}
+
+/* =========================================
+   TELA DE SUCESSO
+========================================= */
+
+.agendamento-sucesso {
+  width: 100%;
+
+  max-width: 680px;
+
+  margin: 50px auto 0;
+
+  padding: 55px 40px;
+
+  border: 1px solid rgba(201, 164, 92, 0.22);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.035),
+      rgba(255, 255, 255, 0.012)
+    );
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.35);
+
+  text-align: center;
+}
+
+.agendamento-sucesso-icon {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 64px;
+  height: 64px;
+
+  margin: 0 auto 25px;
+
+  border: 1px solid rgba(127, 170, 110, 0.5);
+
+  border-radius: 50%;
+
+  color: #a9d4a2;
+
+  font-size: 21px;
+
+  background: rgba(85, 130, 80, 0.08);
+}
+
+.agendamento-sucesso h1 {
+  margin: 0;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: clamp(32px, 5vw, 45px);
+
+  font-weight: 400;
+
+  line-height: 1.25;
+
+  color: #f5f1e9;
+}
+
+.agendamento-sucesso > p {
+  margin: 0 auto;
+
+  color: rgba(242, 238, 231, 0.6);
+
+  font-size: 13px;
+
+  line-height: 1.8;
+}
+
+.agendamento-resumo-final {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 12px;
+
+  margin: 30px 0;
+}
+
+.agendamento-resumo-final > div {
+  min-width: 0;
+
+  padding: 16px;
+
+  border: 1px solid rgba(201, 164, 92, 0.18);
+
+  background: rgba(201, 164, 92, 0.035);
+}
+
+.agendamento-resumo-final span {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: rgba(242, 238, 231, 0.35);
+
+  font-size: 8px;
+
+  font-weight: 600;
+
+  letter-spacing: 1.5px;
+}
+
+.agendamento-resumo-final strong {
+  display: block;
+
+  color: #eee8df;
+
+  font-size: 12px;
+
+  font-weight: 400;
+
+  line-height: 1.5;
+
+  text-transform: capitalize;
+}
+
+/* =========================================
+   CONTINUAR
+========================================= */
+
+.agendamento-continuar {
+  width: 100%;
+
+  min-height: 48px;
+
+  margin-top: 20px;
+
+  border: 1px solid rgba(201, 164, 92, 0.4);
+
+  background: transparent;
+
+  color: #c9a45c;
+
+  font-size: 9px;
+
+  font-weight: 600;
+
+  letter-spacing: 1.5px;
+
+  cursor: pointer;
+}
+
+.agendamento-continuar:hover {
+  background: rgba(201, 164, 92, 0.08);
+
+  border-color: #c9a45c;
+}
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 900px) {
+  .agendamento-main {
+    padding-top: 80px;
+  }
+
+  .agendamento-hero {
+    padding-top: 65px;
+  }
+
+  .agendamento-container {
+    grid-template-columns: 1fr;
+  }
+
+  .agendamento-card-header {
+    grid-column: auto;
+  }
+
+  .agendamento-side {
+    min-height: 400px;
+  }
+
+  .agendamento-empty {
+    min-height: 260px;
+  }
+}
+
+/* =========================================
+   CELULAR
+========================================= */
+
+@media (max-width: 600px) {
+  .agendamento-page {
+    padding-bottom: 50px;
+  }
+
+  .agendamento-main {
+    width: 100%;
+
+    padding: 45px 12px 45px;
+  }
+
+  .agendamento-hero {
+    width: 100%;
+
+    padding: 35px 12px 0;
+
+    margin: 0 auto;
+  }
+
+  .agendamento-eyebrow {
+    font-size: 8px;
+
+    letter-spacing: 3.5px;
+  }
+
+  .agendamento-hero h1 {
+    font-size: 35px;
+
+    letter-spacing: 1px;
+  }
+
+  .agendamento-hero p {
+    padding: 0 8px;
+
+    font-size: 11px;
+
+    line-height: 1.7;
+  }
+
+  .agendamento-container {
+    width: 100%;
+
+    max-width: 100%;
+
+    gap: 15px;
+  }
+
+  /* CABEÇALHO */
+
+  .agendamento-card-header {
+    width: 100%;
+
+    padding: 0;
+
+    margin-bottom: 2px;
+
+    text-align: center;
+  }
+
+  .agendamento-label {
+    margin-bottom: 7px;
+
+    font-size: 8px;
+
+    letter-spacing: 2.5px;
+  }
+
+  .agendamento-card-header h1 {
+    font-size: 34px;
+
+    line-height: 1.15;
+  }
+
+  .agendamento-card-header p {
+    max-width: 330px;
+
+    margin-top: 8px;
+
+    font-size: 11px;
+
+    line-height: 1.65;
+  }
+
+  /* CARDS */
+
+  .agendamento-card,
+  .agendamento-side {
+    width: 100%;
+
+    padding: 20px 14px;
+  }
+
+  /* BOTÃO HOJE */
+
+  .agendamento-hoje {
+    align-self: center;
+
+    margin-bottom: 18px;
+
+    padding: 7px 10px;
+
+    font-size: 7px;
+
+    letter-spacing: 1px;
+  }
+
+  /* CALENDÁRIO */
+
+  .agendamento-calendar-navigation {
+    margin-bottom: 17px;
+
+    padding: 10px 0;
+  }
+
+  .agendamento-calendar-navigation > strong {
+    font-size: 13px;
+  }
+
+  .calendar-arrow {
+    width: 30px;
+    height: 30px;
+  }
+
+  .agendamento-weekdays {
+    margin-bottom: 6px;
+  }
+
+  .agendamento-weekdays span {
+    font-size: 7px;
+
+    letter-spacing: 0.5px;
+  }
+
+  .agendamento-calendar {
+    gap: 3px;
+  }
+
+  .calendar-day {
+    font-size: 10px;
+  }
+
+  .calendar-day-dot {
+    bottom: 3px;
+
+    width: 3px;
+    height: 3px;
+  }
+
+  .calendar-legend {
+    gap: 9px;
+
+    margin-top: 17px;
+
+    padding-top: 14px;
+  }
+
+  .legend-item {
+    font-size: 7px;
+  }
+
+  .legend-dot {
+    width: 6px;
+    height: 6px;
+  }
+
+  /* LADO DOS HORÁRIOS */
+
+  .agendamento-side {
+    min-height: auto;
+  }
+
+  .agendamento-side-header {
+    margin-bottom: 22px;
+
+    text-align: center;
+  }
+
+  .agendamento-side-header span {
+    font-size: 8px;
+
+    letter-spacing: 1.7px;
+  }
+
+  .agendamento-side-header h2 {
+    font-size: 23px;
+
+    margin-top: 7px;
+  }
+
+  .horarios-header {
+    text-align: center;
+  }
+
+  .horarios-header span {
+    font-size: 8px;
+  }
+
+  .horarios-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 8px;
+  }
+
+  .horario-button {
+    min-height: 45px;
+
+    padding: 7px;
+
+    font-size: 10px;
+  }
+
+  .horario-extra-label {
+    font-size: 7px;
+
+    letter-spacing: 1.2px;
+  }
+
+  .agendamento-empty {
+    min-height: 220px;
+
+    padding: 20px;
+  }
+
+  /* ETAPA 2 */
+
+  .agendamento-dados-container {
+    width: 100%;
+
+    max-width: none;
+  }
+
+  .agendamento-dados-card {
+    width: 100%;
+
+    padding: 24px 16px;
+  }
+
+  .agendamento-dados-header {
+    text-align: center;
+  }
+
+  .agendamento-dados-header h2 {
+    font-size: 27px;
+  }
+
+  .agendamento-resumo {
+    grid-template-columns: 1fr;
+
+    gap: 9px;
+  }
+
+  .agendamento-form {
+    grid-template-columns: 1fr;
+
+    gap: 16px;
+  }
+
+  .agendamento-form-group-full {
+    grid-column: auto;
+  }
+
+  .agendamento-enviar {
+    grid-column: auto;
+
+    min-height: 50px;
+  }
+
+  .agendamento-form-observacao {
+    grid-column: auto;
+
+    margin-top: 0;
+
+    padding: 0 4px;
+
+    font-size: 8px;
+  }
+
+  /* CONFIRMAÇÃO WHATSAPP */
+
+  .agendamento-confirmacao {
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-top: 25px;
+
+    padding: 18px 15px;
+
+    text-align: center;
+  }
+
+  .agendamento-confirmacao > svg {
+    margin-top: 0;
+
+    font-size: 22px;
+  }
+
+  .agendamento-confirmacao h2 {
+    margin-bottom: 9px;
+
+    font-size: 18px;
+
+    line-height: 1.35;
+  }
+
+  .agendamento-confirmacao p {
+    font-size: 10px;
+
+    line-height: 1.7;
+  }
+
+  /* SUCESSO */
+
+  .agendamento-sucesso {
+    width: 100%;
+
+    max-width: 100%;
+
+    margin: 20px auto 0;
+
+    padding: 35px 16px;
+  }
+
+  .agendamento-sucesso-icon {
+    width: 58px;
+    height: 58px;
+
+    margin-bottom: 20px;
+
+    font-size: 19px;
+  }
+
+  .agendamento-sucesso h1 {
+    font-size: 30px;
+
+    line-height: 1.25;
+  }
+
+  .agendamento-line {
+    margin: 18px auto;
+  }
+
+  .agendamento-resumo-final {
+    grid-template-columns: 1fr;
+
+    gap: 9px;
+
+    margin: 24px 0;
+  }
+
+  .agendamento-resumo-final > div {
+    width: 100%;
+
+    padding: 13px;
+  }
+
+  .agendamento-resumo-final span {
+    font-size: 7px;
+  }
+
+  .agendamento-resumo-final strong {
+    font-size: 11px;
+  }
+
+  .agendamento-sucesso .agendamento-confirmacao {
+    width: 100%;
+
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .agendamento-continuar {
+    width: 100%;
+
+    min-height: 48px;
+
+    margin-top: 20px;
+
+    font-size: 9px;
+  }
+}
+
+/* =========================================
+   CELULAR PEQUENO
+========================================= */
+
+@media (max-width: 380px) {
+  .agendamento-main {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .agendamento-hero {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  .agendamento-card,
+  .agendamento-side {
+    padding-left: 11px;
+    padding-right: 11px;
+  }
+
+  .agendamento-card-header h1 {
+    font-size: 30px;
+  }
+
+  .agendamento-card-header p {
+    font-size: 10px;
+  }
+
+  .agendamento-hoje {
+    padding: 7px 8px;
+
+    font-size: 7px;
+  }
+
+  .calendar-day {
+    font-size: 9px;
+  }
+
+  .calendar-legend {
+    gap: 7px;
+  }
+
+  .legend-item {
+    font-size: 6.5px;
+  }
+
+  .agendamento-dados-card {
+    padding: 22px 13px;
+  }
+
+  .agendamento-dados-header h2 {
+    font-size: 25px;
+  }
+
+  .agendamento-form-group input,
+  .agendamento-form-group select {
+    height: 46px;
+  }
+
+  .agendamento-sucesso {
+    padding: 32px 13px;
+  }
+
+  .agendamento-sucesso h1 {
+    font-size: 27px;
+  }
+
+  .agendamento-confirmacao {
+    padding: 16px 12px;
+  }
+
+  .agendamento-confirmacao h2 {
+    font-size: 17px;
+  }
+}

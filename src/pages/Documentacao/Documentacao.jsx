@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 
 import {
@@ -13,7 +12,7 @@ import {
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 
-import autorizacao from "../../assets/images/autorizacao.pdf";
+import autorizacao from "../../assets/formulario/autorizacao.pdf";
 
 import "./Documentacao.css";
 
@@ -27,7 +26,6 @@ export default function Documentacao() {
       {/* =====================================================
           HEADER
       ===================================================== */}
-
       <Header />
 
 
@@ -165,8 +163,6 @@ export default function Documentacao() {
 
               <div className="requirement-content">
 
-                
-
 
                 <h3>
                   FICHA DE ANAMNESE
@@ -213,8 +209,6 @@ export default function Documentacao() {
 
 
               <div className="requirement-content">
-
-                
 
 
                 <h3>
@@ -428,4 +422,3 @@ export default function Documentacao() {
   );
 
 }
-

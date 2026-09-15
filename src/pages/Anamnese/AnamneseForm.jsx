@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { supabase } from "../../lib/supabase";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from "../../lib/firebase";
 
 import "./AnamneseForm.css";
 
@@ -15,30 +16,30 @@ export default function AnamneseForm() {
   const [etapa, setEtapa] = useState(1);
 
   useEffect(() => {
-    const verificarUsuario = async () => {
-      const { data, error } = await supabase.auth.getSession();
-
-      if (error) {
-        console.error("Erro ao verificar sessão:", error);
-        navigate("/anamnese");
+    // Verifica o usuário autenticado pelo Firebase
+    const unsubscribe = onAuthStateChanged(auth, (usuario) => {
+      if (!usuario) {
+        navigate("/anamnese", { replace: true });
         return;
       }
 
-      if (!data.session) {
-        navigate("/anamnese");
-        return;
-      }
+      console.log("Usuário autenticado pelo Firebase:", usuario);
 
-      setUser(data.session.user);
+      setUser(usuario);
       setLoading(false);
-    };
+    });
 
-    verificarUsuario();
+    return () => unsubscribe();
   }, [navigate]);
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
-    navigate("/anamnese");
+    try {
+      await signOut(auth);
+      navigate("/anamnese", { replace: true });
+    } catch (error) {
+      console.error("Erro ao sair:", error);
+      alert("Não foi possível sair. Tente novamente.");
+    }
   };
 
   const proximaEtapa = () => {
@@ -267,19 +268,25 @@ export default function AnamneseForm() {
                 <div className="radio-group">
 
                   <label className="radio-option">
+
                     <input
                       type="radio"
                       name="alergia"
                     />
+
                     <span>Sim</span>
+
                   </label>
 
                   <label className="radio-option">
+
                     <input
                       type="radio"
                       name="alergia"
                     />
+
                     <span>Não</span>
+
                   </label>
 
                 </div>
@@ -309,19 +316,25 @@ export default function AnamneseForm() {
                 <div className="radio-group">
 
                   <label className="radio-option">
+
                     <input
                       type="radio"
                       name="medicamento"
                     />
+
                     <span>Sim</span>
+
                   </label>
 
                   <label className="radio-option">
+
                     <input
                       type="radio"
                       name="medicamento"
                     />
+
                     <span>Não</span>
+
                   </label>
 
                 </div>

@@ -1,0 +1,784 @@
+.admin-trabalhos-page {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 80% 10%, rgba(140, 20, 20, 0.12), transparent 30%),
+    radial-gradient(circle at 10% 90%, rgba(212, 175, 55, 0.06), transparent 28%),
+    #090909;
+  color: #f1eee7;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.admin-trabalhos-header {
+  min-height: 82px;
+  padding: 0 5%;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.18);
+  background: rgba(8, 8, 8, 0.94);
+}
+
+.admin-voltar {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: none;
+  background: transparent;
+  color: #bdb8ae;
+  cursor: pointer;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: 0.25s ease;
+}
+
+.admin-voltar svg {
+  color: #d4af37;
+  font-size: 0.8rem;
+}
+
+.admin-voltar:hover {
+  color: #d4af37;
+}
+
+.admin-trabalhos-header-brand {
+  text-align: center;
+}
+
+.admin-trabalhos-header-brand span {
+  display: block;
+  color: #d4af37;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.05rem;
+  letter-spacing: 0.22em;
+}
+
+.admin-trabalhos-header-brand small {
+  display: block;
+  margin-top: 5px;
+  color: #77736c;
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+}
+
+.admin-trabalhos-header-space {
+  min-width: 1px;
+}
+
+/* =========================
+   CONTEÚDO
+========================= */
+
+.admin-trabalhos-content {
+  width: min(1400px, 90%);
+  margin: 0 auto;
+  padding: 55px 0 80px;
+}
+
+.admin-trabalhos-title-area {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.admin-section-label {
+  color: #d4af37;
+  font-size: 0.63rem;
+  letter-spacing: 0.22em;
+  font-weight: 600;
+}
+
+.admin-trabalhos-title-area h1 {
+  margin: 10px 0 8px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+
+.admin-trabalhos-title-area p {
+  margin: 0;
+  color: #85817a;
+  font-size: 0.92rem;
+}
+
+/* =========================
+   BOTÕES
+========================= */
+
+.admin-add-button,
+.admin-save-button,
+.admin-empty-button {
+  border: 1px solid #d4af37;
+  background: #d4af37;
+  color: #090909;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 22px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: 0.25s ease;
+}
+
+.admin-add-button:hover,
+.admin-save-button:hover:not(:disabled),
+.admin-empty-button:hover {
+  background: #ead078;
+  border-color: #ead078;
+  transform: translateY(-1px);
+}
+
+.admin-save-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.35;
+}
+
+.admin-cancel-button {
+  min-height: 48px;
+  padding: 0 22px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: transparent;
+  color: #aaa59c;
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: 0.25s ease;
+}
+
+.admin-cancel-button:hover {
+  border-color: rgba(212, 175, 55, 0.5);
+  color: #d4af37;
+}
+
+/* =========================
+   FORMULÁRIO
+========================= */
+
+.admin-trabalho-form-card {
+  margin-bottom: 55px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.035),
+    rgba(255, 255, 255, 0.012)
+  );
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+}
+
+.admin-form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 28px 30px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.admin-form-header span {
+  color: #d4af37;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+}
+
+.admin-form-header h2 {
+  margin: 7px 0 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.8rem;
+  font-weight: 400;
+}
+
+.admin-close-button {
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: transparent;
+  color: #85817a;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.25s ease;
+}
+
+.admin-close-button:hover {
+  border-color: rgba(212, 175, 55, 0.5);
+  color: #d4af37;
+}
+
+.admin-trabalho-form-card form {
+  padding: 30px;
+}
+
+.admin-form-grid {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.95fr) minmax(300px, 1.05fr);
+  gap: 35px;
+}
+
+/* =========================
+   UPLOAD
+========================= */
+
+.admin-upload-area {
+  min-height: 390px;
+}
+
+.admin-upload-placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 390px;
+  padding: 40px;
+  border: 1px dashed rgba(212, 175, 55, 0.3);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(212, 175, 55, 0.035),
+      rgba(255, 255, 255, 0.012)
+    );
+  color: #85817a;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  text-align: center;
+  transition: 0.3s ease;
+}
+
+.admin-upload-placeholder:hover {
+  border-color: rgba(212, 175, 55, 0.7);
+  background: rgba(212, 175, 55, 0.055);
+}
+
+.admin-upload-placeholder svg {
+  margin-bottom: 8px;
+  color: #d4af37;
+  font-size: 2.4rem;
+}
+
+.admin-upload-placeholder strong {
+  color: #e7e2d8;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.admin-upload-placeholder span {
+  max-width: 280px;
+  line-height: 1.6;
+  font-size: 0.78rem;
+}
+
+.admin-upload-placeholder small {
+  color: #5f5b55;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.admin-image-preview {
+  position: relative;
+  width: 100%;
+  height: 390px;
+  overflow: hidden;
+  background: #111;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+}
+
+.admin-image-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.admin-change-image {
+  position: absolute;
+  left: 15px;
+  bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.78);
+  color: #eee;
+  cursor: pointer;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: 0.25s ease;
+}
+
+.admin-change-image:hover {
+  border-color: #d4af37;
+  color: #d4af37;
+}
+
+/* =========================
+   CAMPOS
+========================= */
+
+.admin-form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.admin-field {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.admin-field label {
+  color: #aaa59c;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.admin-field input,
+.admin-field select {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  outline: none;
+  background: #101010;
+  color: #eee;
+  font-family: inherit;
+  font-size: 0.86rem;
+  transition: 0.25s ease;
+}
+
+.admin-field select {
+  cursor: pointer;
+}
+
+.admin-field input::placeholder {
+  color: #55514c;
+}
+
+.admin-field input:focus,
+.admin-field select:focus {
+  border-color: rgba(212, 175, 55, 0.65);
+}
+
+.admin-destinos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.admin-checkbox {
+  min-height: 48px;
+  padding: 0 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #101010;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  cursor: pointer;
+  color: #aaa59c;
+  font-size: 0.72rem;
+  transition: 0.25s ease;
+}
+
+.admin-checkbox:hover {
+  border-color: rgba(212, 175, 55, 0.4);
+}
+
+.admin-checkbox input {
+  width: 15px;
+  height: 15px;
+  min-height: auto;
+  accent-color: #d4af37;
+  cursor: pointer;
+}
+
+.admin-checkbox:has(input:checked) {
+  border-color: rgba(212, 175, 55, 0.55);
+  color: #d4af37;
+}
+
+.admin-flash-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  padding-top: 2px;
+}
+
+/* =========================
+   AÇÕES FORM
+========================= */
+
+.admin-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 35px;
+  padding-top: 25px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* =========================
+   LISTA
+========================= */
+
+.admin-lista-section {
+  margin-top: 20px;
+}
+
+.admin-lista-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.admin-lista-header span {
+  color: #d4af37;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+}
+
+.admin-lista-header h2 {
+  margin: 7px 0 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.8rem;
+  font-weight: 400;
+}
+
+.admin-lista-header strong {
+  color: #68645e;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.admin-empty-state {
+  min-height: 330px;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.012);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 35px;
+}
+
+.admin-empty-state > svg {
+  margin-bottom: 18px;
+  color: #4e4b46;
+  font-size: 2.2rem;
+}
+
+.admin-empty-state h3 {
+  margin: 0 0 8px;
+  color: #c6c1b8;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.4rem;
+  font-weight: 400;
+}
+
+.admin-empty-state p {
+  max-width: 400px;
+  margin: 0 0 25px;
+  color: #66625c;
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.admin-trabalhos-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.admin-trabalho-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: #101010;
+  transition: 0.3s ease;
+}
+
+.admin-trabalho-card:hover {
+  border-color: rgba(212, 175, 55, 0.35);
+  transform: translateY(-3px);
+}
+
+.admin-trabalho-card.inativo {
+  opacity: 0.55;
+}
+
+.admin-trabalho-image {
+  position: relative;
+  height: 260px;
+  overflow: hidden;
+  background: #080808;
+}
+
+.admin-trabalho-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.admin-trabalho-card:hover .admin-trabalho-image img {
+  transform: scale(1.04);
+}
+
+.admin-inativo-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.58);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-inativo-overlay span {
+  padding: 7px 12px;
+  border: 1px solid rgba(212, 175, 55, 0.6);
+  color: #d4af37;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+}
+
+.admin-trabalho-info {
+  padding: 17px 17px 12px;
+}
+
+.admin-trabalho-categoria {
+  color: #d4af37;
+  font-size: 0.58rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.admin-trabalho-info h3 {
+  margin: 7px 0 12px;
+  color: #ddd8cf;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.05rem;
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+.admin-trabalho-destinos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.admin-trabalho-destinos span {
+  padding: 4px 7px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #77736d;
+  font-size: 0.52rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.admin-trabalho-flash-info {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+  color: #c9c3b9;
+  font-size: 0.67rem;
+}
+
+.admin-trabalho-flash-info span {
+  color: #d4af37;
+}
+
+/* =========================
+   AÇÕES CARD
+========================= */
+
+.admin-trabalho-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 4px;
+  padding: 10px 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.admin-trabalho-actions button {
+  width: 32px;
+  height: 32px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #716d66;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s ease;
+}
+
+.admin-trabalho-actions button:hover {
+  border-color: rgba(212, 175, 55, 0.3);
+  color: #d4af37;
+}
+
+.admin-trabalho-actions button.delete:hover {
+  border-color: rgba(160, 40, 40, 0.4);
+  color: #c65353;
+}
+
+/* =========================
+   RESPONSIVO
+========================= */
+
+@media (max-width: 1100px) {
+  .admin-trabalhos-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 850px) {
+  .admin-trabalhos-header {
+    grid-template-columns: auto 1fr;
+    gap: 20px;
+  }
+
+  .admin-trabalhos-header-brand {
+    justify-self: end;
+    text-align: right;
+  }
+
+  .admin-trabalhos-header-space {
+    display: none;
+  }
+
+  .admin-trabalhos-title-area {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .admin-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-upload-area,
+  .admin-upload-placeholder {
+    min-height: 330px;
+  }
+
+  .admin-image-preview {
+    height: 330px;
+  }
+
+  .admin-trabalhos-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .admin-trabalhos-header {
+    min-height: 72px;
+    padding: 0 20px;
+  }
+
+  .admin-voltar span {
+    display: none;
+  }
+
+  .admin-trabalhos-header-brand span {
+    font-size: 0.85rem;
+  }
+
+  .admin-trabalhos-header-brand small {
+    font-size: 0.48rem;
+  }
+
+  .admin-trabalhos-content {
+    width: calc(100% - 30px);
+    padding: 35px 0 60px;
+  }
+
+  .admin-trabalhos-title-area {
+    margin-bottom: 30px;
+  }
+
+  .admin-add-button {
+    width: 100%;
+  }
+
+  .admin-trabalho-form-card form,
+  .admin-form-header {
+    padding: 20px;
+  }
+
+  .admin-form-grid {
+    gap: 25px;
+  }
+
+  .admin-upload-area,
+  .admin-upload-placeholder {
+    min-height: 280px;
+  }
+
+  .admin-image-preview {
+    height: 280px;
+  }
+
+  .admin-destinos {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-flash-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .admin-form-actions button {
+    width: 100%;
+  }
+
+  .admin-lista-header {
+    align-items: flex-start;
+  }
+
+  .admin-trabalhos-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-trabalho-image {
+    height: 330px;
+  }
+}
