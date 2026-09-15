@@ -1,0 +1,1823 @@
+
+/* =========================================================
+   KSA STUDIO — CRM
+   Layout responsivo / mobile centralizado
+========================================================= */
+
+.admin-crm {
+  min-height: 100vh;
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(212, 175, 55, 0.06),
+      transparent 32%
+    ),
+    #080808;
+  color: #f4f0e8;
+  font-family: inherit;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.admin-crm-header {
+  width: 100%;
+  min-height: 105px;
+  padding: 20px 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(20, 20, 20, 0.98),
+    rgba(12, 12, 12, 0.98)
+  );
+
+  border-bottom: 1px solid rgba(212, 175, 55, 0.18);
+
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
+}
+
+.admin-crm-header-left {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+/* =========================================================
+   BOTÃO VOLTAR
+========================================================= */
+
+.admin-crm-back {
+  min-height: 38px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 0 15px;
+
+  border: 1px solid rgba(212, 175, 55, 0.42);
+  border-radius: 8px;
+
+  background: rgba(0, 0, 0, 0.38);
+
+  color: #d4af37;
+
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.admin-crm-back svg {
+  width: 15px;
+  height: 15px;
+}
+
+.admin-crm-back:hover {
+  background: rgba(212, 175, 55, 0.09);
+  border-color: #d4af37;
+  color: #f0d77a;
+
+  transform: translateX(-2px);
+
+  box-shadow: 0 6px 18px rgba(212, 175, 55, 0.1);
+}
+
+/* =========================================================
+   TÍTULO
+========================================================= */
+
+.admin-crm-title {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.admin-crm-title-icon {
+  width: 46px;
+  height: 46px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 10px;
+
+  background: rgba(212, 175, 55, 0.06);
+
+  color: #d4af37;
+}
+
+.admin-crm-title-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.admin-crm-title > div:last-child {
+  min-width: 0;
+}
+
+.admin-crm-title span {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: #a99368;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+}
+
+.admin-crm-title h1 {
+  margin: 0;
+
+  color: #f4f0e8;
+
+  font-size: 27px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+}
+
+.admin-crm-title p {
+  margin: 3px 0 0;
+
+  color: #85817a;
+
+  font-size: 12px;
+}
+
+/* =========================================================
+   CONTADOR
+========================================================= */
+
+.admin-crm-header-count {
+  min-width: 95px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  padding-left: 25px;
+
+  border-left: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+.admin-crm-header-count span {
+  color: #8e887c;
+
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.admin-crm-header-count strong {
+  margin-top: 3px;
+
+  color: #d4af37;
+
+  font-size: 25px;
+  font-weight: 500;
+}
+
+/* =========================================================
+   CONTEÚDO
+========================================================= */
+
+.admin-crm-content {
+  width: min(1180px, calc(100% - 70px));
+
+  margin: 0 auto;
+  padding: 38px 0 70px;
+}
+
+/* =========================================================
+   RESUMO
+========================================================= */
+
+.admin-crm-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 16px;
+
+  margin-bottom: 42px;
+}
+
+.admin-crm-summary-card {
+  min-height: 130px;
+
+  padding: 22px 24px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  background: linear-gradient(
+    145deg,
+    rgba(22, 22, 22, 0.96),
+    rgba(13, 13, 13, 0.96)
+  );
+
+  border: 1px solid rgba(212, 175, 55, 0.13);
+  border-radius: 12px;
+
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.18);
+}
+
+.admin-crm-summary-card span {
+  color: #918a7c;
+
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.7px;
+}
+
+.admin-crm-summary-card strong {
+  margin-top: 6px;
+
+  color: #d4af37;
+
+  font-size: 31px;
+  line-height: 1;
+  font-weight: 500;
+}
+
+.admin-crm-summary-card small {
+  margin-top: 8px;
+
+  color: #6f6b64;
+
+  font-size: 11px;
+}
+
+/* =========================================================
+   CABEÇALHO DA LISTA
+========================================================= */
+
+.admin-crm-list-header {
+  margin-bottom: 18px;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.admin-crm-list-header > div span {
+  color: #a99368;
+
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+}
+
+.admin-crm-list-header h2 {
+  margin: 5px 0 0;
+
+  color: #f1ede4;
+
+  font-size: 23px;
+  font-weight: 500;
+}
+
+.admin-crm-new-button {
+  min-height: 43px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  padding: 0 18px;
+
+  border: 1px solid rgba(212, 175, 55, 0.55);
+  border-radius: 8px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(212, 175, 55, 0.14),
+    rgba(212, 175, 55, 0.05)
+  );
+
+  color: #d4af37;
+
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.admin-crm-new-button svg {
+  width: 13px;
+  height: 13px;
+}
+
+.admin-crm-new-button:hover {
+  background: rgba(212, 175, 55, 0.17);
+  border-color: #d4af37;
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 7px 22px rgba(212, 175, 55, 0.1);
+}
+
+/* =========================================================
+   BUSCA
+========================================================= */
+
+.admin-crm-search {
+  width: 100%;
+  height: 48px;
+
+  margin-bottom: 18px;
+  padding: 0 15px;
+
+  display: flex;
+  align-items: center;
+
+  background: rgba(18, 18, 18, 0.92);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 9px;
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.admin-crm-search:focus-within {
+  border-color: rgba(212, 175, 55, 0.45);
+
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.04);
+}
+
+.admin-crm-search > svg {
+  width: 15px;
+  height: 15px;
+
+  margin-right: 11px;
+
+  color: #817b70;
+
+  flex-shrink: 0;
+}
+
+.admin-crm-search input {
+  width: 100%;
+  height: 100%;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+
+  color: #eee9df;
+
+  font-family: inherit;
+  font-size: 13px;
+}
+
+.admin-crm-search input::placeholder {
+  color: #5f5b55;
+}
+
+.admin-crm-search button {
+  width: 28px;
+  height: 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 0;
+
+  background: transparent;
+
+  color: #777169;
+
+  cursor: pointer;
+}
+
+.admin-crm-search button:hover {
+  color: #d4af37;
+}
+
+/* =========================================================
+   LISTA DE CLIENTES
+========================================================= */
+
+.admin-crm-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.admin-crm-client-card {
+  min-height: 104px;
+
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) auto;
+
+  align-items: center;
+  gap: 17px;
+
+  padding: 17px 19px;
+
+  background: linear-gradient(
+    145deg,
+    rgba(22, 22, 22, 0.96),
+    rgba(14, 14, 14, 0.96)
+  );
+
+  border: 1px solid rgba(255, 255, 255, 0.055);
+  border-radius: 11px;
+
+  transition:
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    background 0.25s ease;
+}
+
+.admin-crm-client-card:hover {
+  border-color: rgba(212, 175, 55, 0.22);
+
+  background: linear-gradient(
+    145deg,
+    rgba(25, 25, 25, 0.98),
+    rgba(15, 15, 15, 0.98)
+  );
+
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+   AVATAR
+========================================================= */
+
+.admin-crm-client-avatar {
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: linear-gradient(
+    145deg,
+    rgba(212, 175, 55, 0.18),
+    rgba(212, 175, 55, 0.05)
+  );
+
+  border: 1px solid rgba(212, 175, 55, 0.28);
+
+  color: #d4af37;
+
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* =========================================================
+   DADOS DO CLIENTE
+========================================================= */
+
+.admin-crm-client-main {
+  min-width: 0;
+}
+
+.admin-crm-client-name-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.admin-crm-client-name-row h3 {
+  margin: 0;
+
+  color: #f0ece3;
+
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.admin-crm-status {
+  min-height: 21px;
+
+  display: inline-flex;
+  align-items: center;
+
+  padding: 0 8px;
+
+  border-radius: 20px;
+
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+}
+
+.admin-crm-status.novo {
+  color: #d4af37;
+
+  background: rgba(212, 175, 55, 0.09);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.admin-crm-status.cliente {
+  color: #aebba1;
+
+  background: rgba(120, 155, 110, 0.09);
+  border: 1px solid rgba(120, 155, 110, 0.2);
+}
+
+.admin-crm-status.recorrente {
+  color: #d7b5a7;
+
+  background: rgba(150, 90, 65, 0.1);
+  border: 1px solid rgba(180, 110, 80, 0.22);
+}
+
+/* =========================================================
+   INFORMAÇÕES
+========================================================= */
+
+.admin-crm-client-info {
+  margin-top: 8px;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 13px;
+}
+
+.admin-crm-client-info span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+
+  color: #8c877e;
+
+  font-size: 11px;
+}
+
+.admin-crm-client-info svg {
+  width: 11px;
+  height: 11px;
+
+  color: #a99368;
+}
+
+.admin-crm-client-meta {
+  margin-top: 7px;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 13px;
+}
+
+.admin-crm-client-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+
+  color: #5f5b55;
+
+  font-size: 10px;
+}
+
+.admin-crm-client-meta svg {
+  width: 10px;
+  height: 10px;
+}
+
+/* =========================================================
+   AÇÕES
+========================================================= */
+
+.admin-crm-client-actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.admin-crm-action-button {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 7px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.admin-crm-action-button svg {
+  width: 13px;
+  height: 13px;
+}
+
+.admin-crm-action-button.edit {
+  border: 1px solid rgba(212, 175, 55, 0.18);
+
+  background: rgba(212, 175, 55, 0.04);
+
+  color: #a99368;
+}
+
+.admin-crm-action-button.edit:hover {
+  border-color: rgba(212, 175, 55, 0.45);
+
+  background: rgba(212, 175, 55, 0.1);
+
+  color: #d4af37;
+}
+
+.admin-crm-action-button.delete {
+  border: 1px solid rgba(180, 75, 65, 0.15);
+
+  background: rgba(180, 75, 65, 0.035);
+
+  color: #8e625d;
+}
+
+.admin-crm-action-button.delete:hover {
+  border-color: rgba(200, 80, 70, 0.4);
+
+  background: rgba(200, 80, 70, 0.09);
+
+  color: #c87c73;
+}
+
+.admin-crm-action-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.admin-crm-open-button {
+  min-height: 34px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  margin-left: 3px;
+  padding: 0 11px;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 7px;
+
+  background: rgba(255, 255, 255, 0.025);
+
+  color: #aaa49a;
+
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.admin-crm-open-button svg {
+  width: 9px;
+  height: 9px;
+}
+
+.admin-crm-open-button:hover {
+  background: rgba(212, 175, 55, 0.07);
+
+  border-color: rgba(212, 175, 55, 0.25);
+
+  color: #d4af37;
+}
+
+/* =========================================================
+   ESTADO VAZIO
+========================================================= */
+
+.admin-crm-empty {
+  min-height: 310px;
+
+  padding: 45px 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  background: rgba(15, 15, 15, 0.75);
+
+  border: 1px dashed rgba(212, 175, 55, 0.18);
+  border-radius: 12px;
+}
+
+.admin-crm-empty-icon {
+  width: 54px;
+  height: 54px;
+
+  margin-bottom: 17px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: rgba(212, 175, 55, 0.06);
+
+  border: 1px solid rgba(212, 175, 55, 0.18);
+
+  color: #a99368;
+}
+
+.admin-crm-empty-icon svg {
+  width: 21px;
+  height: 21px;
+}
+
+.admin-crm-empty h3 {
+  margin: 0;
+
+  color: #ddd7cc;
+
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.admin-crm-empty p {
+  max-width: 380px;
+
+  margin: 8px 0 20px;
+
+  color: #716c65;
+
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.admin-crm-empty button {
+  min-height: 39px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 0 15px;
+
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 7px;
+
+  background: rgba(212, 175, 55, 0.06);
+
+  color: #d4af37;
+
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.admin-crm-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  padding: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(0, 0, 0, 0.78);
+
+  backdrop-filter: blur(6px);
+}
+
+.admin-crm-modal {
+  width: min(650px, 100%);
+  max-height: calc(100vh - 40px);
+
+  overflow-y: auto;
+
+  background: linear-gradient(
+    145deg,
+    #191919,
+    #0d0d0d
+  );
+
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  border-radius: 13px;
+
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
+
+  scrollbar-width: thin;
+  scrollbar-color: rgba(212, 175, 55, 0.35) transparent;
+}
+
+/* =========================================================
+   MODAL HEADER
+========================================================= */
+
+.admin-crm-modal-header {
+  min-height: 83px;
+
+  padding: 20px 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.admin-crm-modal-header span {
+  color: #a99368;
+
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.admin-crm-modal-header h2 {
+  margin: 5px 0 0;
+
+  color: #eee9df;
+
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.admin-crm-modal-header > button {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 7px;
+
+  background: rgba(255, 255, 255, 0.03);
+
+  color: #89837b;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.admin-crm-modal-header > button:hover {
+  border-color: rgba(212, 175, 55, 0.3);
+
+  background: rgba(212, 175, 55, 0.06);
+
+  color: #d4af37;
+}
+
+/* =========================================================
+   FORMULÁRIO
+========================================================= */
+
+.admin-crm-form {
+  padding: 25px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-crm-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.admin-crm-form-group.full {
+  width: 100%;
+  margin-bottom: 18px;
+}
+
+.admin-crm-form-grid {
+  margin-bottom: 18px;
+
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 15px;
+}
+
+.admin-crm-form-grid .admin-crm-form-group {
+  margin-bottom: 0;
+}
+
+.admin-crm-form-group label {
+  color: #9b958b;
+
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+}
+
+.admin-crm-input-wrapper {
+  height: 45px;
+
+  padding: 0 13px;
+
+  display: flex;
+  align-items: center;
+
+  background: rgba(0, 0, 0, 0.27);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 7px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.admin-crm-input-wrapper:focus-within {
+  border-color: rgba(212, 175, 55, 0.42);
+
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.04);
+}
+
+.admin-crm-input-wrapper svg {
+  width: 13px;
+  height: 13px;
+
+  margin-right: 9px;
+
+  color: #8f7950;
+
+  flex-shrink: 0;
+}
+
+.admin-crm-input-wrapper input {
+  width: 100%;
+  height: 100%;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+
+  color: #eee9df;
+
+  font-family: inherit;
+  font-size: 12px;
+}
+
+.admin-crm-input-wrapper input::placeholder {
+  color: #55514c;
+}
+
+.admin-crm-form-group textarea {
+  width: 100%;
+  min-height: 105px;
+
+  padding: 12px 13px;
+
+  resize: vertical;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 7px;
+
+  outline: none;
+
+  background: rgba(0, 0, 0, 0.27);
+
+  color: #eee9df;
+
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 1.5;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.admin-crm-form-group textarea:focus {
+  border-color: rgba(212, 175, 55, 0.42);
+
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.04);
+}
+
+.admin-crm-form-group textarea::placeholder {
+  color: #55514c;
+}
+
+/* =========================================================
+   AVISO
+========================================================= */
+
+.admin-crm-form-info {
+  margin: 1px 0 23px;
+  padding: 11px 13px;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+
+  border: 1px solid rgba(212, 175, 55, 0.1);
+  border-radius: 7px;
+
+  background: rgba(212, 175, 55, 0.035);
+
+  color: #777169;
+
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.admin-crm-form-info svg {
+  margin-top: 2px;
+
+  color: #907b53;
+
+  flex-shrink: 0;
+}
+
+/* =========================================================
+   BOTÕES DO FORMULÁRIO
+========================================================= */
+
+.admin-crm-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 9px;
+}
+
+.admin-crm-primary-button,
+.admin-crm-secondary-button {
+  min-height: 41px;
+
+  padding: 0 17px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  border-radius: 7px;
+
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.admin-crm-primary-button {
+  border: 1px solid rgba(212, 175, 55, 0.55);
+
+  background: linear-gradient(
+    135deg,
+    rgba(212, 175, 55, 0.15),
+    rgba(212, 175, 55, 0.06)
+  );
+
+  color: #d4af37;
+}
+
+.admin-crm-primary-button:hover {
+  background: rgba(212, 175, 55, 0.18);
+  border-color: #d4af37;
+
+  transform: translateY(-1px);
+}
+
+.admin-crm-primary-button:disabled {
+  opacity: 0.55;
+
+  cursor: wait;
+
+  transform: none;
+}
+
+.admin-crm-secondary-button {
+  border: 1px solid rgba(255, 255, 255, 0.09);
+
+  background: rgba(255, 255, 255, 0.025);
+
+  color: #99938a;
+}
+
+.admin-crm-secondary-button:hover {
+  border-color: rgba(255, 255, 255, 0.17);
+  color: #d5d0c7;
+}
+
+/* =========================================================
+   PERFIL
+========================================================= */
+
+.admin-crm-profile {
+  padding: 25px;
+}
+
+.admin-crm-profile-top {
+  padding-bottom: 23px;
+
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.admin-crm-profile-avatar {
+  width: 58px;
+  height: 58px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: linear-gradient(
+    145deg,
+    rgba(212, 175, 55, 0.18),
+    rgba(212, 175, 55, 0.04)
+  );
+
+  border: 1px solid rgba(212, 175, 55, 0.28);
+
+  color: #d4af37;
+
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.admin-crm-profile-top h3 {
+  margin: 0 0 7px;
+
+  color: #eee9df;
+
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* =========================================================
+   GRID DA FICHA
+========================================================= */
+
+.admin-crm-profile-grid {
+  margin-top: 20px;
+
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 10px;
+}
+
+.admin-crm-profile-item {
+  min-height: 75px;
+
+  padding: 14px;
+
+  background: rgba(0, 0, 0, 0.18);
+
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+}
+
+.admin-crm-profile-item span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  color: #777169;
+
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.admin-crm-profile-item span svg {
+  width: 10px;
+  height: 10px;
+
+  color: #9d8350;
+}
+
+.admin-crm-profile-item strong {
+  display: block;
+
+  margin-top: 7px;
+
+  color: #c7c1b7;
+
+  font-size: 12px;
+  font-weight: 500;
+
+  word-break: break-word;
+}
+
+/* =========================================================
+   SEÇÕES DO PERFIL
+========================================================= */
+
+.admin-crm-profile-section {
+  margin-top: 20px;
+}
+
+.admin-crm-profile-section > span {
+  color: #8e7951;
+
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+}
+
+.admin-crm-profile-section p {
+  margin: 7px 0 0;
+  padding: 12px 13px;
+
+  color: #8c877e;
+
+  background: rgba(0, 0, 0, 0.18);
+
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 7px;
+
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+/* =========================================================
+   AÇÕES DO PERFIL
+========================================================= */
+
+.admin-crm-profile-actions {
+  margin-top: 25px;
+  padding-top: 20px;
+
+  display: flex;
+  justify-content: flex-end;
+  gap: 9px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+  .admin-crm-header {
+    padding: 20px 25px;
+  }
+
+  .admin-crm-content {
+    width: min(700px, calc(100% - 40px));
+  }
+
+  .admin-crm-client-card {
+    grid-template-columns: 48px minmax(0, 1fr);
+  }
+
+  .admin-crm-client-actions {
+    grid-column: 2;
+
+    justify-content: flex-start;
+
+    margin-top: 4px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+  /* ---------- página ---------- */
+
+  .admin-crm {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* ---------- header ---------- */
+
+  .admin-crm-header {
+    min-height: auto;
+
+    padding: 18px 16px 22px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
+  }
+
+  .admin-crm-header-left {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 0;
+  }
+
+  /* ---------- voltar ---------- */
+
+  .admin-crm-back {
+    align-self: flex-start;
+
+    margin-bottom: 22px;
+  }
+
+  /* ---------- título ---------- */
+
+  .admin-crm-title {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 10px;
+
+    text-align: center;
+  }
+
+  .admin-crm-title-icon {
+    width: 46px;
+    height: 46px;
+  }
+
+  .admin-crm-title > div:last-child {
+    width: 100%;
+  }
+
+  .admin-crm-title span {
+    margin-bottom: 5px;
+
+    font-size: 9px;
+    letter-spacing: 1.6px;
+  }
+
+  .admin-crm-title h1 {
+    font-size: 27px;
+    letter-spacing: 1.5px;
+  }
+
+  .admin-crm-title p {
+    margin-top: 5px;
+
+    font-size: 11px;
+  }
+
+  /* ---------- contador ---------- */
+
+  .admin-crm-header-count {
+    width: 100%;
+    min-width: 0;
+
+    margin-top: 20px;
+    padding: 13px 0 0;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    border-left: 0;
+    border-top: 1px solid rgba(212, 175, 55, 0.12);
+  }
+
+  .admin-crm-header-count span {
+    font-size: 9px;
+  }
+
+  .admin-crm-header-count strong {
+    margin-top: 0;
+
+    font-size: 21px;
+  }
+
+  /* ---------- conteúdo ---------- */
+
+  .admin-crm-content {
+    width: calc(100% - 28px);
+
+    margin: 0 auto;
+
+    padding: 26px 0 50px;
+  }
+
+  /* ---------- resumo ---------- */
+
+  .admin-crm-summary {
+    width: 100%;
+
+    grid-template-columns: 1fr;
+
+    gap: 10px;
+
+    margin-bottom: 32px;
+  }
+
+  .admin-crm-summary-card {
+    min-height: 92px;
+
+    padding: 17px 18px;
+
+    align-items: center;
+
+    text-align: center;
+  }
+
+  .admin-crm-summary-card strong {
+    font-size: 28px;
+  }
+
+  /* ---------- lista ---------- */
+
+  .admin-crm-list-header {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 14px;
+
+    text-align: center;
+  }
+
+  .admin-crm-list-header > div {
+    width: 100%;
+  }
+
+  .admin-crm-list-header h2 {
+    font-size: 22px;
+  }
+
+  .admin-crm-new-button {
+    width: 100%;
+  }
+
+  /* ---------- busca ---------- */
+
+  .admin-crm-search {
+    width: 100%;
+    height: 46px;
+
+    margin-top: 18px;
+
+    text-align: left;
+  }
+
+  .admin-crm-search input {
+    min-width: 0;
+
+    font-size: 11px;
+  }
+
+  /* ---------- cards ---------- */
+
+  .admin-crm-client-card {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 11px;
+
+    padding: 18px 15px;
+
+    text-align: center;
+  }
+
+  .admin-crm-client-card:hover {
+    transform: none;
+  }
+
+  .admin-crm-client-avatar {
+    width: 48px;
+    height: 48px;
+
+    font-size: 17px;
+  }
+
+  .admin-crm-client-main {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .admin-crm-client-name-row {
+    width: 100%;
+
+    justify-content: center;
+  }
+
+  .admin-crm-client-name-row h3 {
+    font-size: 14px;
+  }
+
+  .admin-crm-client-info {
+    width: 100%;
+
+    margin-top: 10px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 6px;
+  }
+
+  .admin-crm-client-info span {
+    justify-content: center;
+
+    font-size: 10px;
+
+    word-break: break-word;
+  }
+
+  .admin-crm-client-meta {
+    width: 100%;
+
+    margin-top: 8px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 5px;
+  }
+
+  .admin-crm-client-meta span {
+    justify-content: center;
+
+    font-size: 9px;
+  }
+
+  /* ---------- ações ---------- */
+
+  .admin-crm-client-actions {
+    width: 100%;
+
+    margin-top: 5px;
+
+    display: grid;
+    grid-template-columns: 42px 42px minmax(0, 1fr);
+
+    gap: 7px;
+  }
+
+  .admin-crm-action-button {
+    width: 42px;
+    height: 38px;
+  }
+
+  .admin-crm-open-button {
+    width: 100%;
+    min-height: 38px;
+
+    justify-content: center;
+
+    margin-left: 0;
+  }
+
+  /* ---------- vazio ---------- */
+
+  .admin-crm-empty {
+    width: 100%;
+
+    min-height: 280px;
+
+    padding: 35px 18px;
+  }
+
+  .admin-crm-empty p {
+    max-width: 300px;
+  }
+
+  /* ---------- modal ---------- */
+
+  .admin-crm-modal-overlay {
+    padding: 10px;
+  }
+
+  .admin-crm-modal {
+    width: 100%;
+    max-height: calc(100dvh - 20px);
+
+    border-radius: 11px;
+  }
+
+  .admin-crm-modal-header {
+    padding: 17px;
+
+    text-align: center;
+  }
+
+  .admin-crm-modal-header > div {
+    flex: 1;
+  }
+
+  .admin-crm-modal-header h2 {
+    font-size: 18px;
+  }
+
+  /* ---------- formulário ---------- */
+
+  .admin-crm-form {
+    padding: 18px;
+  }
+
+  .admin-crm-form-grid {
+    grid-template-columns: 1fr;
+
+    gap: 18px;
+  }
+
+  .admin-crm-form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .admin-crm-primary-button,
+  .admin-crm-secondary-button {
+    width: 100%;
+  }
+
+  /* ---------- perfil ---------- */
+
+  .admin-crm-profile {
+    padding: 18px;
+
+    text-align: center;
+  }
+
+  .admin-crm-profile-top {
+    flex-direction: column;
+
+    justify-content: center;
+
+    text-align: center;
+  }
+
+  .admin-crm-profile-avatar {
+    width: 62px;
+    height: 62px;
+  }
+
+  .admin-crm-profile-top h3 {
+    font-size: 18px;
+  }
+
+  .admin-crm-profile-grid {
+    grid-template-columns: 1fr;
+
+    text-align: center;
+  }
+
+  .admin-crm-profile-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .admin-crm-profile-item span {
+    justify-content: center;
+  }
+
+  .admin-crm-profile-section {
+    text-align: center;
+  }
+
+  .admin-crm-profile-section p {
+    text-align: center;
+  }
+
+  .admin-crm-profile-actions {
+    flex-direction: column;
+  }
+
+  .admin-crm-profile-actions .admin-crm-primary-button,
+  .admin-crm-profile-actions .admin-crm-secondary-button {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   MOBILE PEQUENO
+========================================================= */
+
+@media (max-width: 400px) {
+  .admin-crm-content {
+    width: calc(100% - 22px);
+  }
+
+  .admin-crm-title-icon {
+    width: 42px;
+    height: 42px;
+  }
+
+  .admin-crm-title h1 {
+    font-size: 24px;
+  }
+
+  .admin-crm-title p {
+    font-size: 10px;
+  }
+
+  .admin-crm-client-card {
+    padding: 16px 12px;
+  }
+
+  .admin-crm-client-info span {
+    max-width: 100%;
+
+    font-size: 9px;
+  }
+
+  .admin-crm-client-meta span {
+    font-size: 8.5px;
+  }
+
+  .admin-crm-client-actions {
+    grid-template-columns: 40px 40px minmax(0, 1fr);
+  }
+
+  .admin-crm-action-button {
+    width: 40px;
+  }
+
+  .admin-crm-open-button {
+    font-size: 9px;
+  }
+}

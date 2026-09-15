@@ -1,3 +1,4 @@
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
 
@@ -27,14 +28,18 @@ import AdminLogin from "./pages/Admin/AdminLogin";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import AdminTrabalhos from "./pages/Admin/AdminTrabalhos";
 import AgendamentoAdmin from "./pages/Admin/AgendamentoAdmin";
+import AdminAnamneses from "./pages/Admin/AdminAnamneses";
+import AdminCRM from "./pages/Admin/AdminCRM";
 
 function App() {
   return (
     <BrowserRouter>
+
       {/* Volta automaticamente para o topo ao mudar de página */}
       <ScrollToTop />
 
       <Routes>
+
         {/* =====================================================
             HOME
         ===================================================== */}
@@ -149,16 +154,44 @@ function App() {
           element={<AdminDashboard />}
         />
 
+        {/* =====================================================
+            CRM
+        ===================================================== */}
+
+        <Route
+          path="/admin/crm"
+          element={<AdminCRM />}
+        />
+
+        {/* =====================================================
+            TRABALHOS
+        ===================================================== */}
+
         <Route
           path="/admin/trabalhos"
           element={<AdminTrabalhos />}
         />
 
+        {/* =====================================================
+            AGENDA ADMIN
+        ===================================================== */}
+
         <Route
           path="/admin/agendamento"
           element={<AgendamentoAdmin />}
         />
+
+        {/* =====================================================
+            ANAMNESES ADMIN
+        ===================================================== */}
+
+        <Route
+          path="/admin/anamneses"
+          element={<AdminAnamneses />}
+        />
+
       </Routes>
+
     </BrowserRouter>
   );
 }

@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -30,8 +31,16 @@ function AdminDashboard() {
   const navigate = useNavigate();
 
   const [usuario, setUsuario] = useState(null);
-  const [quantidadeAgendamentos, setQuantidadeAgendamentos] =
-    useState(0);
+
+  const [
+    quantidadeAgendamentos,
+    setQuantidadeAgendamentos,
+  ] = useState(0);
+
+  const [
+    quantidadeAnamneses,
+    setQuantidadeAnamneses,
+  ] = useState(0);
 
   /* =========================================================
      VERIFICAR USUÁRIO LOGADO
@@ -77,6 +86,34 @@ function AdminDashboard() {
   }, []);
 
   /* =========================================================
+     CONTAR ANAMNESES EM TEMPO REAL
+  ========================================================= */
+
+  useEffect(() => {
+    const anamnesesRef = collection(
+      db,
+      "anamneses"
+    );
+
+    const unsubscribe = onSnapshot(
+      anamnesesRef,
+      (snapshot) => {
+        setQuantidadeAnamneses(
+          snapshot.size
+        );
+      },
+      (error) => {
+        console.error(
+          "Erro ao contar anamneses:",
+          error
+        );
+      }
+    );
+
+    return () => unsubscribe();
+  }, []);
+
+  /* =========================================================
      LOGOUT
   ========================================================= */
 
@@ -106,8 +143,8 @@ function AdminDashboard() {
     },
 
     {
-      titulo: "Agendamentos",
-      descricao: "Agenda e horários marcados",
+      titulo: "Agenda",
+      descricao: "Agenda inteligente e horários",
       icon: <FaCalendarAlt />,
       numero: String(
         quantidadeAgendamentos
@@ -119,14 +156,18 @@ function AdminDashboard() {
       titulo: "Anamneses",
       descricao: "Formulários dos clientes",
       icon: <FaFileMedical />,
-      numero: "00",
+      numero: String(
+        quantidadeAnamneses
+      ).padStart(2, "0"),
+      rota: "/admin/anamneses",
     },
 
     {
-      titulo: "Clientes",
-      descricao: "Cadastro e histórico",
+      titulo: "CRM",
+      descricao: "Clientes, histórico e relacionamento",
       icon: <FaUsers />,
       numero: "00",
+      rota: "/admin/crm",
     },
 
     {
@@ -177,7 +218,6 @@ function AdminDashboard() {
 
         </div>
 
-
         <div className="admin-dashboard-user">
 
           {usuario?.photoURL && (
@@ -200,7 +240,6 @@ function AdminDashboard() {
 
           </div>
 
-
           <button
             type="button"
             onClick={handleLogout}
@@ -212,7 +251,6 @@ function AdminDashboard() {
         </div>
 
       </header>
-
 
       {/* =====================================================
           CONTEÚDO
@@ -242,7 +280,6 @@ function AdminDashboard() {
 
           </div>
 
-
           <div className="admin-dashboard-date">
 
             KSA STUDIO
@@ -254,7 +291,6 @@ function AdminDashboard() {
           </div>
 
         </div>
-
 
         {/* ===================================================
             RESUMO
@@ -274,11 +310,10 @@ function AdminDashboard() {
 
           </div>
 
-
           <div>
 
             <span>
-              AGENDAMENTOS
+              AGENDA
             </span>
 
             <strong>
@@ -289,7 +324,6 @@ function AdminDashboard() {
 
           </div>
 
-
           <div>
 
             <span>
@@ -297,11 +331,12 @@ function AdminDashboard() {
             </span>
 
             <strong>
-              00
+              {String(
+                quantidadeAnamneses
+              ).padStart(2, "0")}
             </strong>
 
           </div>
-
 
           <div>
 
@@ -316,7 +351,6 @@ function AdminDashboard() {
           </div>
 
         </div>
-
 
         {/* ===================================================
             MÓDULOS
@@ -333,7 +367,6 @@ function AdminDashboard() {
           </h2>
 
         </div>
-
 
         <div className="admin-dashboard-modules">
 
@@ -356,7 +389,6 @@ function AdminDashboard() {
                 {modulo.icon}
               </div>
 
-
               <div className="admin-module-content">
 
                 <span>
@@ -368,7 +400,6 @@ function AdminDashboard() {
                 </small>
 
               </div>
-
 
               <strong>
                 {modulo.numero}

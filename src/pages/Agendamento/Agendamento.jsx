@@ -355,24 +355,9 @@ function Agendamento() {
         horario
       );
 
-    /*
-      Se não existe documento no Firestore,
-      o horário padrão está disponível.
-    */
-
     if (!item) {
       return false;
     }
-
-    /*
-      HORÁRIO EXTRA
-
-      Um extra só fica disponível se:
-      - for realmente extra;
-      - não estiver bloqueado;
-      - não estiver marcado como indisponível;
-      - não tiver agendamento.
-    */
 
     if (
       horarioEhExtra(item)
@@ -381,17 +366,6 @@ function Agendamento() {
         item
       );
     }
-
-    /*
-      HORÁRIO PADRÃO
-
-      Se existe documento em horariosOcupados,
-      ele representa um horário ocupado ou bloqueado.
-
-      Portanto:
-      - bloqueado = indisponível
-      - agendamentoId = indisponível
-    */
 
     if (
       item.bloqueado === true
@@ -404,11 +378,6 @@ function Agendamento() {
     ) {
       return true;
     }
-
-    /*
-      Documento sem bloqueio e sem agendamento.
-      Por segurança, consideramos disponível.
-    */
 
     return false;
   }
@@ -443,22 +412,9 @@ function Agendamento() {
       return [];
     }
 
-    /*
-      Começamos pelos horários padrão.
-    */
-
     const horarios = [
       ...horariosDemo,
     ];
-
-    /*
-      Depois adicionamos os horários extras
-      criados pelo administrador.
-
-      Extras bloqueados continuam sendo incluídos
-      aqui porque precisamos mostrar que existem,
-      porém ficarão desabilitados para o cliente.
-    */
 
     horariosOcupados
       .filter(
@@ -488,10 +444,6 @@ function Agendamento() {
           );
         }
       });
-
-    /*
-      Ordenação cronológica.
-    */
 
     return horarios.sort(
       (a, b) => {
@@ -556,23 +508,6 @@ function Agendamento() {
       return true;
     }
 
-    /*
-      IMPORTANTE:
-
-      O administrador bloqueia o dia inteiro
-      criando os cinco documentos padrão com:
-
-      bloqueado: true
-
-      Portanto verificamos os cinco horários
-      padrão separadamente.
-
-      Extras não interferem aqui.
-
-      Se os cinco horários padrão estiverem bloqueados,
-      o dia inteiro está bloqueado.
-    */
-
     return horariosDemo.every(
       (horario) =>
         horarioEstaOcupado(
@@ -609,13 +544,6 @@ function Agendamento() {
       return false;
     }
 
-    /*
-      Se o dia não estiver bloqueado por inteiro,
-      verificamos se existe pelo menos um horário livre.
-
-      Extras livres também entram nessa verificação.
-    */
-
     return (
       obterHorariosDaData(
         dataISO
@@ -651,10 +579,6 @@ function Agendamento() {
 
       const dias = [];
 
-      /*
-        Espaços antes do primeiro dia.
-      */
-
       for (
         let i = 0;
         i <
@@ -663,10 +587,6 @@ function Agendamento() {
       ) {
         dias.push(null);
       }
-
-      /*
-        Dias do mês.
-      */
 
       for (
         let dia = 1;
@@ -791,10 +711,6 @@ function Agendamento() {
 
     setErro("");
 
-    /*
-      Validações básicas.
-    */
-
     if (
       !dataSelecionada ||
       !horarioSelecionado
@@ -823,14 +739,6 @@ function Agendamento() {
 
       return;
     }
-
-    /*
-      Verificação antes da transação.
-
-      Isso melhora a experiência caso o horário
-      tenha sido bloqueado enquanto a pessoa
-      estava preenchendo o formulário.
-    */
 
     if (
       horarioEstaOcupado(
@@ -902,17 +810,7 @@ function Agendamento() {
                 slotExistente
               );
 
-            /*
-              ==================================================
-              HORÁRIO EXTRA
-              ==================================================
-            */
-
             if (ehExtra) {
-              /*
-                Extra bloqueado.
-              */
-
               if (
                 slotExistente.bloqueado ===
                 true
@@ -921,10 +819,6 @@ function Agendamento() {
                   "HORARIO_OCUPADO"
                 );
               }
-
-              /*
-                Extra explicitamente indisponível.
-              */
 
               if (
                 slotExistente.disponivel ===
@@ -935,10 +829,6 @@ function Agendamento() {
                 );
               }
 
-              /*
-                Extra já agendado.
-              */
-
               if (
                 slotExistente.agendamentoId
               ) {
@@ -947,21 +837,6 @@ function Agendamento() {
                 );
               }
             } else {
-              /*
-                ==================================================
-                HORÁRIO PADRÃO
-                ==================================================
-
-                Se existe qualquer documento no slot,
-                precisamos verificar o motivo.
-
-                Bloqueio manual:
-                indisponível.
-
-                Agendamento:
-                indisponível.
-              */
-
               if (
                 slotExistente
               ) {
@@ -982,24 +857,11 @@ function Agendamento() {
                   );
                 }
 
-                /*
-                  Qualquer outro documento
-                  existente no horário padrão
-                  também deve impedir a reserva,
-                  evitando disputa de slot.
-                */
-
                 throw new Error(
                   "HORARIO_OCUPADO"
                 );
               }
             }
-
-            /*
-              ==================================================
-              NOVO AGENDAMENTO
-              ==================================================
-            */
 
             const novoAgendamento = {
               nome:
@@ -1022,30 +884,12 @@ function Agendamento() {
                 serverTimestamp(),
             };
 
-            /*
-              Salva a solicitação.
-            */
-
             transaction.set(
               agendamentoRef,
               novoAgendamento
             );
 
-            /*
-              ==================================================
-              SALVAR O SLOT
-              ==================================================
-            */
-
             if (ehExtra) {
-              /*
-                Preservamos as informações do horário extra.
-
-                Principalmente:
-                horarioExtra: true
-                motivo
-              */
-
               transaction.set(
                 slotRef,
                 {
@@ -1066,11 +910,6 @@ function Agendamento() {
                 }
               );
             } else {
-              /*
-                Horário padrão passa a ser ocupado
-                pelo novo agendamento.
-              */
-
               transaction.set(
                 slotRef,
                 {
@@ -1095,10 +934,6 @@ function Agendamento() {
             };
           }
         );
-
-      /*
-        Mostra a confirmação.
-      */
 
       setAgendamentoEnviado(
         resultado
@@ -1267,6 +1102,25 @@ function Agendamento() {
       <section className="agendamento-hero">
 
         <div className="agendamento-container">
+
+          {/* =================================================
+              BOTÃO VOLTAR
+          ================================================= */}
+
+          <button
+            type="button"
+            className="agendamento-voltar"
+            onClick={() =>
+              navigate(-1)
+            }
+            aria-label="Voltar para a página anterior"
+          >
+            <FiArrowLeft />
+
+            <span>
+              Voltar
+            </span>
+          </button>
 
           {/* =================================================
               CALENDÁRIO
